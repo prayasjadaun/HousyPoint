@@ -20,6 +20,9 @@ class PropertyFilters extends StatefulWidget {
 }
 
 class _PropertyFiltersState extends State<PropertyFilters> {
+  final List<String> _developers = ['Developer', 'M3M', 'DLF', 'Central Park'];
+  String _selectedDeveloper = 'Developer';
+
   int _selectedLocationIndex = 0;
   int _selectedPropertyTypeIndex = 0;
   int _selectedDealTypeIndex = 0;
@@ -29,11 +32,11 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   final List<String> _locations = ['INDIA', 'OVERSEAS'];
   final List<String> _propertyTypes = ['RESALE', 'RENT', 'COMMERCIAL'];
   final List<Map<String, dynamic>> _bhkTypes = [
-    {'type': '5.5/5 BHK', 'count': '124'},
-    {'type': '4.5/4 BHK', 'count': '246'},
-    {'type': '3.5/3 BHK', 'count': '180'},
-    {'type': '2.5/2 BHK', 'count': '110'},
-    {'type': '1.5/1 BHK', 'count': '78'},
+    {'type': '5.5 / 5 BHK', 'count': '124'},
+    {'type': '4.5 / 4 BHK', 'count': '246'},
+    {'type': '3.5 / 3 BHK', 'count': '180'},
+    {'type': '2.5 / 2 BHK', 'count': '110'},
+    {'type': '1.5 / 1 BHK', 'count': '78'},
     {'type': 'Studio', 'count': '58'},
   ];
 
@@ -58,7 +61,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           _buildLocationTabs(),
           _buildPropertyTypeTabs(),
           _buildBHKFilters(),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           _buildDistressDeals(),
         ],
       ),
@@ -69,21 +72,61 @@ class _PropertyFiltersState extends State<PropertyFilters> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+        color: Colors.grey,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
       child: Row(
-        children: List.generate(
-          _locations.length,
-          (index) => Padding(
-            padding: const EdgeInsets.only(right: 8),
-            child: _buildLocationChip(
-              _locations[index],
-              index == _selectedLocationIndex,
-              () => setState(() => _selectedLocationIndex = index),
+        children: [
+          // Location Chips
+          ...List.generate(
+            _locations.length,
+            (index) => Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: _buildLocationChip(
+                _locations[index],
+                index == _selectedLocationIndex,
+                () => setState(() => _selectedLocationIndex = index),
+              ),
             ),
           ),
-        ),
+          // Spacer to separate Developer dropdown
+          const Spacer(),
+          // Developer Dropdown
+          _buildDeveloperDropdown(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDeveloperDropdown() {
+    return DropdownButtonHideUnderline(
+      child: DropdownButton<String>(
+        value: _selectedDeveloper,
+        items: _developers.map((developer) {
+          return DropdownMenuItem<String>(
+            value: developer,
+            child: Row(
+              children: [
+                // const Icon(Icons., size: 18),
+                // const SizedBox(width: 5),
+                Text(
+                  developer,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+        onChanged: (value) {
+          setState(() {
+            _selectedDeveloper = value!;
+          });
+        },
+        dropdownColor: Colors.white,
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
       ),
     );
   }
@@ -174,32 +217,45 @@ class _PropertyFiltersState extends State<PropertyFilters> {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  border: Border.all(color: Colors.grey)),
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(15),
+              //     border: Border.all(color: Colors.grey)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      _buildBHKChip(bhkType, index == _selectedBHKIndex),
-                      const SizedBox(height: 4),
-                    ],
+                  Container(
+                    width: 200,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(15)),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        _buildBHKChip(bhkType, index == _selectedBHKIndex),
+                        const SizedBox(height: 4),
+                      ],
+                    ),
                   ),
                   const SizedBox(
-                    width: 50,
+                    width: 5,
                   ),
-                  Column(
-                    children: [
-                      Text(
-                        count,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.black,
+                  Container(
+                    width: 120,
+                    height: 30,
+                    decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(10)),
+                    child: Column(
+                      children: [
+                        Text(
+                          count,
+                          style: const TextStyle(
+                            fontSize: 13,
+                            color: Colors.black,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 ],
               ),

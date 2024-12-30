@@ -12,7 +12,7 @@ class PropertyCard extends StatelessWidget {
       elevation: 4,
       margin: const EdgeInsets.all(8),
       child: Container(
-        width: 200,
+        width: 150,
         padding: const EdgeInsets.all(8),
         child: LayoutBuilder(builder: (context, constraints) {
           return Column(

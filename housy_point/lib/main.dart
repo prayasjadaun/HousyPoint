@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'views/screens/home_screen.dart';
-import 'providers/home_screen_provider.dart'; // Import the provider
-import 'providers/menu_provider.dart'; // Import another provider if needed
+import 'providers/home_screen_provider.dart';
+import 'providers/menu_provider.dart';
 
 void main() {
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
+        // ChangeNotifierProvider(create: (_) => PropertyFiltersProvider()),
         ChangeNotifierProvider(
             create: (context) => MenuProvider()), // Example of another provider
       ],

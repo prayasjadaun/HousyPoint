@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/widgets/bottom_navbar.dart';
 import 'package:housy_point/views/widgets/property_filter.dart';
@@ -121,37 +122,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                // Categories Section
-                // Positioned(
-                //   top: 300,
-                //   left: 10,
-                //   right: 10,
-                //   child: Container(
-                //     decoration: BoxDecoration(
-                //       color: Colors.white,
-                //       borderRadius: BorderRadius.circular(20),
-                //       boxShadow: [
-                //         BoxShadow(
-                //           color: Colors.black.withOpacity(0.1),
-                //           blurRadius: 10,
-                //           offset: const Offset(0, 4),
-                //         ),
-                //       ],
-                //     ),
-                //     child: GridView.count(
-                //       mainAxisSpacing: 8.0,
-                //       crossAxisSpacing: 5.0,
-                //       crossAxisCount: 4,
-                //       shrinkWrap: true,
-                //       physics: const NeverScrollableScrollPhysics(),
-                //       children: categories
-                //           .map((category) => CategoryItem(category: category))
-                //           .toList(),
-                //     ),
-                //   ),
-                // ),
+
                 Positioned(
-                  top: 250,
+                  top: 300,
                   left: 10,
                   right: 10,
                   child: Container(
@@ -171,7 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            const SizedBox(height: 350),
+            const SizedBox(height: 400),
             // Property List Section
             const PropertyListScreen(
               selectedCategory: null,
