@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/views/widgets/catogery_item.dart';
-import '../../models/category_model.dart';
+import 'package:housy_point/views/widgets/utils/catogery_item.dart';
+import '../../../models/category_model.dart';
 
 class CategoryGrid extends StatelessWidget {
   final List<Category> categories;

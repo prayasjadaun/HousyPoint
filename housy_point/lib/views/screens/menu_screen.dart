@@ -1,7 +1,7 @@
 // lib/widgets/app_drawer.dart
 import 'package:flutter/material.dart';
 import 'package:housy_point/providers/menu_provider.dart';
-import 'package:housy_point/views/widgets/menu_items.dart';
+import 'package:housy_point/views/widgets/utils/menu_items.dart';
 import 'package:provider/provider.dart';
 
 class AppDrawer extends StatelessWidget {

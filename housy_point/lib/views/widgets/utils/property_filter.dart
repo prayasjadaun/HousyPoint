@@ -84,7 +84,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           ...List.generate(
             _locations.length,
             (index) => Padding(
-              padding: const EdgeInsets.only(right: 8),
+              padding: const EdgeInsets.only(right: 5),
               child: _buildLocationChip(
                 _locations[index],
                 index == _selectedLocationIndex,
@@ -224,7 +224,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    width: 200,
+                    width: 150,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(15)),
@@ -240,8 +240,9 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                     width: 5,
                   ),
                   Container(
+                    padding: const EdgeInsets.all(3),
                     width: 120,
-                    height: 30,
+                    height: 35,
                     decoration: BoxDecoration(
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(10)),

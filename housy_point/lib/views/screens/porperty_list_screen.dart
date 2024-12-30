@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/property_model.dart';
-import 'package:housy_point/views/widgets/property_card.dart';
+import 'package:housy_point/views/widgets/utils/property_card.dart';
 
 class PropertyListScreen extends StatefulWidget {
   const PropertyListScreen({super.key, required selectedCategory});
