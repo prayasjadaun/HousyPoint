@@ -10,8 +10,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
         // ChangeNotifierProvider(create: (_) => PropertyFiltersProvider()),
-        ChangeNotifierProvider(
-            create: (context) => MenuProvider()), // Example of another provider
+        ChangeNotifierProvider(create: (context) => MenuProvider()),
       ],
       child: const MyApp(),
     ),

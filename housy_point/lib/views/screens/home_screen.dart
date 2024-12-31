@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housy_point/views/screens/loan_screen.dart';
+import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/porperty_list_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
 import 'package:housy_point/views/widgets/bottom_navbar.dart';
@@ -18,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: const Drawer(),
+      endDrawer: const AppDrawer(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
