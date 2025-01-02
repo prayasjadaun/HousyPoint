@@ -14,35 +14,49 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
           child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.symmetric(vertical: 80.0, horizontal: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // App Logo
+                // App Logo with shadow and gradient
                 Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(8),
+                    gradient: LinearGradient(
+                      colors: [
+                        Theme.of(context).primaryColor,
+                        Colors.deepPurple.shade900
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        spreadRadius: 2,
+                        blurRadius: 6,
+                        offset: Offset(0, 2), // changes position of shadow
+                      ),
+                    ],
                   ),
                   child: Text(
                     'Housy Point',
-                    style: GoogleFonts.merriweather(
+                    style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 40),
                 Text(
                   "ONE STOP SOLUTION FOR ALL YOUR REAL ESTATE NEEDS",
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.merriweather(
-                    fontSize: 23,
-                    fontWeight: FontWeight.bold,
+                  style: GoogleFonts.poppins(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.grey[800],
                   ),
                 ),
                 const Text(
@@ -52,16 +66,25 @@ class AuthScreen extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
-                const SizedBox(height: 20),
-                // Phone Number Input
+                const SizedBox(height: 30),
+                // Phone Number Input with shadow
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.grey[400]!),
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        spreadRadius: 2,
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
                   ),
                   child: IntlPhoneField(
                     decoration: const InputDecoration(
                       labelText: 'Phone Number',
+                      labelStyle: TextStyle(color: Colors.grey),
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 12),
                     ),
@@ -73,28 +96,28 @@ class AuthScreen extends StatelessWidget {
                     },
                   ),
                 ),
-                const SizedBox(height: 16),
-                // Continue Button with SpinKit
+                const SizedBox(height: 24),
+                // Continue Button with a Gradient and smooth hover effect
                 Consumer<AuthScreenProvider>(
                   builder: (context, auth, _) => ElevatedButton(
                     onPressed: auth.isLoading
                         ? null
                         : () async {
                             if (await auth.verifyPhoneNumber()) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => const OtpScreen(),
-                                ),
-                              );
+                              // ignore: use_build_context_synchronously
+                              showAuthBottomSheet(context);
                             }
                           },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: auth.isLoading
+                          ? Colors.grey
+                          : Theme.of(context).primaryColor,
                       minimumSize: const Size(double.infinity, 50),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(12),
                       ),
+                      shadowColor: Colors.black.withOpacity(0.2),
+                      elevation: 5,
                     ),
                     child: auth.isLoading
                         ? Row(
@@ -107,7 +130,7 @@ class AuthScreen extends StatelessWidget {
                               const SizedBox(width: 12),
                               Text(
                                 'Verifying...',
-                                style: GoogleFonts.merriweather(
+                                style: GoogleFonts.poppins(
                                   color: Colors.black,
                                   fontSize: 16,
                                 ),
@@ -116,7 +139,7 @@ class AuthScreen extends StatelessWidget {
                           )
                         : Text(
                             'Continue',
-                            style: GoogleFonts.merriweather(
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
                               fontSize: 16,
                             ),
@@ -128,6 +151,24 @@ class AuthScreen extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+
+  void showAuthBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          height: 600,
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
+          child: const OtpScreen(),
+        );
+      },
     );
   }
 }

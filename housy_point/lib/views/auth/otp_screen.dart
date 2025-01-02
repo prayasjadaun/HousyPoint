@@ -53,10 +53,11 @@ class _OtpScreenState extends State<OtpScreen> {
               color: Colors.black, fontWeight: FontWeight.w600),
         ),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Consumer<AuthScreenProvider>(
               builder: (context, auth, _) => Text(
@@ -79,7 +80,7 @@ class _OtpScreenState extends State<OtpScreen> {
                   decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(8),
-                    color: Colors.grey.shade50,
+                    color: Colors.white,
                   ),
                   child: TextField(
                     controller: _otpControllers[index],
@@ -130,12 +131,13 @@ class _OtpScreenState extends State<OtpScreen> {
                     ? null
                     : () async {
                         // Collect OTP
-                        String otp = _otpControllers
+                        _otpControllers
                             .map((controller) => controller.text)
                             .join();
 
                         if (await auth.verifyPhoneNumber()) {
                           Navigator.pushReplacement(
+                            // ignore: use_build_context_synchronously
                             context,
                             MaterialPageRoute(
                               builder: (_) => const HomeScreen(),

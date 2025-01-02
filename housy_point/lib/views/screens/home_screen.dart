@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       selectedCategory: null,
                     ),
                     const SizedBox(height: 20),
-                    const LoanScreen(),
+                    // const LoanScreen(),
                   ],
                 ),
               ),
