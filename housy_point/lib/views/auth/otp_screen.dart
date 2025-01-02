@@ -60,7 +60,7 @@ class _OtpScreenState extends State<OtpScreen> {
           children: [
             Consumer<AuthScreenProvider>(
               builder: (context, auth, _) => Text(
-                "We've sent a verification code to\n+91 ${auth.phoneNumber}",
+                "We've sent a verification code to\n${auth.phoneNumber}",
                 style: GoogleFonts.merriweather(
                   fontSize: 16,
                   color: Colors.grey.shade600,

@@ -14,10 +14,10 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // App Logo
