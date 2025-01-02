@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/views/screens/loan_screen.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/porperty_list_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';

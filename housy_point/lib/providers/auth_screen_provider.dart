@@ -32,7 +32,7 @@ class AuthScreenProvider with ChangeNotifier {
     return true;
   }
 
-  Future<bool> verifyOtp() async {
+  Future<bool> verifyOtp(String otp) async {
     setLoading(true);
     // Simulate API call
     await Future.delayed(const Duration(seconds: 2));

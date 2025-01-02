@@ -12,6 +12,7 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -36,7 +37,7 @@ class AuthScreen extends StatelessWidget {
                         color: Colors.black.withOpacity(0.2),
                         spreadRadius: 2,
                         blurRadius: 6,
-                        offset: Offset(0, 2), // changes position of shadow
+                        offset: const Offset(0, 2),
                       ),
                     ],
                   ),
@@ -44,8 +45,8 @@ class AuthScreen extends StatelessWidget {
                     'Housy Point',
                     style: GoogleFonts.poppins(
                       color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
+                      fontSize: 28,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
@@ -55,12 +56,13 @@ class AuthScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: GoogleFonts.poppins(
                     fontSize: 20,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     color: Colors.grey[800],
                   ),
                 ),
+                const SizedBox(height: 10),
                 const Text(
-                  'Log in or sign up',
+                  'Login via mobile number',
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
@@ -70,14 +72,15 @@ class AuthScreen extends StatelessWidget {
                 // Phone Number Input with shadow
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey[400]!),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey[300]!),
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withOpacity(0.05),
                         spreadRadius: 2,
                         blurRadius: 8,
-                        offset: Offset(0, 4),
+                        offset: const Offset(0, 4),
                       ),
                     ],
                   ),
@@ -97,10 +100,10 @@ class AuthScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 24),
-                // Continue Button with a Gradient and smooth hover effect
+                
                 Consumer<AuthScreenProvider>(
-                  builder: (context, auth, _) => ElevatedButton(
-                    onPressed: auth.isLoading
+                  builder: (context, auth, _) => GestureDetector(
+                    onTap: auth.isLoading
                         ? null
                         : () async {
                             if (await auth.verifyPhoneNumber()) {
@@ -108,42 +111,55 @@ class AuthScreen extends StatelessWidget {
                               showAuthBottomSheet(context);
                             }
                           },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: auth.isLoading
-                          ? Colors.grey
-                          : Theme.of(context).primaryColor,
-                      minimumSize: const Size(double.infinity, 50),
-                      shape: RoundedRectangleBorder(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context).primaryColor,
+                            Colors.deepPurple.shade900,
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                         borderRadius: BorderRadius.circular(12),
-                      ),
-                      shadowColor: Colors.black.withOpacity(0.2),
-                      elevation: 5,
-                    ),
-                    child: auth.isLoading
-                        ? Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const SpinKitThreeBounce(
-                                color: Colors.black,
-                                size: 24.0,
-                              ),
-                              const SizedBox(width: 12),
-                              Text(
-                                'Verifying...',
-                                style: GoogleFonts.poppins(
-                                  color: Colors.black,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Text(
-                            'Continue',
-                            style: GoogleFonts.poppins(
-                              color: Colors.white,
-                              fontSize: 16,
-                            ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.2),
+                            spreadRadius: 2,
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
                           ),
+                        ],
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      alignment: Alignment.center,
+                      child: auth.isLoading
+                          ? Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const SpinKitThreeBounce(
+                                  color: Colors.white,
+                                  size: 24.0,
+                                ),
+                                const SizedBox(width: 12),
+                                Text(
+                                  'Verifying...',
+                                  style: GoogleFonts.poppins(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              ],
+                            )
+                          : Text(
+                              'Continue',
+                              style: GoogleFonts.poppins(
+                                color: Colors.white,
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                    ),
                   ),
                 ),
               ],
@@ -158,15 +174,26 @@ class AuthScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent, // Allows for rounded corners
       builder: (BuildContext context) {
         return Container(
-          height: 600,
+          padding: const EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.7, // Dynamic height
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-          child: const OtpScreen(),
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: const OtpScreen(), // Displays the OTP Screen
         );
       },
     );

@@ -212,15 +212,29 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent,
+      backgroundColor:
+          Colors.transparent, // Makes the bottom sheet background transparent
       builder: (BuildContext context) {
         return Container(
-          height: 600,
+          padding: const EdgeInsets.all(
+              16.0), // Adds padding inside the bottom sheet
+          height: MediaQuery.of(context).size.height *
+              0.7, // Adjusts height dynamically
           decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20), topRight: Radius.circular(20))),
-          child: const AuthScreen(),
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: const AuthScreen(), // Reuse your AuthScreen widget
         );
       },
     );
