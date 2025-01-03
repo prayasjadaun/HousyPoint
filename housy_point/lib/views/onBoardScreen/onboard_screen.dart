@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
 import 'package:housy_point/views/auth/auth_screen.dart';
+import 'package:housy_point/views/auth/sequentiol_bottomsheet.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
 
 class OnBoardingScreen extends StatefulWidget {
-  const OnBoardingScreen({super.key});
+  const OnBoardingScreen({super.key, required this.onBack});
 
+  final VoidCallback onBack;
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
 }
@@ -22,7 +24,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   void initState() {
     super.initState();
-    // Start timer for auto-sliding
+    _startAutoScroll();
+  }
+
+  void _startAutoScroll() {
     _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
       if (_currentPage < _numPages - 1) {
         _currentPage++;
@@ -48,10 +53,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         appBar: AppBar(
           backgroundColor: Colors.black,
           centerTitle: true,
-          title: Image(
-            image: AssetImage(
-              'assets/applogos/logo.png',
-            ),
+          title: const Image(
+            image: AssetImage('assets/applogos/logo.png'),
             width: 200,
             height: 80,
           ),
@@ -62,44 +65,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               Expanded(
                 child: IntroductionScreen(
                   key: _introKey,
-                  pages: [
-                    // First Page
-                    PageViewModel(
-                      titleWidget: const SizedBox.shrink(),
-                      bodyWidget: buildPageContent(
-                        context,
-                        "2 Rooms Apartment",
-                        "Gurugram, Haryana",
-                        "assets/images/propertyone.jpeg",
-                        0,
-                      ),
-                      decoration: getPageDecoration(),
-                    ),
-                    // Second Page
-                    PageViewModel(
-                      titleWidget: const SizedBox.shrink(),
-                      bodyWidget: buildPageContent(
-                        context,
-                        "Luxury Villa",
-                        "Delhi Phase 6, India",
-                        "assets/images/propertytwo.jpg",
-                        1,
-                      ),
-                      decoration: getPageDecoration(),
-                    ),
-                    // Third Page
-                    PageViewModel(
-                      titleWidget: const SizedBox.shrink(),
-                      bodyWidget: buildPageContent(
-                        context,
-                        "Premium Penthouse",
-                        "Sports ville, Mumbai",
-                        "assets/images/property.jpg",
-                        2,
-                      ),
-                      decoration: getPageDecoration(),
-                    ),
-                  ],
+                  pages: _getPages(context),
                   onChange: (index) {
                     setState(() {
                       _currentPage = index;
@@ -119,8 +85,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     _timer?.cancel();
-                    // Show the AuthScreen as a bottom sheet
-                    showAuthBottomSheet(context);
+                    Navigator.pop(context); // Exit onboarding
+                    showAuthBottomSheet(context); // Show bottom sheet
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.black,
@@ -147,11 +113,49 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
+  List<PageViewModel> _getPages(BuildContext context) {
+    return [
+      PageViewModel(
+        titleWidget: const SizedBox.shrink(),
+        bodyWidget: buildPageContent(
+          context,
+          "2 Rooms Apartment",
+          "Gurugram, Haryana",
+          "assets/images/propertyone.jpeg",
+          0,
+        ),
+        decoration: getPageDecoration(),
+      ),
+      PageViewModel(
+        titleWidget: const SizedBox.shrink(),
+        bodyWidget: buildPageContent(
+          context,
+          "Luxury Villa",
+          "Delhi Phase 6, India",
+          "assets/images/propertytwo.jpg",
+          1,
+        ),
+        decoration: getPageDecoration(),
+      ),
+      PageViewModel(
+        titleWidget: const SizedBox.shrink(),
+        bodyWidget: buildPageContent(
+          context,
+          "Premium Penthouse",
+          "Sports ville, Mumbai",
+          "assets/images/property.jpg",
+          2,
+        ),
+        decoration: getPageDecoration(),
+      ),
+    ];
+  }
+
   Widget buildPageContent(BuildContext context, String title, String bodyText,
       String imagePath, int index) {
     return Column(
       children: [
-        buildImage(context, imagePath, index),
+        buildImage(context, imagePath),
         const SizedBox(height: 20),
         Text(
           title,
@@ -169,20 +173,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  Widget buildImage(BuildContext context, String path, int index) {
+  Widget buildImage(BuildContext context, String path) {
     bool isPortrait =
         MediaQuery.of(context).orientation == Orientation.portrait;
-    Provider.of<OnBoardingProvider>(context);
 
     return SizedBox(
       height: MediaQuery.of(context).size.height * (isPortrait ? 0.6 : 0.4),
       child: ClipRRect(
-          borderRadius: BorderRadius.circular(20),
-          child: Image.asset(
-            path,
-            width: double.infinity,
-            fit: BoxFit.cover,
-          )),
+        borderRadius: BorderRadius.circular(20),
+        child: Image.asset(
+          path,
+          width: double.infinity,
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 
@@ -207,19 +211,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 
-  // Function to show the AuthScreen as a Bottom Sheet
   void showAuthBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor:
-          Colors.transparent, // Makes the bottom sheet background transparent
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(
-              16.0), // Adds padding inside the bottom sheet
-          height: MediaQuery.of(context).size.height *
-              0.7, // Adjusts height dynamically
+          padding: const EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.7,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -234,7 +234,38 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ],
           ),
-          child: const AuthScreen(), // Reuse your AuthScreen widget
+          child: AuthScreen(
+            onNext: () {},
+          ),
+        );
+      },
+    );
+  }
+
+  void showSequentialBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.7,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: const SequentialBottomSheet(),
         );
       },
     );

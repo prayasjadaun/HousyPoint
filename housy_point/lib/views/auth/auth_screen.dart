@@ -1,13 +1,17 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/views/auth/otp_screen.dart';
+import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key});
+  const AuthScreen({super.key, required this.onNext});
+  final VoidCallback onNext;
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +23,8 @@ class AuthScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
             child: Column(
               children: [
-                // App Logo
-                Container(
-                  padding: const EdgeInsets.all(14),
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Theme.of(context).primaryColor,
-                        Colors.deepPurple.shade900,
-                      ],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(16),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 6,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Image.asset('assets/applogos/logo.png'),
+                AppLogo(
+                  logoPath: 'assets/applogos/logo.png',
                 ),
                 const SizedBox(height: 40),
                 Text(
@@ -68,7 +51,9 @@ class AuthScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(
-                        color: Colors.grey[300]!,
+                        color: provider.isPhoneValid
+                            ? Colors.grey[300]!
+                            : Colors.red, // Red border if validation fails
                         width: 1,
                       ),
                       borderRadius: BorderRadius.circular(12),
@@ -89,8 +74,11 @@ class AuthScreen extends StatelessWidget {
                               context: context,
                               showPhoneCode: true,
                               onSelect: (Country country) {
-                                provider
-                                    .setCountryCode('+${country.phoneCode}');
+                                provider.setCountryCode(
+                                  '+${country.phoneCode}',
+                                  country.phoneCode
+                                      .length, // Update expected length
+                                );
                               },
                             );
                           },
@@ -129,7 +117,8 @@ class AuthScreen extends StatelessWidget {
                       if (!auth.isLoading) {
                         auth.verifyPhoneNumber().then((success) {
                           if (success) {
-                            showAuthBottomSheet(context);
+                            Navigator.pop(context);
+                            showOtpBottomSheet(context);
                           }
                         });
                       }
@@ -138,8 +127,8 @@ class AuthScreen extends StatelessWidget {
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
                           colors: [
-                            Theme.of(context).primaryColor,
-                            Colors.deepPurple.shade900,
+                            Color(0xFF004253),
+                            Color(0xFF004240),
                           ],
                           begin: Alignment.topLeft,
                           end: Alignment.bottomRight,
@@ -193,7 +182,7 @@ class AuthScreen extends StatelessWidget {
     );
   }
 
-  void showAuthBottomSheet(BuildContext context) {
+  void showOtpBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -216,7 +205,10 @@ class AuthScreen extends StatelessWidget {
               ),
             ],
           ),
-          child: const OtpScreen(),
+          child: OtpScreen(
+            onNext: () {},
+            onBack: () {},
+          ),
         );
       },
     );

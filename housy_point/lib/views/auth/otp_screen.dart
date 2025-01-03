@@ -2,12 +2,15 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:housy_point/providers/auth_screen_provider.dart';
-import 'package:housy_point/views/screens/home_screen.dart';
+import 'package:housy_point/views/auth/registration_screen.dart';
+import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class OtpScreen extends StatefulWidget {
-  const OtpScreen({super.key});
+  const OtpScreen({super.key, required this.onNext, required this.onBack});
+  final VoidCallback onNext;
+  final VoidCallback onBack;
 
   @override
   State<OtpScreen> createState() => _OtpScreenState();
@@ -68,30 +71,41 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text(
-          'OTP Verification',
-          style: GoogleFonts.merriweather(
-              color: Colors.black, fontWeight: FontWeight.w600),
-        ),
-      ),
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   leading: IconButton(
+      //     icon: const Icon(Icons.arrow_back, color: Colors.black),
+      //     onPressed: () => Navigator.pop(context),
+      //   ),
+
+      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
+            AppLogo(
+              logoPath: 'assets/applogos/logo.png',
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'OTP Verification',
+              style: GoogleFonts.merriweather(
+                  fontSize: 25,
+                  color: Colors.black,
+                  fontWeight: FontWeight.w600),
+            ),
+            const SizedBox(height: 20),
             Consumer<AuthScreenProvider>(
-              builder: (context, auth, _) => Text(
-                "We've sent a verification code to\n${auth.phoneNumber}",
-                style: GoogleFonts.merriweather(
-                  fontSize: 16,
-                  color: Colors.grey.shade600,
+              builder: (context, auth, _) => Center(
+                child: Text(
+                  "We've sent a verification code to\n${auth.phoneNumber}",
+                  style: GoogleFonts.merriweather(
+                    fontSize: 16,
+                    color: Colors.grey.shade600,
+                  ),
                 ),
               ),
             ),
@@ -179,21 +193,23 @@ class _OtpScreenState extends State<OtpScreen> {
                             .join();
 
                         if (await auth.verifyPhoneNumber()) {
-                          Navigator.pushReplacement(
-                            // ignore: use_build_context_synchronously
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const HomeScreen(),
-                            ),
-                          );
+                          // if (!auth.isLoading) {
+                          auth.verifyPhoneNumber().then((success) {
+                            if (success) {
+                              Navigator.pop(context);
+
+                              showRegistrationBottomSheet(context);
+                            }
+                          });
                         }
+                        // }
                       },
                 child: Container(
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
-                        Theme.of(context).primaryColor,
-                        Colors.deepPurple.shade900,
+                        Color(0xFF004253),
+                        Color(0xFF004240),
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -242,6 +258,37 @@ class _OtpScreenState extends State<OtpScreen> {
           ],
         ),
       ),
+    );
+  }
+
+  void showRegistrationBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.7,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(20),
+              topRight: Radius.circular(20),
+            ),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.1),
+                blurRadius: 10,
+                spreadRadius: 5,
+              ),
+            ],
+          ),
+          child: RegistrationScreen(
+            onBack: () {},
+          ),
+        );
+      },
     );
   }
 }
