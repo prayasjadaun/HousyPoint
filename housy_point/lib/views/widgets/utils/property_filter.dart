@@ -20,8 +20,8 @@ class PropertyFilters extends StatefulWidget {
 }
 
 class _PropertyFiltersState extends State<PropertyFilters> {
-  final List<String> _developers = ['Developer', 'M3M', 'DLF', 'Central Park'];
-  String _selectedDeveloper = 'Developer';
+  final List<String> _developers = ['Developers', 'M3M', 'DLF', 'Central Park'];
+  String _selectedDeveloper = 'Developers';
 
   int _selectedLocationIndex = 0;
   int _selectedPropertyTypeIndex = 0;

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
 import 'package:housy_point/views/auth/auth_screen.dart';
 import 'package:housy_point/views/auth/sequentiol_bottomsheet.dart';
+import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -51,14 +54,13 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.black,
-          centerTitle: true,
-          title: const Image(
-            image: AssetImage('assets/applogos/logo.png'),
-            width: 200,
-            height: 80,
-          ),
-        ),
+            backgroundColor: Color(0xFF004240),
+           
+            title: Image(
+              image: AssetImage('assets/applogos/logo.png'),
+              width: double.infinity,
+              height: 50,
+            )),
         body: Consumer<OnBoardingProvider>(
           builder: (context, provider, _) => Column(
             children: [
@@ -80,29 +82,62 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   globalBackgroundColor: Colors.white,
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    _timer?.cancel();
-                    Navigator.pop(context); // Exit onboarding
-                    showAuthBottomSheet(context); // Show bottom sheet
+              Consumer<AuthScreenProvider>(
+                builder: (context, auth, _) => GestureDetector(
+                  onTap: () {
+                    showSequentialBottomSheet(context);
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+                  child: Container(
+                    width: 200,
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 14),
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF004253),
+                          Color(0xFF004240),
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.2),
+                          spreadRadius: 2,
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 40, vertical: 12),
-                  ),
-                  child: Text(
-                    "Get Started",
-                    style: GoogleFonts.merriweather(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    alignment: Alignment.center,
+                    child: auth.isLoading
+                        ? Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const SpinKitThreeBounce(
+                                color: Colors.white,
+                                size: 24.0,
+                              ),
+                              const SizedBox(width: 12),
+                              Text(
+                                'Verifying...',
+                                style: GoogleFonts.poppins(
+                                  color: Colors.white,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Text(
+                            'Get Started',
+                            style: GoogleFonts.poppins(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
                   ),
                 ),
               ),

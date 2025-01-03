@@ -71,15 +71,6 @@ class _OtpScreenState extends State<OtpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back, color: Colors.black),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-
-      // ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
@@ -193,16 +184,15 @@ class _OtpScreenState extends State<OtpScreen> {
                             .join();
 
                         if (await auth.verifyPhoneNumber()) {
-                          // if (!auth.isLoading) {
+                        
                           auth.verifyPhoneNumber().then((success) {
                             if (success) {
                               Navigator.pop(context);
-
                               showRegistrationBottomSheet(context);
                             }
                           });
                         }
-                        // }
+                       
                       },
                 child: Container(
                   decoration: BoxDecoration(
