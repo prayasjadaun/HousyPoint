@@ -46,14 +46,14 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.black,
           centerTitle: true,
-          title: Text(
-            'H O U S Y P O I N T',
-            style: GoogleFonts.merriweather(
-              fontSize: 20,
-              fontWeight: FontWeight.w900,
+          title: Image(
+            image: AssetImage(
+              'assets/applogos/logo.png',
             ),
+            width: 200,
+            height: 80,
           ),
         ),
         body: Consumer<OnBoardingProvider>(

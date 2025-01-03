@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/views/auth/otp_screen.dart';
-import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:provider/provider.dart';
+import 'package:country_picker/country_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AuthScreen extends StatelessWidget {
@@ -16,17 +16,17 @@ class AuthScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 80.0, horizontal: 20),
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
             child: Column(
               children: [
-                // App Logo with shadow and gradient
+                // App Logo
                 Container(
                   padding: const EdgeInsets.all(14),
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [
                         Theme.of(context).primaryColor,
-                        Colors.deepPurple.shade900
+                        Colors.deepPurple.shade900,
                       ],
                       begin: Alignment.topLeft,
                       end: Alignment.bottomRight,
@@ -41,14 +41,7 @@ class AuthScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: Text(
-                    'Housy Point',
-                    style: GoogleFonts.poppins(
-                      color: Colors.white,
-                      fontSize: 28,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
+                  child: Image.asset('assets/applogos/logo.png'),
                 ),
                 const SizedBox(height: 40),
                 Text(
@@ -69,48 +62,78 @@ class AuthScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 30),
-                // Phone Number Input with shadow
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(color: Colors.grey[300]!),
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
+                Consumer<AuthScreenProvider>(
+                  builder: (context, provider, _) => Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      border: Border.all(
+                        color: Colors.grey[300]!,
+                        width: 1,
                       ),
-                    ],
-                  ),
-                  child: IntlPhoneField(
-                    decoration: const InputDecoration(
-                      labelText: 'Phone Number',
-                      labelStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 12),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          spreadRadius: 2,
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
                     ),
-                    initialCountryCode: 'IN',
-                    onChanged: (phone) {
-                      context
-                          .read<AuthScreenProvider>()
-                          .setPhoneNumber(phone.completeNumber);
-                    },
+                    child: Row(
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            showCountryPicker(
+                              context: context,
+                              showPhoneCode: true,
+                              onSelect: (Country country) {
+                                provider
+                                    .setCountryCode('+${country.phoneCode}');
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+                              Text(
+                                provider.countryCode,
+                                style: const TextStyle(fontSize: 16),
+                              ),
+                              const Icon(Icons.arrow_drop_down),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: TextField(
+                            decoration: const InputDecoration(
+                              hintText: 'Enter Mobile Number',
+                              hintStyle: TextStyle(color: Colors.grey),
+                              border: InputBorder.none,
+                            ),
+                            keyboardType: TextInputType.phone,
+                            onChanged: (value) {
+                              provider.setPhoneNumber(value);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(height: 24),
-                
                 Consumer<AuthScreenProvider>(
                   builder: (context, auth, _) => GestureDetector(
-                    onTap: auth.isLoading
-                        ? null
-                        : () async {
-                            if (await auth.verifyPhoneNumber()) {
-                              // ignore: use_build_context_synchronously
-                              showAuthBottomSheet(context);
-                            }
-                          },
+                    onTap: () {
+                      if (!auth.isLoading) {
+                        auth.verifyPhoneNumber().then((success) {
+                          if (success) {
+                            showAuthBottomSheet(context);
+                          }
+                        });
+                      }
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
@@ -127,7 +150,7 @@ class AuthScreen extends StatelessWidget {
                             color: Colors.black.withOpacity(0.2),
                             spreadRadius: 2,
                             blurRadius: 8,
-                            offset: Offset(0, 4),
+                            offset: const Offset(0, 4),
                           ),
                         ],
                       ),
@@ -174,11 +197,11 @@ class AuthScreen extends StatelessWidget {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      backgroundColor: Colors.transparent, // Allows for rounded corners
+      backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
           padding: const EdgeInsets.all(16.0),
-          height: MediaQuery.of(context).size.height * 0.7, // Dynamic height
+          height: MediaQuery.of(context).size.height * 0.7,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: const BorderRadius.only(
@@ -193,7 +216,7 @@ class AuthScreen extends StatelessWidget {
               ),
             ],
           ),
-          child: const OtpScreen(), // Displays the OTP Screen
+          child: const OtpScreen(),
         );
       },
     );
