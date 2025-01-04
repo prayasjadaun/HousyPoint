@@ -18,7 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: const AppDrawer(),
+      endDrawer: const MenuScreen(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
@@ -38,11 +38,32 @@ class _HomeScreenState extends State<HomeScreen> {
                         // Background Image
                         Container(
                           width: double.infinity,
-                          height: 400,
+                          height: 500,
                           decoration: const BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage('assets/images/prop.jpg'),
+                              image:
+                                  AssetImage('assets/images/propertyone.jpeg'),
                               fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        // Gradient Overlay with opacity at the bottom
+                        Positioned.fill(
+                          child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                              height: 100,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Colors.transparent,
+                                    Colors.black.withOpacity(
+                                        0.9), // Adjust opacity here
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -147,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 400),
+                    const SizedBox(height: 300),
                     // Property List Section
                     const PropertyListScreen(
                       selectedCategory: null,

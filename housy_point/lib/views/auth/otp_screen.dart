@@ -184,7 +184,6 @@ class _OtpScreenState extends State<OtpScreen> {
                             .join();
 
                         if (await auth.verifyPhoneNumber()) {
-                        
                           auth.verifyPhoneNumber().then((success) {
                             if (success) {
                               Navigator.pop(context);
@@ -192,7 +191,6 @@ class _OtpScreenState extends State<OtpScreen> {
                             }
                           });
                         }
-                       
                       },
                 child: Container(
                   decoration: BoxDecoration(
@@ -258,7 +256,7 @@ class _OtpScreenState extends State<OtpScreen> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(1.0),
           height: MediaQuery.of(context).size.height * 0.7,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -274,8 +272,29 @@ class _OtpScreenState extends State<OtpScreen> {
               ),
             ],
           ),
-          child: RegistrationScreen(
-            onBack: () {},
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Upper line or drag indicator
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  width: 80.0,
+                  height: 4.0,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(2.0),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: RegistrationScreen(
+                    onBack: () {},
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

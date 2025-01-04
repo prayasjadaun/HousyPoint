@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
 import 'package:housy_point/views/onBoardScreen/onboard_screen.dart';
+import 'package:housy_point/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'providers/home_screen_provider.dart';
 import 'providers/menu_provider.dart';
@@ -11,7 +12,8 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(
-      create: (_) => OnBoardingProvider(),),
+          create: (_) => OnBoardingProvider(),
+        ),
         ChangeNotifierProvider(create: (_) => AuthScreenProvider()),
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
         // ChangeNotifierProvider(create: (_) => PropertyFiltersProvider()),
@@ -33,7 +35,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  OnBoardingScreen(onBack: () {  },),
+      home:
+          //  const HomeScreen(),
+          OnBoardingScreen(
+        onBack: () {},
+      ),
     );
   }
 }

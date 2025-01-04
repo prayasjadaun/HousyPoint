@@ -5,7 +5,6 @@ import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
 import 'package:housy_point/views/auth/auth_screen.dart';
 import 'package:housy_point/views/auth/sequentiol_bottomsheet.dart';
-import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:provider/provider.dart';
 import 'dart:async';
@@ -55,7 +54,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         backgroundColor: Colors.white,
         appBar: AppBar(
             backgroundColor: Color(0xFF004240),
-           
             title: Image(
               image: AssetImage('assets/applogos/logo.png'),
               width: double.infinity,
@@ -284,7 +282,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(1.0),
           height: MediaQuery.of(context).size.height * 0.7,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -300,7 +298,28 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               ),
             ],
           ),
-          child: const SequentialBottomSheet(),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Upper line or drag indicator
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  width: 80.0,
+                  height: 4.0,
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(2.0),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16.0),
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: SequentialBottomSheet(),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );
