@@ -28,7 +28,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   int _selectedDealTypeIndex = 0;
   int? _selectedBHKIndex;
   bool _isDistressDealsExpanded = true;
-
+  final List<String> _dealTypes = ['RESALE', 'RENT', 'COMMERCIAL'];
   final List<String> _locations = ['INDIA', 'OVERSEAS'];
   final List<String> _propertyTypes = ['RESALE', 'RENT', 'COMMERCIAL'];
   final List<Map<String, dynamic>> _bhkTypes = [
@@ -43,18 +43,15 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(bottom: 8.0),
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(5, 5),
-            color: Colors.grey,
-            blurRadius: 5.0,
-          )
-        ],
-        borderRadius: BorderRadius.circular(20),
-        color: const Color(0xFFF5F5F5),
-      ),
+      padding:
+          const EdgeInsets.only(top: 10.0, left: 16, right: 16, bottom: 8.0),
+      decoration: BoxDecoration(boxShadow: const [
+        BoxShadow(
+          offset: Offset(2, 2),
+          color: Colors.grey,
+          blurRadius: 5.0,
+        ),
+      ], borderRadius: BorderRadius.circular(20), color: Colors.white),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -72,7 +69,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
     return Container(
       padding: const EdgeInsets.all(8),
       decoration: const BoxDecoration(
-        color: Colors.grey,
+        color: Color(0xFF004240),
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
           topRight: Radius.circular(20),
@@ -110,11 +107,10 @@ class _PropertyFiltersState extends State<PropertyFilters> {
             value: developer,
             child: Row(
               children: [
-                // const Icon(Icons., size: 18),
-                // const SizedBox(width: 5),
                 Text(
                   developer,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
@@ -125,8 +121,8 @@ class _PropertyFiltersState extends State<PropertyFilters> {
             _selectedDeveloper = value!;
           });
         },
-        dropdownColor: Colors.white,
-        icon: const Icon(Icons.arrow_drop_down, color: Colors.black),
+        dropdownColor: Color(0xFF004240),
+        icon: const Icon(Icons.arrow_drop_down, color: Colors.white),
       ),
     );
   }
@@ -145,14 +141,14 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           children: [
             Icon(
               label == 'INDIA' ? Icons.add_location : Icons.language,
-              color: isSelected ? Colors.black : Colors.black,
+              color: isSelected ? Colors.black : Colors.white,
               size: 18,
             ),
             const SizedBox(width: 4),
             Text(
               label,
               style: TextStyle(
-                color: isSelected ? Colors.black : Colors.black,
+                color: isSelected ? Colors.black : Colors.white,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -165,7 +161,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   Widget _buildPropertyTypeTabs() {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-      // decoration: const BoxDecoration(color: Colors.grey),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
@@ -178,7 +173,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                 border: Border(
                   bottom: BorderSide(
                     color: _selectedPropertyTypeIndex == index
-                        ? Colors.teal
+                        ? Color(0xFF004240)
                         : Colors.transparent,
                     width: 2,
                   ),
@@ -189,7 +184,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                 style: TextStyle(
                   fontSize: 12,
                   color: _selectedPropertyTypeIndex == index
-                      ? Colors.teal
+                      ? Color(0xFF004240)
                       : Colors.black,
                   fontWeight: FontWeight.bold,
                 ),
@@ -217,9 +212,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 10),
               padding: const EdgeInsets.symmetric(horizontal: 10),
-              // decoration: BoxDecoration(
-              //     borderRadius: BorderRadius.circular(15),
-              //     border: Border.all(color: Colors.grey)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -273,16 +265,13 @@ class _PropertyFiltersState extends State<PropertyFilters> {
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius: BorderRadius.circular(4),
-        // border: Border.all(
-        //   color: isSelected ? Colors.teal : Colors.grey.shade300,
-        // ),
       ),
       child: Text(
         bhkType,
         style: TextStyle(
           fontSize: 13,
           fontWeight: FontWeight.w600,
-          color: isSelected ? Colors.blue : Colors.black,
+          color: isSelected ? Color(0xFF004240) : Colors.black,
         ),
       ),
     );
@@ -292,90 +281,102 @@ class _PropertyFiltersState extends State<PropertyFilters> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        InkWell(
-          onTap: () {
-            setState(() {
-              _isDistressDealsExpanded = !_isDistressDealsExpanded;
-              widget.onDistressDealsExpandedChanged
-                  ?.call(_isDistressDealsExpanded);
-            });
-          },
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'DISTRESS DEALS',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
+        _dealTypes.isNotEmpty
+            ? InkWell(
+                onTap: () => setState(
+                    () => _isDistressDealsExpanded = !_isDistressDealsExpanded),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        'DISTRESS DEALS',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _isDistressDealsExpanded =
+                                !_isDistressDealsExpanded;
+                          });
+                          // Add the callback here as well
+                          widget.onDistressDealsExpandedChanged
+                              ?.call(_isDistressDealsExpanded);
+                        },
+                        child: AnimatedRotation(
+                          turns: _isDistressDealsExpanded ? 0 : -0.25,
+                          duration: const Duration(milliseconds: 200),
+                          child: const Icon(
+                            Icons.keyboard_arrow_down,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                AnimatedRotation(
-                  turns: _isDistressDealsExpanded ? 0 : -0.25,
-                  duration: const Duration(milliseconds: 200),
-                  child: const Icon(
-                    Icons.keyboard_arrow_down,
-                    color: Colors.black,
+              )
+            : AnimatedCrossFade(
+                firstChild: Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(25),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 4,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(child: _buildDealTypeButton('RESALE', 0)),
+                      Expanded(child: _buildDealTypeButton('RENTING', 1)),
+                      Expanded(child: _buildDealTypeButton('COMMERCIAL', 2)),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-        AnimatedCrossFade(
-          firstChild: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.2),
-                  spreadRadius: 1,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                _buildDealTypeButton('RESALE', 0),
-                _buildDealTypeButton('RENTING', 1),
-                _buildDealTypeButton('COMMERCIAL', 2),
-              ],
-            ),
-          ),
-          secondChild: const SizedBox.shrink(),
-          crossFadeState: _isDistressDealsExpanded
-              ? CrossFadeState.showFirst
-              : CrossFadeState.showSecond,
-          duration: const Duration(milliseconds: 200),
-        ),
+                secondChild: const SizedBox.shrink(),
+                crossFadeState: _isDistressDealsExpanded
+                    ? CrossFadeState.showFirst
+                    : CrossFadeState.showSecond,
+                duration: const Duration(milliseconds: 200),
+              ),
       ],
     );
   }
 
-  Widget _buildDealTypeButton(String label, int index) {
+  Widget _buildDealTypeButton(String text, int index) {
     final isSelected = _selectedDealTypeIndex == index;
-    return Expanded(
-      child: InkWell(
-        onTap: () => setState(() => _selectedDealTypeIndex = index),
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 12),
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.teal : Colors.transparent,
-            borderRadius: BorderRadius.circular(25),
-          ),
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: isSelected ? Colors.white : Colors.grey,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
+    return InkWell(
+      onTap: () {
+        setState(() {
+          _selectedDealTypeIndex = index;
+        });
+        // Add callback here if needed
+        // widget.onDealTypeSelected?.call(index);
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        decoration: BoxDecoration(
+          color: isSelected ? Color(0xFF004240) : Colors.transparent,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 14,
           ),
         ),
       ),

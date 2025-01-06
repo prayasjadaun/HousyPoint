@@ -1,11 +1,12 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/property_model.dart';
 import 'package:housy_point/views/widgets/utils/property_card.dart';
 
 class PropertyListScreen extends StatefulWidget {
-  const PropertyListScreen({super.key, required selectedCategory});
+  final String selectedCategory;
+
+  const PropertyListScreen({super.key, required this.selectedCategory});
 
   @override
   State<PropertyListScreen> createState() => _PropertyListScreenState();
@@ -21,7 +22,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Cozy Apartment',
       location: 'New York, USA',
-      rating: 4.5,
+      bhk: 4.5,
       reviews: 120,
       price: 200,
     ),
@@ -29,7 +30,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Luxury Villa',
       location: 'Los Angeles, USA',
-      rating: 4.8,
+      bhk: 3.5,
       reviews: 95,
       price: 500,
     ),
@@ -37,7 +38,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Modern Condo',
       location: 'Chicago, USA',
-      rating: 4.3,
+      bhk: 4,
       reviews: 75,
       price: 150,
     ),
@@ -45,7 +46,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Beachfront House',
       location: 'Miami, USA',
-      rating: 4.9,
+      bhk: 4,
       reviews: 180,
       price: 700,
     ),
@@ -53,7 +54,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Mountain Cabin',
       location: 'Aspen, USA',
-      rating: 4.7,
+      bhk: 4.5,
       reviews: 60,
       price: 250,
     ),
@@ -61,7 +62,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Rustic Cottage',
       location: 'Vermont, USA',
-      rating: 4.6,
+      bhk: 4,
       reviews: 40,
       price: 180,
     ),
@@ -69,7 +70,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Penthouse Suite',
       location: 'San Francisco, USA',
-      rating: 4.9,
+      bhk: 5,
       reviews: 200,
       price: 800,
     ),
@@ -77,7 +78,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Historic Home',
       location: 'Boston, USA',
-      rating: 4.4,
+      bhk: 5,
       reviews: 110,
       price: 300,
     ),
@@ -85,7 +86,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Farmhouse Retreat',
       location: 'Nashville, USA',
-      rating: 4.8,
+      bhk: 3,
       reviews: 85,
       price: 220,
     ),
@@ -93,7 +94,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       imageUrl: 'assets/images/property.jpg',
       title: 'Urban Loft',
       location: 'Seattle, USA',
-      rating: 4.5,
+      bhk: 4,
       reviews: 130,
       price: 350,
     ),
@@ -135,13 +136,13 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            "Available Properties",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          Text(
+            "Available Properties in ${widget.selectedCategory}",
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           SizedBox(
-            height: 250,
+            height: 400,
             child: GestureDetector(
               onPanDown: (_) => _stopAutoScroll(),
               onPanCancel: () => _startAutoScroll(),

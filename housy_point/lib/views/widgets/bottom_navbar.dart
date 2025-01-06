@@ -77,7 +77,7 @@ class IconBottomBar extends StatelessWidget {
           onPressed: onPressed,
           icon: Icon(
             icon,
-            size: 25,
+            size: 20,
             color: selected ? primaryColor : Colors.grey,
           ),
         ),
@@ -106,7 +106,7 @@ class IconBottomBar2 extends StatelessWidget {
         onPressed: onPressed,
         icon: Icon(
           icon,
-          size: 25,
+          size: 20,
           color: Colors.white,
         ),
       ),
