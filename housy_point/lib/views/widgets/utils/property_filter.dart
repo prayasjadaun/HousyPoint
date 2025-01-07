@@ -110,7 +110,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                 Text(
                   developer,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, color: Colors.white),
+                      fontWeight: FontWeight.w900, color: Colors.white),
                 ),
               ],
             ),
@@ -149,7 +149,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
               label,
               style: TextStyle(
                 color: isSelected ? Colors.black : Colors.white,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
               ),
             ),
           ],
@@ -182,11 +182,11 @@ class _PropertyFiltersState extends State<PropertyFilters> {
               child: Text(
                 _propertyTypes[index],
                 style: TextStyle(
-                  fontSize: 12,
+                  fontSize: 14,
                   color: _selectedPropertyTypeIndex == index
                       ? Color(0xFF004240)
                       : Colors.black,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
                 ),
               ),
             ),
@@ -243,6 +243,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                         Text(
                           count,
                           style: const TextStyle(
+                            fontWeight: FontWeight.w900,
                             fontSize: 13,
                             color: Colors.black,
                           ),
@@ -269,8 +270,8 @@ class _PropertyFiltersState extends State<PropertyFilters> {
       child: Text(
         bhkType,
         style: TextStyle(
-          fontSize: 13,
-          fontWeight: FontWeight.w600,
+          fontSize: 14,
+          fontWeight: FontWeight.w900,
           color: isSelected ? Color(0xFF004240) : Colors.black,
         ),
       ),
@@ -295,7 +296,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                         'DISTRESS DEALS',
                         style: TextStyle(
                           fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                          fontWeight: FontWeight.w900,
                         ),
                       ),
                       GestureDetector(

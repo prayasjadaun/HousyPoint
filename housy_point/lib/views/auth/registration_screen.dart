@@ -170,7 +170,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ),
                                   );
 
-                                  Navigator.push(
+                                  Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) =>

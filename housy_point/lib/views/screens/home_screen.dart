@@ -266,7 +266,7 @@ class HomeContent extends StatelessWidget {
                       const SizedBox(height: 300),
                       // Property List Section
                       const PropertyListScreen(
-                        selectedCategory: 'All',
+                        selectedCategory: 'India',
                       ),
                       const SizedBox(height: 20),
                     ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
+import 'package:housy_point/views/onBoardScreen/onboard_screen.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'providers/home_screen_provider.dart';
@@ -36,7 +37,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const HomeScreen(),
-      //     OnBoardingScreen(
+      // home: OnBoardingScreen(
       //   onBack: () {},
       // ),
     );

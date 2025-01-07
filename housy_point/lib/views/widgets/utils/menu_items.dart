@@ -20,13 +20,13 @@ class MenuItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey.shade100,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(color: Colors.grey)),
       child: ListTile(
         leading: Icon(
           icon,
-          color: Colors.blue.shade900,
+          color: Color(0xFF004253),
         ),
         title: Text(title),
         subtitle: subtitle != null ? Text(subtitle!) : null,
@@ -43,7 +43,7 @@ class MenuItem extends StatelessWidget {
               )
             : const Icon(
                 Icons.chevron_right,
-                color: Colors.blue,
+                color: Color(0xFF004253),
               ),
         onTap: onTap,
       ),

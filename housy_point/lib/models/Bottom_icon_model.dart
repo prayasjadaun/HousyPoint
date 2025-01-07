@@ -47,7 +47,7 @@ class IconBottomBar2 extends StatelessWidget {
   final IconData icon;
   final bool selected;
   final VoidCallback onPressed;
-  
+
   static const primaryColor = Colors.black;
 
   @override

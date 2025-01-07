@@ -51,7 +51,7 @@ class MenuScreen extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: Colors.grey.shade100,
+            backgroundColor: Colors.green.shade100,
             child: const Text('HP'),
           ),
           const SizedBox(width: 16),
@@ -233,7 +233,14 @@ class MenuScreen extends StatelessWidget {
               ),
             ),
           ],
-        )
+        ),
+        const SizedBox(height: 20),
+        Divider(
+          height: 10,
+          endIndent: 10,
+          indent: 10,
+          color: Colors.grey,
+        ),
       ],
     );
   }
