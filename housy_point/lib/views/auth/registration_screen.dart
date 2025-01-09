@@ -1,8 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:housy_point/models/registration_field_model.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
 import 'package:housy_point/views/widgets/const/app_logo.dart';
+import 'package:provider/provider.dart';
+
+import '../../providers/registration_provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final VoidCallback onBack;
@@ -14,6 +18,15 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<RegistrationProvider>(context, listen: false);
+      // Now you can safely access the provider
+    });
+  }
+
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -22,6 +35,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final registrationModel = Provider.of<RegistrationProvider>(context);
+
     return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
@@ -69,6 +84,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       validator: (value) => value == null || value.isEmpty
                           ? 'Please enter your full name'
                           : null,
+                      onChanged: (value) =>
+                          registrationModel.updateFirstName(value),
                     ),
                     const SizedBox(height: 20),
 
@@ -82,16 +99,16 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                           return 'Please enter your email address';
                         }
 
-                        // Regular expression to validate an email address
                         final emailRegex = RegExp(
                           r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
                         );
                         if (!emailRegex.hasMatch(value)) {
                           return 'Enter a valid email address';
                         }
-
-                        return null; // Validation passed
+                        return null;
                       },
+                      onChanged: (value) =>
+                          registrationModel.updateEmail(value),
                     ),
 
                     const SizedBox(height: 20),
@@ -102,11 +119,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                         Transform.scale(
                           scale: 1.2,
                           child: Checkbox(
-                            value: agreedToTerms,
+                            value: registrationModel.agreedToTerms,
                             onChanged: (bool? value) {
-                              setState(() {
-                                agreedToTerms = value ?? false;
-                              });
+                              registrationModel
+                                  .updateAgreedToTerms(value ?? false);
                             },
                             activeColor: Colors.black,
                             checkColor: Colors.white,
@@ -132,7 +148,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             ? null
                             : () async {
                                 if (_formKey.currentState!.validate() &&
-                                    agreedToTerms) {
+                                    registrationModel.agreedToTerms) {
                                   setState(() {
                                     isLoading = true;
                                   });
@@ -145,7 +161,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     isLoading = false;
                                   });
 
-                                  // Registration successful, navigate to HomeScreen
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Row(
@@ -172,12 +187,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                                   Navigator.pushReplacement(
                                     context,
-                                    MaterialPageRoute(
+                                    CupertinoPageRoute(
                                         builder: (context) =>
                                             const HomeScreen()),
                                   );
                                 } else {
-                                  // Validation failed
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                       content: Row(

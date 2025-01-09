@@ -43,8 +43,10 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding:
-          const EdgeInsets.only(top: 10.0, left: 16, right: 16, bottom: 8.0),
+      height: 450,
+      width: MediaQuery.of(context).size.width,
+      // margin: const EdgeInsets.all(8),
+      padding: const EdgeInsets.only(top: 10.0),
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(
           offset: Offset(2, 2),
@@ -52,14 +54,51 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           blurRadius: 5.0,
         ),
       ], borderRadius: BorderRadius.circular(20), color: Colors.white),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
+        alignment: Alignment.topCenter,
         children: [
-          _buildLocationTabs(),
-          _buildPropertyTypeTabs(),
-          _buildBHKFilters(),
-          const SizedBox(height: 10),
-          _buildDistressDeals(),
+          // Background Circle Decorations
+          Positioned(
+            top: -100,
+            right: -50,
+            child: Container(
+              height: 400,
+              width: 400,
+              decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.circular(20),
+                  shape: BoxShape.circle,
+                  color: Colors.green.withOpacity(0.1)),
+            ),
+          ),
+          Positioned(
+            left: -100,
+            bottom: -100,
+            child: Container(
+              height: 300,
+              width: 400,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Colors.amber.withOpacity(0.1)),
+            ),
+          ),
+
+          // Main content stacked on top
+          Positioned(
+            left: 10,
+            right: 10,
+            top: 0,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildLocationTabs(),
+                  _buildPropertyTypeTabs(),
+                  _buildBHKFilters(),
+                  const SizedBox(height: 10),
+                  _buildDistressDeals(),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -77,7 +116,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
       ),
       child: Row(
         children: [
-          // Location Chips
           ...List.generate(
             _locations.length,
             (index) => Padding(
@@ -89,9 +127,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
               ),
             ),
           ),
-          // Spacer to separate Developer dropdown
           const Spacer(),
-          // Developer Dropdown
           _buildDeveloperDropdown(),
         ],
       ),
@@ -104,17 +140,8 @@ class _PropertyFiltersState extends State<PropertyFilters> {
         value: _selectedDeveloper,
         items: _developers.map((developer) {
           return DropdownMenuItem<String>(
-            value: developer,
-            child: Row(
-              children: [
-                Text(
-                  developer,
-                  style: const TextStyle(
-                      fontWeight: FontWeight.w900, color: Colors.white),
-                ),
-              ],
-            ),
-          );
+              value: developer,
+              child: Text(developer, style: TextStyle(color: Colors.white)));
         }).toList(),
         onChanged: (value) {
           setState(() {
@@ -218,7 +245,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                   Container(
                     width: 150,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(15)),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -236,7 +263,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                     width: 120,
                     height: 35,
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(color: Colors.grey.shade400),
                         borderRadius: BorderRadius.circular(10)),
                     child: Column(
                       children: [
@@ -305,7 +332,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                             _isDistressDealsExpanded =
                                 !_isDistressDealsExpanded;
                           });
-                          // Add the callback here as well
                           widget.onDistressDealsExpandedChanged
                               ?.call(_isDistressDealsExpanded);
                         },
@@ -324,7 +350,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
               )
             : AnimatedCrossFade(
                 firstChild: Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  // margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(25),
@@ -362,8 +388,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
         setState(() {
           _selectedDealTypeIndex = index;
         });
-        // Add callback here if needed
-        // widget.onDealTypeSelected?.call(index);
       },
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12),

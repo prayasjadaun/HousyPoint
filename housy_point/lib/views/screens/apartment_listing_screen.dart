@@ -171,7 +171,7 @@ class ApartmentListingScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   // Address
                   Text(
-                    '10, USA',
+                    apartmentListing.property.location,
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 16,
@@ -182,12 +182,10 @@ class ApartmentListingScreen extends StatelessWidget {
                   Row(
                     children: [
                       _buildTab('Overview', true),
-                      _buildTab('Gallery', false),
-                      _buildTab('Review', false),
                     ],
                   ),
                   const SizedBox(height: 16),
-                  // Features
+                  // Features Overview Screen
                   PremiumOverviewGrid(),
                   const SizedBox(height: 24),
                   // Description

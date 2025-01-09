@@ -4,13 +4,17 @@ import 'package:housy_point/providers/menu_provider.dart';
 import 'package:housy_point/views/widgets/utils/menu_items.dart';
 import 'package:provider/provider.dart';
 
+import '../../providers/auth_screen_provider.dart';
+
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+   
     return Consumer<MenuProvider>(
-      builder: (context, menuProvider, child) {
+      builder: (_, menuProvider, child) {
+        final authProvider = Provider.of<AuthScreenProvider>(context);
         return Drawer(
           backgroundColor: Colors.white,
           child: SafeArea(
@@ -19,7 +23,7 @@ class MenuScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    _buildLoginSection(),
+                    _buildLoginSection(context, authProvider),
                     const SizedBox(height: 20),
                     _buildMenuItems(context, menuProvider),
                     const SizedBox(height: 20),
@@ -34,7 +38,8 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginSection() {
+  Widget _buildLoginSection(
+      BuildContext context, AuthScreenProvider authProvider) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -59,24 +64,36 @@ class MenuScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Login/Sign-up now',
+                Text(
+                  authProvider.isAuthenticated
+                      ? 'Hello, ${authProvider.userRole}'
+                      : 'Login/Sign-up now',
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                       color: Colors.black),
                 ),
                 Text(
-                  'Login for best deals & offers',
-                  style: TextStyle(
-                    color: Colors.grey.shade800,
-                    fontSize: 14,
-                  ),
+                  authProvider.isAuthenticated
+                      ? 'Welcome back!'
+                      : 'Login for best deals & offers',
+                  style: TextStyle(color: Colors.grey.shade800, fontSize: 14),
                 ),
               ],
             ),
           ),
-          const Icon(Icons.chevron_right),
+          IconButton(
+            icon: Icon(authProvider.isAuthenticated
+                ? Icons.exit_to_app
+                : Icons.chevron_right),
+            onPressed: () {
+              if (authProvider.isAuthenticated) {
+                authProvider.logout();
+              } else {
+                Navigator.pushNamed(context, '/login');
+              }
+            },
+          ),
         ],
       ),
     );
@@ -266,14 +283,6 @@ class MenuScreen extends StatelessWidget {
           child: const Text('Terms of Service'),
         ),
         const SizedBox(height: 20),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/icons/google_play_store.png', height: 30),
-            const SizedBox(width: 20),
-            Image.asset('assets/icons/app_store.png', height: 30),
-          ],
-        ),
       ],
     );
   }

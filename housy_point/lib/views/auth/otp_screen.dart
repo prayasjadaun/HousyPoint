@@ -106,40 +106,42 @@ class _OtpScreenState extends State<OtpScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: List.generate(
                 4,
-                (index) => Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(8),
-                    color: Colors.white,
-                  ),
-                  child: TextField(
-                    controller: _otpControllers[index],
-                    focusNode: _focusNodes[index],
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.number,
-                    maxLength: 1,
-                    style: GoogleFonts.merriweather(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                (index) => Flexible(
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.grey),
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.white,
                     ),
-                    decoration: const InputDecoration(
-                      counterText: '',
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    onChanged: (value) {
-                      if (value.isNotEmpty) {
-                        if (index < 3) {
-                          _focusNodes[index + 1].requestFocus();
-                        } else {
-                          _focusNodes[index].unfocus();
+                    child: TextField(
+                      controller: _otpControllers[index],
+                      focusNode: _focusNodes[index],
+                      textAlign: TextAlign.center,
+                      keyboardType: TextInputType.number,
+                      maxLength: 1,
+                      style: GoogleFonts.merriweather(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      decoration: const InputDecoration(
+                        counterText: '',
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 12),
+                      ),
+                      onChanged: (value) {
+                        if (value.isNotEmpty) {
+                          if (index < 3) {
+                            _focusNodes[index + 1].requestFocus();
+                          } else {
+                            _focusNodes[index].unfocus();
+                          }
+                        } else if (value.isEmpty && index > 0) {
+                          _focusNodes[index - 1].requestFocus();
                         }
-                      } else if (value.isEmpty && index > 0) {
-                        _focusNodes[index - 1].requestFocus();
-                      }
-                    },
+                      },
+                    ),
                   ),
                 ),
               ),

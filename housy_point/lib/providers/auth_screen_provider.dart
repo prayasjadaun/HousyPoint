@@ -63,4 +63,21 @@ class AuthScreenProvider extends ChangeNotifier {
 
     return true;
   }
+   bool _isAuthenticated = false;
+  String _userRole = 'Guest';  // Define user role
+
+  bool get isAuthenticated => _isAuthenticated;
+  String get userRole => _userRole;  // Getter for userRole
+
+  void login(String username, String role) {
+    _isAuthenticated = true;
+    _userRole = role;  // Set user role on login
+    notifyListeners();
+  }
+
+  void logout() {
+    _isAuthenticated = false;
+    _userRole = 'Guest';  // Reset role on logout
+    notifyListeners();
+  }
 }

@@ -6,6 +6,7 @@ class RegistrationFieldModel extends StatelessWidget {
   final bool obscureText;
   final TextEditingController controller;
   final String? Function(String?)? validator;
+  final Function(String)? onChanged;
 
   const RegistrationFieldModel({
     super.key,
@@ -14,6 +15,7 @@ class RegistrationFieldModel extends StatelessWidget {
     this.obscureText = false,
     required this.controller,
     this.validator,
+    this.onChanged,
   });
 
   @override
