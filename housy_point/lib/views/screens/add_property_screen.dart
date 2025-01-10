@@ -1,10 +1,59 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class AddPropertyScreen extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class AddPropertyScreen extends StatefulWidget {
   const AddPropertyScreen({super.key});
 
   @override
+  State<AddPropertyScreen> createState() => _AddPropertyScreenState();
+}
+
+class _AddPropertyScreenState extends State<AddPropertyScreen> {
+  ImagePicker _picker = ImagePicker();
+  List<XFile>? files;
+  XFile? file;
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Picker'),
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            height: 300,
+            width: double.infinity,
+            color: Colors.grey,
+            child: Center(
+              child: file == null
+                  ? const Text('Image not picked')
+                  : Image.file(File(file!.path), fit: BoxFit.cover,),
+            ),
+          ),
+          ElevatedButton(onPressed: () async{
+            final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
+            setState(() {
+              file = photo;
+            });
+            print('Images Picked');
+            print(photo!.path);
+          }, child: const Text('Pick Image')),
+          ElevatedButton(onPressed: () async{
+            final List<XFile>? photos = await _picker.pickMultiImage();
+            setState(() {
+              files = photos;
+            });
+            print('Images Picked');
+            for(int i = 0; i<files!.length; i++){
+              print(files![i].path);
+            }
+          }, child: const Text('Pick Images')),
+
+        ],
+      ),
+    );
   }
 }

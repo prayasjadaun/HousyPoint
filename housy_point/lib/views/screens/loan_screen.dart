@@ -1,83 +1,111 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/views/widgets/utils/loan_card.dart';
-import 'dart:async';
 
-class LoanScreen extends StatefulWidget {
-  const LoanScreen({super.key});
+class SectionTitle extends StatelessWidget {
+  final String title;
 
-  @override
-  State<LoanScreen> createState() => _LoanScreenState();
-}
-
-class _LoanScreenState extends State<LoanScreen> {
-  late ScrollController _scrollController;
-  late Timer _timer;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController = ScrollController();
-
-    // Timer to scroll automatically
-    _timer = Timer.periodic(const Duration(seconds: 2), (Timer timer) {
-      if (_scrollController.hasClients) {
-        if (_scrollController.offset >=
-            _scrollController.position.maxScrollExtent) {
-          _scrollController.jumpTo(_scrollController.position.minScrollExtent);
-        } else {
-          _scrollController.animateTo(
-            _scrollController.offset + 200,
-            duration: const Duration(seconds: 1),
-            curve: Curves.easeInOut,
-          );
-        }
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel(); // Cancel the timer when the screen is disposed
-    _scrollController.dispose();
-    super.dispose();
-  }
+  const SectionTitle({required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            "HOME LOAN",
+            title,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.teal[900],
             ),
           ),
-          const SizedBox(height: 8),
-          Divider(
-            color: Colors.teal[900],
-            thickness: 2,
-            indent: 40,
-            endIndent: 40,
+          TextButton(
+            onPressed: () {},
+            child: Text(
+              'See all',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
-          const SizedBox(height: 20),
-          // Horizontal Scrolling with Two Cards Displayed
-          SizedBox(
-            height: 200,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              controller: _scrollController,
-              children: const [
-                LoanCard(text: "Unlock the Best Home Loan Deals."),
-                LoanCard(text: "Compare All Bank Offers."),
-                LoanCard(text: "Get Pre-Approval for Your House."),
-                LoanCard(text: "Low Interest Rates, High Approval Chances."),
-                LoanCard(text: "Easy Application Process."),
+        ],
+      ),
+    );
+  }
+}
+
+class HorizontalListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 200,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 5,
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: CardProperty(),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class CardProperty extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 300,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        image: DecorationImage(
+          image: AssetImage(
+            'assets/images/propertyone.jpeg',
+          ),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            bottom: 20,
+            left: 16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Birchwood Cottage',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  'Florida, USA',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
               ],
+            ),
+          ),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.black,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(16),
+                ),
+              ),
+              onPressed: () {},
+              child: Text(
+                'Interested',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ),
         ],

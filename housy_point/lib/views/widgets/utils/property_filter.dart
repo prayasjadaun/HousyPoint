@@ -119,7 +119,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           ...List.generate(
             _locations.length,
             (index) => Padding(
-              padding: const EdgeInsets.only(right: 5),
+              padding: const EdgeInsets.only(right: 1),
               child: _buildLocationChip(
                 _locations[index],
                 index == _selectedLocationIndex,
@@ -158,7 +158,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected ? Colors.white : Colors.transparent,
           borderRadius: BorderRadius.circular(20),

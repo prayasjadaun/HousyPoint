@@ -1,133 +1,288 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/apartment_listing_model.dart';
+import 'package:photo_view/photo_view.dart';
+import 'package:photo_view/photo_view_gallery.dart';
 
-class ApartmentListingScreen extends StatelessWidget {
+class ApartmentListingScreen extends StatefulWidget {
   const ApartmentListingScreen({super.key, required this.apartmentListing});
   final ApartmentListing apartmentListing;
-  // final Property property;
+
+  @override
+  State<ApartmentListingScreen> createState() => _ApartmentListingScreenState();
+}
+
+class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
+  final List<String> imagePaths = [
+    'assets/images/propertyone.jpeg',
+    'assets/images/propertytwo.jpg',
+    'assets/images/propertythree.jpg',
+    'assets/images/propertyfour.jpg',
+    'assets/images/propertyfive.jpg',
+  ];
+
+  late PageController _pageController;
+  int _currentIndex = 0;
+  String _backgroundImage = '';
+  Timer? _autoBackgroundSlideTimer;
+  ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: 0);
+    _backgroundImage = imagePaths[0];
+    _startAutoSlide();
+    _scrollController = ScrollController(); // Start the auto-slide timer
+  }
+
+  void _startAutoSlide() {
+    _autoBackgroundSlideTimer =
+        Timer.periodic(const Duration(seconds: 3), (timer) {
+      if (_pageController.hasClients) {
+        setState(() {
+          _currentIndex = (_currentIndex + 1) % imagePaths.length;
+          _backgroundImage = imagePaths[_currentIndex];
+        });
+        _pageController.animateToPage(_currentIndex,
+            duration: Duration(seconds: 5), curve: Curves.slowMiddle);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _autoBackgroundSlideTimer?.cancel();
+    _scrollController.dispose(); // Clean up the controller when not in use
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  void _onThumbnailTapped(int pageIndex) {
+    if (_pageController.hasClients) {
+      setState(() {
+        _currentIndex = pageIndex; // Update current index
+      });
+      _pageController.animateToPage(
+        _currentIndex,
+        duration: const Duration(seconds: 5),
+        curve: Curves.linearToEaseOut,
+      );
+      _startAutoSlide(); // Restart auto-slide if necessary
+    }
+  }
+
+  void _openImageViewer(BuildContext context) {
+    PhotoViewGallery.builder(
+      itemCount: imagePaths.length,
+      pageController: PageController(initialPage: _currentIndex),
+      builder: (context, index) {
+        return PhotoViewGalleryPageOptions(
+          imageProvider: AssetImage(imagePaths[index]),
+          minScale: PhotoViewComputedScale.contained,
+          maxScale: PhotoViewComputedScale.covered * 2,
+          heroAttributes: PhotoViewHeroAttributes(tag: imagePaths[index]),
+        );
+      },
+      scrollPhysics: BouncingScrollPhysics(),
+      backgroundDecoration: BoxDecoration(color: Colors.black),
+    );
+  }
+
+  void _openGridView(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return GridView.builder(
+          padding: const EdgeInsets.all(16),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+          ),
+          itemCount: imagePaths.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                PhotoView(
+                  imageProvider: AssetImage(imagePaths[index]),
+                  backgroundDecoration: BoxDecoration(color: Colors.black),
+                  minScale: PhotoViewComputedScale.contained,
+                  maxScale: PhotoViewComputedScale.covered * 2.0,
+                );
+              },
+              child: SizedBox(
+                height: 100,
+                width: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Image.asset(
+                    imagePaths[index],
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
+        controller: _scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                // Main Image
-                Container(
-                  height: 300,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: Colors.grey[200],
-                    image: const DecorationImage(
-                      image: AssetImage('assets/images/propertyone.jpeg'),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                // Top Bar
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 25),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      IconButton(
-                        icon: const CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(Icons.arrow_back, color: Colors.black),
+            SizedBox(
+              height: 300,
+              width: double.infinity,
+              child: PageView(controller: _pageController, children: [
+                Stack(
+                  children: [
+                    // Background Image
+                    Container(
+                      height: 300,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(_backgroundImage),
+                          fit: BoxFit.cover,
                         ),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
                       ),
-                      Row(
+                    ),
+                    // Top Bar
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 25),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           IconButton(
                             icon: const CircleAvatar(
                               backgroundColor: Colors.white,
-                              child: Icon(Icons.share, color: Colors.black),
+                              child:
+                                  Icon(Icons.arrow_back, color: Colors.black),
                             ),
-                            onPressed: apartmentListing.onSharePressed,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
                           ),
-                          const SizedBox(width: 8),
-                          IconButton(
-                            icon: const CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child: Icon(Icons.favorite_border,
-                                  color: Colors.black),
-                            ),
-                            onPressed: apartmentListing.onFavoritePressed,
+                          Row(
+                            children: [
+                              IconButton(
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.share, color: Colors.black),
+                                ),
+                                onPressed: () {
+                                  // Add your onSharePressed logic
+                                },
+                              ),
+                              const SizedBox(width: 8),
+                              IconButton(
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.white,
+                                  child: Icon(Icons.favorite_border,
+                                      color: Colors.black),
+                                ),
+                                onPressed: () {
+                                  // Add your onFavoritePressed logic
+                                },
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-                // Image Gallery
-                Positioned(
-                  bottom: 16,
-                  left: 16,
-                  right: 16,
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Row(
-                        children: [
-                          for (int i = 0; i < 5; i++)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8),
+                    ),
+                    // Image Slider (Thumbnails and +10 Button)
+                    Positioned(
+                      bottom: 16,
+                      left: 16,
+                      right: 16,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 8.0, vertical: 8.0),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              // Thumbnails
+                              for (int i = 0; i < imagePaths.length; i++)
+                                GestureDetector(
+                                  onTap: () {
+                                    _onThumbnailTapped(i);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 4),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(8),
+                                      child: Container(
+                                        height: 60,
+                                        width: 60,
+                                        decoration: BoxDecoration(
+                                          border: _currentIndex == i
+                                              ? Border.all(
+                                                  color: Colors.blue,
+                                                  width: 2.0)
+                                              : null,
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Image.asset(
+                                          imagePaths[i],
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              const SizedBox(width: 8),
+                              // +10 Button
+                              GestureDetector(
+                                onTap: () => _openGridView(context),
                                 child: Container(
                                   width: 60,
                                   height: 60,
-                                  color: Colors.grey[300],
-                                  child: Image.asset(
-                                    'assets/images/propertyone.jpeg',
-                                    fit: BoxFit.cover,
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[600],
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      '+10',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          Container(
-                            width: 60,
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.grey[600],
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Center(
-                              child: Text(
-                                '+10',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ]),
             ),
+
+            // Type and Rating
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Type and Rating
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -171,7 +326,7 @@ class ApartmentListingScreen extends StatelessWidget {
                   const SizedBox(height: 8),
                   // Address
                   Text(
-                    apartmentListing.property.location,
+                    widget.apartmentListing.property.location,
                     style: TextStyle(
                       color: Colors.grey[600],
                       fontSize: 16,
@@ -198,7 +353,7 @@ class ApartmentListingScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    apartmentListing.property.description ??
+                    widget.apartmentListing.property.description ??
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
                     style: TextStyle(
                       color: Colors.grey[600],
@@ -206,7 +361,7 @@ class ApartmentListingScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: apartmentListing.onReadMorePressed,
+                    onPressed: widget.apartmentListing.onReadMorePressed,
                     child: const Text('Read more',
                         style: TextStyle(color: Color(0xFF004240))),
                   ),
@@ -287,94 +442,47 @@ class ApartmentListingScreen extends StatelessWidget {
           ],
         ),
       ),
-      // bottomNavigationBar:Container(
-      //   color: Colors.white,
-      //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: [
-      //       Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: [
-      //           Text(
-      //             'Total Price',
-      //             style: TextStyle(
-      //               color: Colors.grey[600],
-      //               fontSize: 15,
-      //             ),
-      //           ),
-      //           const Text(
-      //             '\$1,500 /month',
-      //             style: TextStyle(
-      //               fontSize: 20,
-      //               color: Colors.blue,
-      //               fontWeight: FontWeight.bold,
-      //             ),
-      //           ),
-      //         ],
-      //       ),
-      //       Container(
-      //         height: 50,
-      //         width: 150,
-      //         decoration: BoxDecoration(
-      //           borderRadius: const BorderRadius.all(Radius.circular(10)),
-      //           color: const Color(0xFF004240),
-      //         ),
-      //         child: const Center(
-      //           child: Text(
-      //             'Book Now',
-      //             style: TextStyle(
-      //               color: Colors.white,
-      //               fontSize: 16,
-      //               fontWeight: FontWeight.bold,
-      //             ),
-      //           ),
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
+}
 
-  Widget _buildTab(String text, bool isSelected) {
-    return Container(
-      margin: const EdgeInsets.only(right: 24),
-      padding: const EdgeInsets.only(bottom: 8),
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color: isSelected ? Color(0xFF004240) : Colors.transparent,
-            width: 2,
-          ),
+Widget _buildTab(String text, bool isSelected) {
+  return Container(
+    margin: const EdgeInsets.only(right: 24),
+    padding: const EdgeInsets.only(bottom: 8),
+    decoration: BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: isSelected ? Color(0xFF004240) : Colors.transparent,
+          width: 2,
         ),
       ),
-      child: Text(
+    ),
+    child: Text(
+      text,
+      style: TextStyle(
+        color: isSelected ? Color(0xFF004240) : Colors.grey[600],
+        fontSize: 16,
+        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+      ),
+    ),
+  );
+}
+
+Widget _buildFeature(IconData icon, String text) {
+  return Row(
+    children: [
+      Icon(icon, color: Color(0xFF004240), size: 24),
+      const SizedBox(width: 8),
+      Text(
         text,
-        style: TextStyle(
-          color: isSelected ? Color(0xFF004240) : Colors.grey[600],
+        style: const TextStyle(
           fontSize: 16,
-          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          fontWeight: FontWeight.w500,
         ),
       ),
-    );
-  }
-
-  Widget _buildFeature(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon, color: Color(0xFF004240), size: 24),
-        const SizedBox(width: 8),
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-          ),
-        ),
-      ],
-    );
-  }
+    ],
+  );
 }
 
 class PremiumOverviewGrid extends StatelessWidget {
@@ -383,7 +491,7 @@ class PremiumOverviewGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
-      crossAxisCount: 2, // Adjust columns as per the design
+      crossAxisCount: 2,
       crossAxisSpacing: 16,
       mainAxisSpacing: 16,
       padding: const EdgeInsets.all(16),
@@ -497,6 +605,8 @@ class PremiumOverviewGrid extends StatelessWidget {
               fontSize: 14,
               height: 1.4,
             ),
+            overflow: TextOverflow.ellipsis,
+            maxLines: 2,
           ),
         ],
       ),

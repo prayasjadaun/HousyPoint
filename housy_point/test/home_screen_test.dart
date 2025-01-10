@@ -5,7 +5,6 @@ import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/porperty_list_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/views/screens/search_screen.dart';
-import 'package:housy_point/views/screens/shortlisted_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
 

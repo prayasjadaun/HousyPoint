@@ -8,7 +8,6 @@ import 'package:housy_point/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
 import 'providers/home_screen_provider.dart';
 import 'providers/menu_provider.dart';
-import 'views/screens/splash_screen.dart';
 
 void main() {
   runApp(

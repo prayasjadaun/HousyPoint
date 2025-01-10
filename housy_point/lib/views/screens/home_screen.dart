@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:housy_point/views/screens/add_property_screen.dart';
+import 'package:housy_point/views/screens/loan_screen.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/porperty_list_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
-import 'package:housy_point/views/screens/search_screen.dart';
 import 'package:housy_point/views/screens/shortlisted_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
 
@@ -22,10 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     HomeContent(),
-    const SearchScreen(key: Key('SearchScreen')),
     const AddPropertyScreen(key: Key('AddPropertyScreen')),
     const ShortlistedScreen(key: Key('ShortlistedScreen')),
-    const ProfileScreen(key: Key('ProfileScreen')),
+    ProfileScreen(),
   ];
 
   void _onTabTapped(int index) {
@@ -35,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _pageController.animateToPage(
       index,
       duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
+      curve: Curves.easeIn,
     );
   }
 
@@ -91,7 +90,6 @@ class _HomeScreenState extends State<HomeScreen> {
         onTap: _onTabTapped,
         items: const [
           TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.search, title: 'Search'),
           TabItem(icon: Icons.add, title: 'Rent/Sell'),
           TabItem(icon: Icons.favorite, title: 'Shortlisted'),
           TabItem(icon: Icons.person, title: 'Profile'),
@@ -190,6 +188,14 @@ class HomeContent extends StatelessWidget {
                       selectedCategory: 'India',
                     ),
                     const SizedBox(height: 20),
+
+                    SectionTitle(title: 'Popular Place'),
+                    SizedBox(height: 8),
+                    HorizontalListView(),
+                    SizedBox(height: 16),
+                    // SectionTitle(title: 'Nearby You'),
+                    // SizedBox(height: 8),
+                    // HorizontalListView(),
                   ],
                 ),
               ),
