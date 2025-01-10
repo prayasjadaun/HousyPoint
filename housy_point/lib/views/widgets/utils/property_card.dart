@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/property_model.dart';
+import 'package:housy_point/providers/shortlisted_provider.dart';
+import 'package:provider/provider.dart';
 
-class PropertyCard extends StatelessWidget {
+class PropertyCard extends StatefulWidget {
   final Property property;
 
   const PropertyCard({super.key, required this.property});
 
   @override
+  _PropertyCardState createState() => _PropertyCardState();
+}
+
+class _PropertyCardState extends State<PropertyCard> {
+  @override
   Widget build(BuildContext context) {
+    final shortlistProvider = Provider.of<ShortlistProvider>(context);
+    final isShortlisted =
+        shortlistProvider.shortlistedProperties.contains(widget.property);
+
     return Container(
       height: 300,
       margin: const EdgeInsets.all(8.0),
@@ -27,7 +38,7 @@ class PropertyCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16),
             child: Image.asset(
-              property.imageUrl,
+              widget.property.imageUrl,
               height: double.infinity,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -50,8 +61,7 @@ class PropertyCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            child: // Foreground Content
-                Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
@@ -66,7 +76,6 @@ class PropertyCard extends StatelessWidget {
                         offset: const Offset(2, 2),
                       ),
                     ],
-                    // color: Colors.black.withOpacity(0.5),
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                   child: Column(
@@ -77,10 +86,9 @@ class PropertyCard extends StatelessWidget {
                         children: [
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                property.title,
+                                widget.property.title,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -88,7 +96,7 @@ class PropertyCard extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                '\$${property.price}',
+                                '\$${widget.property.price}',
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
@@ -97,7 +105,7 @@ class PropertyCard extends StatelessWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                property.bhk.toString() + ' BHK',
+                                '${widget.property.bhk} BHK',
                                 style: const TextStyle(
                                   color: Colors.white70,
                                   fontSize: 18,
@@ -108,7 +116,7 @@ class PropertyCard extends StatelessWidget {
                                 children: [
                                   Icon(Icons.location_on, color: Colors.white),
                                   const SizedBox(width: 4),
-                                  Text(property.location,
+                                  Text(widget.property.location,
                                       style: const TextStyle(
                                           color: Colors.white70, fontSize: 18)),
                                 ],
@@ -117,12 +125,15 @@ class PropertyCard extends StatelessWidget {
                             ],
                           ),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              // Toggle shortlist state
+                              shortlistProvider
+                                  .toggleShortlist(widget.property);
+                            },
                             child: Container(
                               height: 50,
                               width: 100,
                               decoration: BoxDecoration(
-                                // color: Color(0xFF004240),
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -146,7 +157,6 @@ class PropertyCard extends StatelessWidget {
               ],
             ),
           ),
-
           // Heart Icon
           Positioned(
             top: 8,
@@ -163,36 +173,19 @@ class PropertyCard extends StatelessWidget {
                 ],
               ),
               child: IconButton(
-                icon: const Icon(
-                  Icons.favorite_border,
+                icon: Icon(
+                  isShortlisted ? Icons.favorite : Icons.favorite_border,
                   color: Colors.red,
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  // Toggle shortlist state
+                  shortlistProvider.toggleShortlist(widget.property);
+                },
               ),
             ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildIconWithText(IconData icon, String text) {
-    return Row(
-      children: [
-        CircleAvatar(
-          radius: 15,
-          backgroundColor: Colors.white,
-          child: Icon(icon, size: 16, color: Colors.black),
-        ),
-        const SizedBox(width: 4),
-        Text(
-          text,
-          style: const TextStyle(
-            fontSize: 12,
-            color: Colors.white,
-          ),
-        ),
-      ],
     );
   }
 }

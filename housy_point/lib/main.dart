@@ -3,6 +3,7 @@ import 'package:housy_point/providers/auth_screen_provider.dart';
 import 'package:housy_point/providers/bottom_step_manager_provider.dart';
 import 'package:housy_point/providers/onbording_provider.dart';
 import 'package:housy_point/providers/registration_provider.dart';
+import 'package:housy_point/providers/shortlisted_provider.dart';
 import 'package:housy_point/providers/splash_screen_provider.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +15,7 @@ void main() {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => SplashScreenProvider()),
+        ChangeNotifierProvider(create: (context) => ShortlistProvider()),
         ChangeNotifierProvider(
             create: (context) => BottomStepManagerProvider()),
         ChangeNotifierProvider(create: (_) => OnBoardingProvider()),

@@ -6,7 +6,9 @@ import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/porperty_list_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/views/screens/shortlisted_screen.dart';
+import 'package:housy_point/providers/shortlisted_provider.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -15,10 +17,12 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenState extends State<HomeScreen>
+    with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
+  late TabController _tabController; // Add TabController
 
   final List<Widget> _screens = [
     HomeContent(),
@@ -26,6 +30,19 @@ class _HomeScreenState extends State<HomeScreen> {
     const ShortlistedScreen(key: Key('ShortlistedScreen')),
     ProfileScreen(),
   ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController =
+        TabController(length: 4, vsync: this); // Initialize TabController
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   void _onTabTapped(int index) {
     setState(() {
@@ -79,21 +96,37 @@ class _HomeScreenState extends State<HomeScreen> {
         physics: const NeverScrollableScrollPhysics(),
         children: _screens,
       ),
-      bottomNavigationBar: ConvexAppBar(
-        key: const Key('BottomNavBar'),
-        height: 50,
-        style: TabStyle.reactCircle,
-        backgroundColor: const Color(0xFF004240),
-        activeColor: Colors.white,
-        color: Colors.grey.shade300,
-        initialActiveIndex: _currentIndex,
-        onTap: _onTabTapped,
-        items: const [
-          TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.add, title: 'Rent/Sell'),
-          TabItem(icon: Icons.favorite, title: 'Shortlisted'),
-          TabItem(icon: Icons.person, title: 'Profile'),
-        ],
+      bottomNavigationBar: Consumer<ShortlistProvider>(
+        builder: (context, shortlistProvider, child) {
+          return ConvexAppBar(
+            key: const Key('BottomNavBar'),
+            height: 50,
+            style: TabStyle.reactCircle,
+            backgroundColor: const Color(0xFF004240),
+            activeColor: Colors.white,
+            color: Colors.grey.shade300,
+            initialActiveIndex: _currentIndex,
+            onTap: (index) {
+              _onTabTapped(index);
+              _tabController.animateTo(index);
+            },
+            items: [
+              const TabItem(icon: Icons.home, title: 'Home'),
+              const TabItem(icon: Icons.add, title: 'Rent/Sell'),
+              TabItem(
+                icon: Icons.favorite,
+                // icon: shortlistProvider.shortlistedProperties.isEmpty
+                //     ? const Icon(Icons.favorite_border, color: Colors.black)
+                //     : const Icon(
+                //         Icons.favorite,
+                //         color: Colors.green,
+                //       ),
+                title: 'Shortlisted',
+              ),
+              const TabItem(icon: Icons.person, title: 'Profile'),
+            ],
+          );
+        },
       ),
     );
   }
