@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:housy_point/views/screens/add_property_screen.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/porperty_list_screen.dart';
+import 'package:housy_point/views/screens/property_list_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/views/screens/search_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';

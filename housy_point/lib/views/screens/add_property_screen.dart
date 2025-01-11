@@ -17,41 +17,39 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Image Picker'),
-      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            height: 300,
+            height: 400,
             width: double.infinity,
             color: Colors.grey,
             child: Center(
               child: file == null
                   ? const Text('Image not picked')
-                  : Image.file(File(file!.path), fit: BoxFit.cover,),
+                  : Image.file(
+                      File(file!.path),
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
-          ElevatedButton(onPressed: () async{
-            final XFile? photo = await _picker.pickImage(source: ImageSource.gallery);
-            setState(() {
-              file = photo;
-            });
-            print('Images Picked');
-            print(photo!.path);
-          }, child: const Text('Pick Image')),
-          ElevatedButton(onPressed: () async{
-            final List<XFile>? photos = await _picker.pickMultiImage();
-            setState(() {
-              files = photos;
-            });
-            print('Images Picked');
-            for(int i = 0; i<files!.length; i++){
-              print(files![i].path);
-            }
-          }, child: const Text('Pick Images')),
-
+          ElevatedButton(
+              onPressed: () async {
+                final XFile? photo =
+                    await _picker.pickImage(source: ImageSource.gallery);
+                setState(() {
+                  file = photo;
+                });
+              },
+              child: const Text('Pick Image')),
+          ElevatedButton(
+              onPressed: () async {
+                final List<XFile>? photos = await _picker.pickMultiImage();
+                setState(() {
+                  files = photos;
+                });
+              },
+              child: const Text('Pick Multiple Images')),
         ],
       ),
     );

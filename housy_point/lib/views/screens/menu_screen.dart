@@ -1,4 +1,3 @@
-// lib/widgets/app_drawer.dart
 import 'package:flutter/material.dart';
 import 'package:housy_point/providers/menu_provider.dart';
 import 'package:housy_point/views/widgets/utils/menu_items.dart';
@@ -11,21 +10,32 @@ class MenuScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
+    final theme = Theme.of(context); // Accessing the theme
+
     return Consumer<MenuProvider>(
       builder: (_, menuProvider, child) {
         final authProvider = Provider.of<AuthScreenProvider>(context);
+        final backgroundColor =
+            theme.brightness == Brightness.dark ? Colors.black : Colors.white;
+        final textColor =
+            theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+        final buttonColor = theme.brightness == Brightness.dark
+            ? Colors.blue.shade300
+            : Colors.blue.shade900;
+
         return Drawer(
-          backgroundColor: Colors.white,
+          backgroundColor:
+              backgroundColor, // Set background color based on theme
           child: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                    _buildLoginSection(context, authProvider),
+                    _buildLoginSection(
+                        context, authProvider, textColor, buttonColor, theme),
                     const SizedBox(height: 20),
-                    _buildMenuItems(context, menuProvider),
+                    _buildMenuItems(context, menuProvider, textColor),
                     const SizedBox(height: 20),
                     _buildFooter(),
                   ],
@@ -39,11 +49,17 @@ class MenuScreen extends StatelessWidget {
   }
 
   Widget _buildLoginSection(
-      BuildContext context, AuthScreenProvider authProvider) {
+      BuildContext context,
+      AuthScreenProvider authProvider,
+      Color textColor,
+      Color buttonColor,
+      dynamic theme) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blue.shade100,
+        color: theme.brightness == Brightness.dark
+            ? Colors.blueGrey.shade800
+            : Colors.blue.shade200,
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -56,7 +72,9 @@ class MenuScreen extends StatelessWidget {
       child: Row(
         children: [
           CircleAvatar(
-            backgroundColor: Colors.green.shade100,
+            backgroundColor: theme.brightness == Brightness.dark
+                ? Colors.green.shade200
+                : Colors.green.shade100,
             child: const Text('HP'),
           ),
           const SizedBox(width: 16),
@@ -69,23 +87,36 @@ class MenuScreen extends StatelessWidget {
                       ? 'Hello, ${authProvider.userRole}'
                       : 'Login/Sign-up now',
                   style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
-                      color: Colors.black),
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.grey
+                            .shade800, // Adjust the color for dark and light mode
+                    fontSize: 16,
+                    fontWeight: FontWeight.w800,
+                  ),
                 ),
                 Text(
                   authProvider.isAuthenticated
                       ? 'Welcome back!'
                       : 'Login for best deals & offers',
-                  style: TextStyle(color: Colors.grey.shade800, fontSize: 14),
+                  style: TextStyle(
+                    color: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey.shade400
+                        : Colors.grey
+                            .shade800, // Adjust the color for dark and light mode
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
           ),
           IconButton(
-            icon: Icon(authProvider.isAuthenticated
-                ? Icons.exit_to_app
-                : Icons.chevron_right),
+            icon: Icon(
+              authProvider.isAuthenticated
+                  ? Icons.exit_to_app
+                  : Icons.chevron_right,
+              color: buttonColor, // Dynamic button color
+            ),
             onPressed: () {
               if (authProvider.isAuthenticated) {
                 authProvider.logout();
@@ -99,7 +130,8 @@ class MenuScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMenuItems(BuildContext context, MenuProvider menuProvider) {
+  Widget _buildMenuItems(
+      BuildContext context, MenuProvider menuProvider, Color textColor) {
     return Column(
       children: [
         MenuItem(
@@ -110,6 +142,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor, // Passing dynamic text color
         ),
         const SizedBox(
           height: 8,
@@ -121,6 +154,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -133,6 +167,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -145,6 +180,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -157,6 +193,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -168,6 +205,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -179,6 +217,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -190,6 +229,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -201,6 +241,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 8,
@@ -212,6 +253,7 @@ class MenuScreen extends StatelessWidget {
             Navigator.pop(context);
             // Add navigation logic here
           },
+          textColor: textColor,
         ),
         const SizedBox(
           height: 10,
@@ -223,8 +265,7 @@ class MenuScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 "Buy",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500, color: Colors.blue.shade900),
+                style: TextStyle(fontWeight: FontWeight.w500, color: textColor),
               ),
             ),
             const SizedBox(
@@ -234,8 +275,7 @@ class MenuScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 "Sell",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500, color: Colors.blue.shade900),
+                style: TextStyle(fontWeight: FontWeight.w500, color: textColor),
               ),
             ),
             const SizedBox(
@@ -245,8 +285,7 @@ class MenuScreen extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 "Rent",
-                style: TextStyle(
-                    fontWeight: FontWeight.w500, color: Colors.blue.shade900),
+                style: TextStyle(fontWeight: FontWeight.w500, color: textColor),
               ),
             ),
           ],

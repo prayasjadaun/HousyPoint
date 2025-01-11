@@ -131,6 +131,12 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final activeColor = isDarkMode ? Colors.white : Colors.black;
+    final iconColor = isDarkMode ? Colors.grey : Colors.grey.shade600;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
     return Scaffold(
       body: SingleChildScrollView(
         controller: _scrollController,
@@ -394,52 +400,80 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
                   ),
                   const SizedBox(height: 24),
                   // Price and Book Now
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Total Price',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 15,
-                            ),
-                          ),
-                          const Text(
-                            '\$1,500 /month',
-                            style: TextStyle(
-                              fontSize: 20,
-                              color: Colors.blue,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Container(
-                        height: 50,
-                        width: 150,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Color(0xFF004240)),
-                        child: const Center(
-                          child: Text(
-                            'Book Now',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
           ],
+        ),
+      ),
+      bottomNavigationBar: BottomAppBar(
+        height: 90,
+        shape: CircularNotchedRectangle(),
+        color: Colors.transparent,
+        child: Container(
+          padding: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.transparent,
+                blurRadius: 10,
+                offset: Offset(0, -4),
+              ),
+            ],
+            color: isDarkMode ? Colors.white : Colors.black,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Total Price',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 15,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
+                  Expanded(
+                    child: Text(
+                      '\$1,500 /month',
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: isDarkMode ? Colors.black : Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                height: 50,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  color: isDarkMode ? Colors.black : Colors.white,
+                ),
+                child: Center(
+                  child: Text(
+                    'Reserve Now',
+                    style: TextStyle(
+                      color: isDarkMode ? Colors.white : Colors.black,
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

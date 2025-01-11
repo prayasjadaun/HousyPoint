@@ -14,30 +14,59 @@ class MenuItem extends StatelessWidget {
     this.subtitle,
     this.trailing,
     required this.onTap,
+    required Color textColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Accessing the current theme
+
+    final backgroundColor = theme.brightness == Brightness.dark
+        ? Colors.grey.shade900
+        : Colors.grey.shade100;
+
+    final iconColor =
+        theme.brightness == Brightness.dark ? Colors.white : Color(0xFF004253);
+
+    final trailingTextColor =
+        theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+
     return Container(
       decoration: BoxDecoration(
-          color: Colors.grey.shade100,
-          borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: Colors.grey)),
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.grey),
+      ),
       child: ListTile(
         leading: Icon(
           icon,
-          color: Color(0xFF004253),
+          color: iconColor, // Icon color adjusts based on theme
         ),
-        title: Text(title),
-        subtitle: subtitle != null ? Text(subtitle!) : null,
+        title: Text(
+          title,
+          style: TextStyle(
+              color: theme.textTheme.bodyLarge?.color), // Dynamic title color
+        ),
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: TextStyle(
+                    color: theme
+                        .textTheme.bodyMedium?.color), // Dynamic subtitle color
+              )
+            : null,
         trailing: trailing != null
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(trailing!),
+                  Text(
+                    trailing!,
+                    style: TextStyle(
+                        color: trailingTextColor), // Trailing text color
+                  ),
                   const Icon(
                     Icons.chevron_right,
-                    color: Colors.black,
+                    color: Color(0xFF004253),
                   ),
                 ],
               )

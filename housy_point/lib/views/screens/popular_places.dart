@@ -7,6 +7,10 @@ class SectionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textColor =
+        theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: Row(
@@ -17,13 +21,18 @@ class SectionTitle extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
+              color: textColor, // Adjust color based on theme
             ),
           ),
           TextButton(
             onPressed: () {},
             child: Text(
               'See all',
-              style: TextStyle(color: Colors.black),
+              style: TextStyle(
+                color: theme.brightness == Brightness.dark
+                    ? Colors.blue.shade300
+                    : Colors.blue, // Adjust button color
+              ),
             ),
           ),
         ],
@@ -54,14 +63,14 @@ class HorizontalListView extends StatelessWidget {
 class CardProperty extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Container(
       width: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         image: DecorationImage(
-          image: AssetImage(
-            'assets/images/propertyone.jpeg',
-          ),
+          image: AssetImage('assets/images/propertyone.jpeg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -76,16 +85,20 @@ class CardProperty extends StatelessWidget {
                 Text(
                   'Birchwood Cottage',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
+                    color: theme.brightness == Brightness.dark
+                        ? Colors.white
+                        : Colors.white,
+                    fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
                   'Florida, USA',
                   style: TextStyle(
-                    color: Colors.white70,
-                    fontSize: 14,
+                    color: theme.brightness == Brightness.dark
+                        ? Colors.white70
+                        : Colors.white,
+                    fontSize: 16,
                   ),
                 ),
               ],
@@ -96,7 +109,9 @@ class CardProperty extends StatelessWidget {
             right: 16,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+                backgroundColor: theme.brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.black,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -104,7 +119,10 @@ class CardProperty extends StatelessWidget {
               onPressed: () {},
               child: Text(
                 'Interested',
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                    color: theme.brightness == Brightness.dark
+                        ? Colors.black
+                        : Colors.white),
               ),
             ),
           ),

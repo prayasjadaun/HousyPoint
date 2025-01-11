@@ -27,8 +27,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   int _selectedPropertyTypeIndex = 0;
   int _selectedDealTypeIndex = 0;
   int? _selectedBHKIndex;
-  bool _isDistressDealsExpanded = true;
-  final List<String> _dealTypes = ['RESALE', 'RENT', 'COMMERCIAL'];
   final List<String> _locations = ['INDIA', 'OVERSEAS'];
   final List<String> _propertyTypes = ['RESALE', 'RENT', 'COMMERCIAL'];
   final List<Map<String, dynamic>> _bhkTypes = [
@@ -43,17 +41,24 @@ class _PropertyFiltersState extends State<PropertyFilters> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 450,
+      height: 400,
       width: MediaQuery.of(context).size.width,
       // margin: const EdgeInsets.all(8),
       padding: const EdgeInsets.only(top: 10.0),
-      decoration: BoxDecoration(boxShadow: const [
-        BoxShadow(
-          offset: Offset(2, 2),
-          color: Colors.grey,
-          blurRadius: 5.0,
-        ),
-      ], borderRadius: BorderRadius.circular(20), color: Colors.white),
+      decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(2, 2),
+              color: Colors.grey,
+              blurRadius: 5.0,
+            ),
+          ],
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              topRight: Radius.circular(30),
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20)),
+          color: Colors.white),
       child: Stack(
         alignment: Alignment.topCenter,
         children: [
@@ -94,7 +99,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                   _buildPropertyTypeTabs(),
                   _buildBHKFilters(),
                   const SizedBox(height: 10),
-                  _buildDistressDeals(),
+                  // _buildDistressDeals(),
                 ],
               ),
             ),
@@ -164,7 +169,8 @@ class _PropertyFiltersState extends State<PropertyFilters> {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
-          mainAxisSize: MainAxisSize.min,
+          // mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Icon(
               label == 'INDIA' ? Icons.add_location : Icons.language,
@@ -305,81 +311,81 @@ class _PropertyFiltersState extends State<PropertyFilters> {
     );
   }
 
-  Widget _buildDistressDeals() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _dealTypes.isNotEmpty
-            ? InkWell(
-                onTap: () => setState(
-                    () => _isDistressDealsExpanded = !_isDistressDealsExpanded),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        'DISTRESS DEALS',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w900,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _isDistressDealsExpanded =
-                                !_isDistressDealsExpanded;
-                          });
-                          widget.onDistressDealsExpandedChanged
-                              ?.call(_isDistressDealsExpanded);
-                        },
-                        child: AnimatedRotation(
-                          turns: _isDistressDealsExpanded ? 0 : -0.25,
-                          duration: const Duration(milliseconds: 200),
-                          child: const Icon(
-                            Icons.keyboard_arrow_down,
-                            color: Colors.black,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            : AnimatedCrossFade(
-                firstChild: Container(
-                  // margin: const EdgeInsets.symmetric(horizontal: 16),
-                  decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(25),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 4,
-                        offset: const Offset(0, 2),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(child: _buildDealTypeButton('RESALE', 0)),
-                      Expanded(child: _buildDealTypeButton('RENTING', 1)),
-                      Expanded(child: _buildDealTypeButton('COMMERCIAL', 2)),
-                    ],
-                  ),
-                ),
-                secondChild: const SizedBox.shrink(),
-                crossFadeState: _isDistressDealsExpanded
-                    ? CrossFadeState.showFirst
-                    : CrossFadeState.showSecond,
-                duration: const Duration(milliseconds: 200),
-              ),
-      ],
-    );
-  }
+  // Widget _buildDistressDeals() {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       _dealTypes.isNotEmpty
+  //           ? InkWell(
+  //               onTap: () => setState(
+  //                   () => _isDistressDealsExpanded = !_isDistressDealsExpanded),
+  //               child: Padding(
+  //                 padding:
+  //                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+  //                 child: Row(
+  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                   children: [
+  //                     const Text(
+  //                       'DISTRESS DEALS',
+  //                       style: TextStyle(
+  //                         fontSize: 16,
+  //                         fontWeight: FontWeight.w900,
+  //                       ),
+  //                     ),
+  //                     GestureDetector(
+  //                       onTap: () {
+  //                         setState(() {
+  //                           _isDistressDealsExpanded =
+  //                               !_isDistressDealsExpanded;
+  //                         });
+  //                         widget.onDistressDealsExpandedChanged
+  //                             ?.call(_isDistressDealsExpanded);
+  //                       },
+  //                       child: AnimatedRotation(
+  //                         turns: _isDistressDealsExpanded ? 0 : -0.25,
+  //                         duration: const Duration(milliseconds: 200),
+  //                         child: const Icon(
+  //                           Icons.keyboard_arrow_down,
+  //                           color: Colors.black,
+  //                         ),
+  //                       ),
+  //                     ),
+  //                   ],
+  //                 ),
+  //               ),
+  //             )
+  //           : AnimatedCrossFade(
+  //               firstChild: Container(
+  //                 // margin: const EdgeInsets.symmetric(horizontal: 16),
+  //                 decoration: BoxDecoration(
+  //                   color: Colors.grey.shade200,
+  //                   borderRadius: BorderRadius.circular(25),
+  //                   boxShadow: [
+  //                     BoxShadow(
+  //                       color: Colors.grey.withOpacity(0.2),
+  //                       spreadRadius: 1,
+  //                       blurRadius: 4,
+  //                       offset: const Offset(0, 2),
+  //                     ),
+  //                   ],
+  //                 ),
+  //                 child: Row(
+  //                   children: [
+  //                     Expanded(child: _buildDealTypeButton('RESALE', 0)),
+  //                     Expanded(child: _buildDealTypeButton('RENTING', 1)),
+  //                     Expanded(child: _buildDealTypeButton('COMMERCIAL', 2)),
+  //                   ],
+  //                 ),
+  //               ),
+  //               secondChild: const SizedBox.shrink(),
+  //               crossFadeState: _isDistressDealsExpanded
+  //                   ? CrossFadeState.showFirst
+  //                   : CrossFadeState.showSecond,
+  //               duration: const Duration(milliseconds: 200),
+  //             ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildDealTypeButton(String text, int index) {
     final isSelected = _selectedDealTypeIndex == index;

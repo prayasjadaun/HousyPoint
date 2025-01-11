@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:housy_point/models/registration_field_model.dart';
@@ -185,11 +184,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                     ),
                                   );
 
-                                  Navigator.pushReplacement(
-                                    context,
-                                    CupertinoPageRoute(
-                                        builder: (context) =>
-                                            const HomeScreen()),
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => HomeScreen(),
+                                    ),
                                   );
                                 } else {
                                   ScaffoldMessenger.of(context).showSnackBar(

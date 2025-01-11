@@ -20,7 +20,6 @@ class _PropertyCardState extends State<PropertyCard> {
         shortlistProvider.shortlistedProperties.contains(widget.property);
 
     return Container(
-      height: 300,
       margin: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
@@ -51,8 +50,8 @@ class _PropertyCardState extends State<PropertyCard> {
                 borderRadius: BorderRadius.circular(16),
                 gradient: LinearGradient(
                   colors: [
-                    Colors.black.withOpacity(0.9),
-                    Colors.transparent,
+                    Colors.black.withOpacity(0.7),
+                    Colors.black.withOpacity(0.3),
                   ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -60,6 +59,7 @@ class _PropertyCardState extends State<PropertyCard> {
               ),
             ),
           ),
+
           Positioned(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

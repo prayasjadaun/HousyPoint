@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:housy_point/views/screens/add_property_screen.dart';
-import 'package:housy_point/views/screens/loan_screen.dart';
+import 'package:housy_point/views/screens/popular_places.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/porperty_list_screen.dart';
-import 'package:housy_point/views/screens/profile_screen.dart';
+import 'package:housy_point/views/screens/notifications_screen.dart';
+import 'package:housy_point/views/screens/property_list_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:housy_point/views/screens/add_property_screen.dart';
 import 'package:housy_point/views/screens/shortlisted_screen.dart';
+import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/providers/shortlisted_provider.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
-import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,22 +21,14 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  final PageController _pageController = PageController(initialPage: 0);
   int _currentIndex = 0;
-  late TabController _tabController; // Add TabController
-
-  final List<Widget> _screens = [
-    HomeContent(),
-    const AddPropertyScreen(key: Key('AddPropertyScreen')),
-    const ShortlistedScreen(key: Key('ShortlistedScreen')),
-    ProfileScreen(),
-  ];
+  late TabController _tabController;
 
   @override
   void initState() {
     super.initState();
-    _tabController =
-        TabController(length: 4, vsync: this); // Initialize TabController
+    _tabController = TabController(length: 5, vsync: this);
+    _preloadExpensiveWidgets();
   }
 
   @override
@@ -45,85 +38,55 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
+    _tabController.animateTo(index);
+  }
+
+  void _preloadExpensiveWidgets() {
+    Future.microtask(() {
+      PropertyListScreen();
+      HorizontalListView();
     });
-    _pageController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeIn,
-    );
   }
 
   @override
   Widget build(BuildContext context) {
+    // Detect system theme using MediaQuery
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final activeColor = isDarkMode ? Colors.white : Colors.black;
+    final iconColor = isDarkMode ? Colors.grey : Colors.grey.shade600;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xFF004240),
-        title: Image.asset(
-          'assets/applogos/logo.png',
-          key: const Key('AppBarLogo'),
-          height: 50,
-        ),
-        actions: [
-          Container(
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.grey),
-              shape: BoxShape.circle,
-            ),
-            child: IconButton(
-              key: const Key('SearchIcon'),
-              onPressed: () {
-                debugPrint('Search button pressed'); // Mock search action
-              },
-              icon: const Icon(Icons.search, color: Colors.white),
-            ),
-          ),
-          IconButton(
-            key: const Key('MenuIcon'),
-            onPressed: () {
-              _scaffoldKey.currentState?.openEndDrawer();
-            },
-            icon: const Icon(Icons.menu, color: Colors.white),
-          ),
-        ],
-      ),
       key: _scaffoldKey,
       endDrawer: const MenuScreen(),
-      body: PageView(
-        key: const Key('PageView'),
-        controller: _pageController,
+      body: TabBarView(
+        controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
-        children: _screens,
+        children: [
+          const TabContent(child: HomeContent()),
+          const TabContent(child: ShortlistedScreen()),
+          const TabContent(child: AddPropertyScreen()),
+          const TabContent(child: NotificationsScreen()),
+          TabContent(child: ProfileScreen()),
+        ],
       ),
       bottomNavigationBar: Consumer<ShortlistProvider>(
         builder: (context, shortlistProvider, child) {
           return ConvexAppBar(
-            key: const Key('BottomNavBar'),
             height: 50,
             style: TabStyle.reactCircle,
-            backgroundColor: const Color(0xFF004240),
-            activeColor: Colors.white,
-            color: Colors.grey.shade300,
+            backgroundColor: backgroundColor,
+            activeColor: activeColor,
+            color: iconColor,
             initialActiveIndex: _currentIndex,
-            onTap: (index) {
-              _onTabTapped(index);
-              _tabController.animateTo(index);
-            },
-            items: [
-              const TabItem(icon: Icons.home, title: 'Home'),
-              const TabItem(icon: Icons.add, title: 'Rent/Sell'),
-              TabItem(
-                icon: Icons.favorite,
-                // icon: shortlistProvider.shortlistedProperties.isEmpty
-                //     ? const Icon(Icons.favorite_border, color: Colors.black)
-                //     : const Icon(
-                //         Icons.favorite,
-                //         color: Colors.green,
-                //       ),
-                title: 'Shortlisted',
-              ),
-              const TabItem(icon: Icons.person, title: 'Profile'),
+            onTap: _onTabTapped,
+            items: const [
+              TabItem(icon: Icons.home, title: 'Home'),
+              TabItem(icon: Icons.favorite, title: 'Shortlisted'),
+              TabItem(icon: Icons.add, title: 'Rent/Sell'),
+              TabItem(icon: Icons.notifications, title: 'Notification'),
+              TabItem(icon: Icons.person, title: 'Profile'),
             ],
           );
         },
@@ -132,74 +95,94 @@ class _HomeScreenState extends State<HomeScreen>
   }
 }
 
-class HomeContent extends StatelessWidget {
-  HomeContent({super.key});
+class TabContent extends StatefulWidget {
+  final Widget child;
 
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  const TabContent({Key? key, required this.child}) : super(key: key);
+
+  @override
+  State<TabContent> createState() => _TabContentState();
+}
+
+class _TabContentState extends State<TabContent>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
+    return widget.child;
+  }
+
+  @override
+  bool get wantKeepAlive => true;
+}
+
+class HomeContent extends StatelessWidget {
+  const HomeContent({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
+    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    final textColor = isDarkMode ? Colors.white : Colors.black;
+
     return Scaffold(
-      key: _scaffoldKey,
       endDrawer: const MenuScreen(),
       body: LayoutBuilder(
         builder: (context, constraints) {
           return SingleChildScrollView(
             key: const Key('HomeContentScroll'),
-            scrollDirection: Axis.vertical,
             child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // Top Header with Background Image
                     Stack(
                       clipBehavior: Clip.none,
                       children: [
-                        // Background Image
                         Container(
-                          key: const Key('BackgroundImage'),
                           width: double.infinity,
-                          height: 500,
+                          height: 400,
                           decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30),
+                              bottomRight: Radius.circular(30),
+                            ),
                             image: DecorationImage(
                               image:
-                                  AssetImage('assets/images/propertyone.jpeg'),
+                                  AssetImage('assets/images/propertyfour.jpg'),
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
-                        // Gradient Overlay
                         Positioned.fill(
-                          child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                              height: 100,
-                              decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                  colors: [
-                                    Colors.transparent,
-                                    Colors.black.withOpacity(0.9),
-                                  ],
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                ),
+                          child: Container(
+                            height: 300,
+                            decoration: BoxDecoration(
+                              borderRadius: const BorderRadius.only(
+                                bottomLeft: Radius.circular(30),
+                                bottomRight: Radius.circular(30),
+                              ),
+                              gradient: LinearGradient(
+                                colors: [
+                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.9),
+                                ],
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
                               ),
                             ),
                           ),
                         ),
-                        // Filters
                         Positioned(
-                          top: 300,
-                          left: 10,
-                          right: 10,
+                          top: 50,
+                          left: 20,
+                          right: 20,
                           child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 8.0, horizontal: 10),
+                            height: 60,
                             decoration: BoxDecoration(
+                              color: backgroundColor,
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: [
                                 BoxShadow(
@@ -209,26 +192,55 @@ class HomeContent extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            child: const PropertyFilters(),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                IconButton(
+                                  icon: const Icon(Icons.search,
+                                      size: 27, color: Colors.grey),
+                                  onPressed: () {
+                                    debugPrint('Search button pressed');
+                                  },
+                                ),
+                                Text(
+                                  'Search for homes, aparts etc.',
+                                  style: TextStyle(
+                                    color: textColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: const Icon(Icons.filter_list_sharp,
+                                          color: Colors.grey),
+                                      onPressed: () {
+                                        Scaffold.of(context).openEndDrawer();
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
+                        ),
+                        const Positioned(
+                          top: 200,
+                          left: 35,
+                          right: 35,
+                          child: PropertyFilters(),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 300),
-                    // Property List Section
-                    const PropertyListScreen(
-                      key: Key('PropertyListScreen'),
-                      selectedCategory: 'India',
-                    ),
+                    const SizedBox(height: 220),
+                    const SectionTitle(title: 'Available Properties'),
+                    const PropertyListScreen(),
                     const SizedBox(height: 20),
-
-                    SectionTitle(title: 'Popular Place'),
-                    SizedBox(height: 8),
+                    const SectionTitle(title: 'Popular Place'),
+                    const SizedBox(height: 8),
                     HorizontalListView(),
-                    SizedBox(height: 16),
-                    // SectionTitle(title: 'Nearby You'),
-                    // SizedBox(height: 8),
-                    // HorizontalListView(),
+                    const SizedBox(height: 16),
                   ],
                 ),
               ),
