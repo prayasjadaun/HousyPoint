@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/providers/shortlisted_provider.dart';
+import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:provider/provider.dart';
 
 class ShortlistedScreen extends StatelessWidget {

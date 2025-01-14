@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:housy_point/views/screens/add_property_screen.dart';
+import 'package:housy_point/views/screens/distress_deal_property_screen_screen.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/property_list_screen.dart';
+import 'package:housy_point/views/screens/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/views/screens/search_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
@@ -79,7 +80,8 @@ void main() {
       expect(find.byType(ProfileScreen), findsOneWidget);
     });
 
-    testWidgets('Drawer opens when menu icon is tapped', (WidgetTester tester) async {
+    testWidgets('Drawer opens when menu icon is tapped',
+        (WidgetTester tester) async {
       await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
       await tester.pump(const Duration(seconds: 3)); // Delay added
 
@@ -118,7 +120,7 @@ void main() {
       await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
       await tester.pump(const Duration(seconds: 3)); // Delay added
 
-      final propertyListFinder = find.byType(PropertyListScreen);
+      final propertyListFinder = find.byType(DistressDealPropertyScreen);
       expect(propertyListFinder, findsOneWidget);
     });
   });

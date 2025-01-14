@@ -3,7 +3,7 @@ import 'package:provider/provider.dart'; // Import the provider package
 import 'package:housy_point/views/auth/auth_screen.dart';
 import 'package:housy_point/views/auth/otp_screen.dart';
 import 'package:housy_point/views/auth/registration_screen.dart';
-import '../../providers/bottom_step_manager_provider.dart';
+import '../../controllers/providers/bottom_step_manager_provider.dart';
 
 class SequentialBottomSheet extends StatelessWidget {
   const SequentialBottomSheet({super.key});

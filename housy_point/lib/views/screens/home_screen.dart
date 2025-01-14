@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:housy_point/views/screens/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/popular_places.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
 import 'package:housy_point/views/screens/notifications_screen.dart';
-import 'package:housy_point/views/screens/property_list_screen.dart';
+import 'package:housy_point/views/screens/distress_deal_property_screen_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:housy_point/views/screens/add_property_screen.dart';
 import 'package:housy_point/views/screens/shortlisted_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
-import 'package:housy_point/providers/shortlisted_provider.dart';
+import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen>
 
   void _preloadExpensiveWidgets() {
     Future.microtask(() {
-      PropertyListScreen();
+      DistressDealPropertyScreen();
       HorizontalListView();
     });
   }
@@ -234,13 +235,10 @@ class HomeContent extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 220),
-                    const SectionTitle(title: 'Available Properties'),
-                    const PropertyListScreen(),
+                    Center(child: DistressDealsWidget()),
+                    DistressDealPropertyScreen(),
                     const SizedBox(height: 20),
-                    const SectionTitle(title: 'Popular Place'),
-                    const SizedBox(height: 8),
-                    HorizontalListView(),
-                    const SizedBox(height: 16),
+                    // s
                   ],
                 ),
               ),

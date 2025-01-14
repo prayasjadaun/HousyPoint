@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/models/property_model.dart';
+import 'package:housy_point/models/distress_model.dart';
 
 class ApartmentListing {
-  final Property property;
+  final Distress distress;
   final List<String> images;
   final String type;
   final double rating;
@@ -16,7 +16,7 @@ class ApartmentListing {
   final VoidCallback? onBookNowPressed;
 
   ApartmentListing({
-    required this.property,
+    required this.distress,
     this.images = const [],
     this.type = 'Apartment',
     this.rating = 0.0,

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/providers/auth_screen_provider.dart';
-import 'package:housy_point/providers/bottom_step_manager_provider.dart';
-import 'package:housy_point/providers/onbording_provider.dart';
-import 'package:housy_point/providers/registration_provider.dart';
-import 'package:housy_point/providers/shortlisted_provider.dart';
-import 'package:housy_point/providers/splash_screen_provider.dart';
-import 'package:housy_point/providers/theme_provider.dart';
+import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
+import 'package:housy_point/controllers/providers/bottom_step_manager_provider.dart';
+import 'package:housy_point/controllers/providers/distress_deal_provider.dart';
+import 'package:housy_point/controllers/providers/onbording_provider.dart';
+import 'package:housy_point/controllers/providers/registration_provider.dart';
+import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
+import 'package:housy_point/controllers/providers/splash_screen_provider.dart';
+import 'package:housy_point/controllers/providers/theme_provider.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
-import 'package:housy_point/views/screens/splash_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'providers/home_screen_provider.dart';
-import 'providers/menu_provider.dart';
+import 'controllers/providers/home_screen_provider.dart';
+import 'controllers/providers/menu_provider.dart';
 
 void main() {
   runApp(
@@ -27,6 +27,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => MenuProvider()),
         ChangeNotifierProvider(create: (_) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
+        ChangeNotifierProvider(create: (context) => DistressDealProvider()),
       ],
       child: const MyApp(),
     ),
@@ -62,7 +63,8 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system, // Automatically uses system theme
-      home: SplashScreen(),
+      home: HomeScreen(),
+      // SplashScreen(),
     );
   }
 }

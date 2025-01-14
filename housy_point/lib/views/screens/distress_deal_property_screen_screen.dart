@@ -1,22 +1,22 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/apartment_listing_model.dart';
-import 'package:housy_point/models/property_model.dart';
+import 'package:housy_point/models/distress_model.dart';
 import 'package:housy_point/views/screens/apartment_listing_screen.dart';
-import 'package:housy_point/views/widgets/utils/property_card.dart';
+import 'package:housy_point/views/widgets/utils/distress_card.dart';
 
-class PropertyListScreen extends StatefulWidget {
+class DistressDealPropertyScreen extends StatefulWidget {
   // final String selectedCategory;
 
-  const PropertyListScreen({
+  const DistressDealPropertyScreen({
     super.key,
   });
 
   @override
-  State<PropertyListScreen> createState() => _PropertyListScreenState();
+  State<DistressDealPropertyScreen> createState() => _DistressDealPropertyScreenState();
 }
 
-class _PropertyListScreenState extends State<PropertyListScreen> {
+class _DistressDealPropertyScreenState extends State<DistressDealPropertyScreen> {
   final PageController _pageController =
       PageController(viewportFraction: 0.8); // Use viewportFraction here
   Timer? _timer;
@@ -66,7 +66,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
         children: [
           const SizedBox(height: 8),
           SizedBox(
-            height: 300,
+            height: 400,
             child: GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -74,7 +74,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
                   MaterialPageRoute(
                     builder: (context) => ApartmentListingScreen(
                       apartmentListing: ApartmentListing(
-                        property: properties[_currentPage],
+                        distress: properties[_currentPage],
                       ),
                     ),
                   ),
@@ -99,7 +99,7 @@ class _PropertyListScreenState extends State<PropertyListScreen> {
                       scale: _currentPage == index
                           ? 1.0
                           : 0.9, // Optional scaling effect
-                      child: PropertyCard(property: properties[index]),
+                      child: DistressCard(distressProperty: properties[index]),
                     ),
                   );
                 },
