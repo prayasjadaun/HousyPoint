@@ -30,10 +30,10 @@ class DistressDealsWidget extends StatelessWidget {
         ),
         const SizedBox(height: 20),
         Container(
-          margin: EdgeInsets.symmetric(horizontal: 10),
+          margin: EdgeInsets.only(top: 0, left: 10, right: 10, bottom: 10),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Colors.grey.shade300,
             borderRadius: BorderRadius.circular(24),
             boxShadow: [
               BoxShadow(
@@ -66,7 +66,7 @@ class DistressDealsWidget extends StatelessWidget {
                     style: TextStyle(
                       color: isSelected ? Colors.white : Colors.black,
                       fontWeight:
-                          isSelected ? FontWeight.w800 : FontWeight.w500,
+                          isSelected ? FontWeight.w800 : FontWeight.w700,
                     ),
                   ),
                 ),

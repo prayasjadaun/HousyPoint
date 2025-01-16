@@ -99,7 +99,6 @@ class _PropertyFiltersState extends State<PropertyFilters> {
                   _buildPropertyTypeTabs(),
                   _buildBHKFilters(),
                   const SizedBox(height: 10),
-                 
                 ],
               ),
             ),
@@ -111,7 +110,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
 
   Widget _buildLocationTabs() {
     return Container(
-      padding: const EdgeInsets.all(8),
+      padding: const EdgeInsets.all(5),
       decoration: const BoxDecoration(
         color: Color(0xFF004240),
         borderRadius: BorderRadius.only(
@@ -120,16 +119,14 @@ class _PropertyFiltersState extends State<PropertyFilters> {
         ),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           ...List.generate(
             _locations.length,
-            (index) => Padding(
-              padding: const EdgeInsets.only(right: 1),
-              child: _buildLocationChip(
-                _locations[index],
-                index == _selectedLocationIndex,
-                () => setState(() => _selectedLocationIndex = index),
-              ),
+            (index) => _buildLocationChip(
+              _locations[index],
+              index == _selectedLocationIndex,
+              () => setState(() => _selectedLocationIndex = index),
             ),
           ),
           const Spacer(),
@@ -193,7 +190,8 @@ class _PropertyFiltersState extends State<PropertyFilters> {
 
   Widget _buildPropertyTypeTabs() {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+      margin: const EdgeInsets.symmetric(vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: List.generate(
@@ -310,6 +308,7 @@ class _PropertyFiltersState extends State<PropertyFilters> {
       ),
     );
   }
+
   Widget _buildDealTypeButton(String text, int index) {
     final isSelected = _selectedDealTypeIndex == index;
     return InkWell(

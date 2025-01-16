@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/distress_model.dart';
 import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
@@ -76,9 +74,6 @@ class _DistressCardState extends State<DistressCard> {
                       children: [
                         // Background blur effect
                         Positioned.fill(
-                          // child: BackdropFilter(
-                          //   filter:
-                          //       ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                           child: Container(
                             color: Colors.black
                                 .withOpacity(0.2), // Slight transparency
@@ -185,7 +180,7 @@ class _DistressCardState extends State<DistressCard> {
                                           ),
                                           child: Center(
                                             child: Text(
-                                              "I N T E R E S T E D",
+                                              "INTERESTED",
                                               style: TextStyle(
                                                 color: Colors.black,
                                                 fontSize: 15,
@@ -206,95 +201,6 @@ class _DistressCardState extends State<DistressCard> {
                     ),
                   ),
                 ),
-
-                // // Interested Button Container
-                // Container(
-                //   height: 80,
-                //   decoration: BoxDecoration(
-                //     color: Colors.transparent,
-                //     gradient: LinearGradient(
-                //       colors: [
-                //         Colors.black.withOpacity(0.7),
-                //         Colors.black.withOpacity(0.3),
-                //       ],
-                //       begin: Alignment.bottomCenter,
-                //       end: Alignment.center,
-                //     ),
-                //   ),
-                //   child: Row(
-                //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //     children: [
-                //       Container(
-                //         margin: EdgeInsets.all(10),
-                //         height: 50,
-                //         width: 100,
-                //         foregroundDecoration: BoxDecoration(
-                //           gradient: LinearGradient(
-                //             colors: [
-                //               Colors.black.withOpacity(0.5),
-                //               Colors.transparent
-                //             ],
-                //             begin: Alignment.topCenter,
-                //             end: Alignment.bottomCenter,
-                //           ),
-                //           borderRadius: BorderRadius.circular(10),
-                //         ),
-                //         decoration: BoxDecoration(
-                //           borderRadius: BorderRadius.circular(10),
-                //           color: Colors.white,
-                //         ),
-                //         child: Center(
-                //           child: Text(
-                //             '\₹${widget.distressProperty.price} \Cr',
-                //             style: const TextStyle(
-                //                 color: Colors.black,
-                //                 fontWeight: FontWeight.bold,
-                //                 fontSize: 20,
-                //                 overflow: TextOverflow.ellipsis),
-                //           ),
-                //         ),
-                //       ),
-                //       Expanded(
-                //         child: GestureDetector(
-                //           onTap: () {
-                //             // Toggle shortlist state
-                //             shortlistProvider.toggleShortlist(widget.distressProperty);
-                //           },
-                //           child: Container(
-                //             margin: EdgeInsets.all(10),
-                //             height: 50,
-                //             width: 100,
-                //             foregroundDecoration: BoxDecoration(
-                //               gradient: LinearGradient(
-                //                 colors: [
-                //                   Colors.black.withOpacity(0.5),
-                //                   Colors.transparent
-                //                 ],
-                //                 begin: Alignment.topCenter,
-                //                 end: Alignment.bottomCenter,
-                //               ),
-                //               borderRadius: BorderRadius.circular(10),
-                //             ),
-                //             decoration: BoxDecoration(
-                //               color: Colors.blue.shade400,
-                //               borderRadius: BorderRadius.circular(10),
-                //             ),
-                //             child: Center(
-                //               child: Text(
-                //                 "I N T E R E S T E D",
-                //                 style: TextStyle(
-                //                   color: Colors.black,
-                //                   fontSize: 15,
-                //                   fontWeight: FontWeight.w900,
-                //                 ),
-                //               ),
-                //             ),
-                //           ),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // )
               ],
             ),
           ),

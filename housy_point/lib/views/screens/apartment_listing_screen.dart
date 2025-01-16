@@ -1,6 +1,12 @@
 import 'dart:async';
+import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/apartment_listing_model.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/amenities_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/configuration_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/location.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/master_layout_widget.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
@@ -138,272 +144,322 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
     return Scaffold(
       body: SingleChildScrollView(
         controller: _scrollController,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 300,
-              width: double.infinity,
-              child: PageView(controller: _pageController, children: [
-                Stack(
-                  children: [
-                    // Background Image
-                    Container(
-                      height: 300,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage(_backgroundImage),
-                          fit: BoxFit.cover,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 300,
+                width: double.infinity,
+                child: PageView(controller: _pageController, children: [
+                  Stack(
+                    children: [
+                      // Background Image
+                      Container(
+                        height: 300,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage(_backgroundImage),
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
-                    ),
-                    // Top Bar
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 25),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const CircleAvatar(
-                              backgroundColor: Colors.white,
-                              child:
-                                  Icon(Icons.arrow_back, color: Colors.black),
+                      // Top Bar
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0, vertical: 25),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            IconButton(
+                              icon: const CircleAvatar(
+                                backgroundColor: Colors.white,
+                                child:
+                                    Icon(Icons.arrow_back, color: Colors.black),
+                              ),
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
                             ),
-                            onPressed: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Icon(Icons.share, color: Colors.black),
-                                ),
-                                onPressed: () {
-                                  // Add your onSharePressed logic
-                                },
-                              ),
-                              const SizedBox(width: 8),
-                              IconButton(
-                                icon: const CircleAvatar(
-                                  backgroundColor: Colors.white,
-                                  child: Icon(Icons.favorite_border,
-                                      color: Colors.black),
-                                ),
-                                onPressed: () {
-                                  // Add your onFavoritePressed logic
-                                },
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    // Image Slider (Thumbnails and +10 Button)
-                    Positioned(
-                      bottom: 16,
-                      left: 16,
-                      right: 16,
-                      child: SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0, vertical: 8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Row(
-                            children: [
-                              // Thumbnails
-                              for (int i = 0; i < imagePaths.length; i++)
-                                GestureDetector(
-                                  onTap: () {
-                                    _onThumbnailTapped(i);
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: const CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child:
+                                        Icon(Icons.share, color: Colors.black),
+                                  ),
+                                  onPressed: () {
+                                    // Add your onSharePressed logic
                                   },
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 4),
-                                    child: ClipRRect(
+                                ),
+                                const SizedBox(width: 8),
+                                IconButton(
+                                  icon: const CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    child: Icon(Icons.favorite_border,
+                                        color: Colors.black),
+                                  ),
+                                  onPressed: () {
+                                    // Add your onFavoritePressed logic
+                                  },
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Image Slider (Thumbnails and +10 Button)
+                      Positioned(
+                        bottom: 16,
+                        left: 16,
+                        right: 16,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0, vertical: 8.0),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                            child: Row(
+                              children: [
+                                // Thumbnails
+                                for (int i = 0; i < imagePaths.length; i++)
+                                  GestureDetector(
+                                    onTap: () {
+                                      _onThumbnailTapped(i);
+                                    },
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 4),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Container(
+                                          height: 60,
+                                          width: 60,
+                                          decoration: BoxDecoration(
+                                            border: _currentIndex == i
+                                                ? Border.all(
+                                                    color: Colors.blue,
+                                                    width: 2.0)
+                                                : null,
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          child: Image.asset(
+                                            imagePaths[i],
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                const SizedBox(width: 8),
+                                // +10 Button
+                                GestureDetector(
+                                  onTap: () => _openGridView(context),
+                                  child: Container(
+                                    width: 60,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[600],
                                       borderRadius: BorderRadius.circular(8),
-                                      child: Container(
-                                        height: 60,
-                                        width: 60,
-                                        decoration: BoxDecoration(
-                                          border: _currentIndex == i
-                                              ? Border.all(
-                                                  color: Colors.blue,
-                                                  width: 2.0)
-                                              : null,
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        child: Image.asset(
-                                          imagePaths[i],
-                                          fit: BoxFit.cover,
+                                    ),
+                                    child: const Center(
+                                      child: Text(
+                                        '+10',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
                                         ),
                                       ),
                                     ),
                                   ),
                                 ),
-                              const SizedBox(width: 8),
-                              // +10 Button
-                              GestureDetector(
-                                onTap: () => _openGridView(context),
-                                child: Container(
-                                  width: 60,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.grey[600],
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      '+10',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
+                    ],
+                  ),
+                ]),
+              ),
+
+              // Type and Rating
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          height: 25,
+                          width: 80,
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10)),
+                              color: Colors.grey[300]),
+                          child: Center(
+                            child: Text('Apartment',
+                                style: TextStyle(
+                                    color: Color(0xFF004240),
+                                    fontWeight: FontWeight.w500)),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            const Icon(Icons.star,
+                                color: Colors.amber, size: 20),
+                            const SizedBox(width: 4),
+                            Text(
+                              '4.5 (365 reviews)',
+                              style: TextStyle(
+                                color: Colors.grey[600],
+                                fontSize: 14,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
+                    const SizedBox(height: 8),
+                    // Title
+                    const Text(
+                      'Woodland Apartments',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    // Address
+                    Text(
+                      widget.apartmentListing.distress.location,
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 16,
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    // Navigation Tabs
+                    Row(
+                      children: [
+                        _buildTab('Overview', true),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    // Features Overview Screen
+                    PremiumOverviewGridModel(),
+                    const SizedBox(height: 24),
+                    // Description
+                    const Text(
+                      'Description',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      widget.apartmentListing.distress.description ??
+                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
+                      style: TextStyle(
+                        color: Colors.grey[600],
+                        fontSize: 16,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: widget.apartmentListing.onReadMorePressed,
+                      child: const Text('Read more',
+                          style: TextStyle(color: Color(0xFF004240))),
+                    ),
+                    const SizedBox(height: 16),
+                    // Listing Agent
+                    const Text(
+                      'Listing Agent',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    Row(
+                      children: [
+                        CircleAvatar(
+                          radius: 24,
+                          backgroundColor: Colors.grey[300],
+                          child: const Icon(Icons.person),
+                        ),
+                        const SizedBox(width: 12),
+                        const Text(
+                          'Housy Point',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 50),
+                    // LandMark Widget------------------
+                    Container(
+                      height: 600,
+                      width: double.infinity,
+                      child: LandmarksWidget(),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+
+                    // Amenities Widget----------
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: const Text(
+                              "AMENITIES",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            height: 2,
+                            width: 80,
+                            color: Colors.amber,
+                          ),
+                        ]),
+                    AmenitiesScreen(),
+                    SizedBox(
+                      height: 50,
+                    ),
+                    // Master Layout Widget----------------
+                    MasterLayoutWidget(),
+                    // Configration Widget ----------
+                    ConfigrationWidget(),
+                    // Location--------
+                    // ApartmentMapScreen(),
                   ],
                 ),
-              ]),
-            ),
-
-            // Type and Rating
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        height: 25,
-                        width: 80,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            color: Colors.grey[300]),
-                        child: Center(
-                          child: Text('Apartment',
-                              style: TextStyle(
-                                  color: Color(0xFF004240),
-                                  fontWeight: FontWeight.w500)),
-                        ),
-                      ),
-                      Row(
-                        children: [
-                          const Icon(Icons.star, color: Colors.amber, size: 20),
-                          const SizedBox(width: 4),
-                          Text(
-                            '4.5 (365 reviews)',
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 8),
-                  // Title
-                  const Text(
-                    'Woodland Apartments',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  // Address
-                  Text(
-                    widget.apartmentListing.distress.location,
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  // Navigation Tabs
-                  Row(
-                    children: [
-                      _buildTab('Overview', true),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  // Features Overview Screen
-                  PremiumOverviewGridModel(),
-                  const SizedBox(height: 24),
-                  // Description
-                  const Text(
-                    'Description',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Text(
-                    widget.apartmentListing.distress.description ??
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua',
-                    style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 16,
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: widget.apartmentListing.onReadMorePressed,
-                    child: const Text('Read more',
-                        style: TextStyle(color: Color(0xFF004240))),
-                  ),
-                  const SizedBox(height: 16),
-                  // Listing Agent
-                  const Text(
-                    'Listing Agent',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundColor: Colors.grey[300],
-                        child: const Icon(Icons.person),
-                      ),
-                      const SizedBox(width: 12),
-                      const Text(
-                        'Housy Point',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 24),
-                  // Price and Book Now
-                ],
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
+
+      //  Bottom Navbar Button Container
       bottomNavigationBar: BottomAppBar(
         height: 90,
         shape: CircularNotchedRectangle(),

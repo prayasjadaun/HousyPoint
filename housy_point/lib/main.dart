@@ -8,10 +8,9 @@ import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:housy_point/controllers/providers/splash_screen_provider.dart';
 import 'package:housy_point/controllers/providers/theme_provider.dart';
 import 'package:housy_point/views/screens/home_screen.dart';
-import 'package:provider/provider.dart';
-
 import 'controllers/providers/home_screen_provider.dart';
 import 'controllers/providers/menu_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(
@@ -63,7 +62,9 @@ class MyApp extends StatelessWidget {
         ),
       ),
       themeMode: ThemeMode.system, // Automatically uses system theme
-      home: HomeScreen(),
+      home:
+          // HiddenDrawer(),
+          HomeScreen(),
       // SplashScreen(),
     );
   }

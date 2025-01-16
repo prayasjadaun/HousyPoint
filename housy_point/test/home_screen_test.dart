@@ -3,7 +3,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:housy_point/views/screens/add_property_screen.dart';
 import 'package:housy_point/views/screens/distress_deal_property_screen_screen.dart';
 import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/profile_screen.dart';
 import 'package:housy_point/views/screens/search_screen.dart';
 import 'package:housy_point/views/widgets/utils/property_filter.dart';
