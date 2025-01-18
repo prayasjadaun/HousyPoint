@@ -62,10 +62,11 @@ class MasterLayoutWidget extends StatelessWidget {
 class CustomContainer extends StatelessWidget {
   const CustomContainer({super.key, required this.text, this.padding});
   final String text;
-final Padding? padding;
+  final Padding? padding;
   @override
   Widget build(BuildContext context) {
     return Container(
+     
       width: 100,
       height: 30,
       decoration: BoxDecoration(

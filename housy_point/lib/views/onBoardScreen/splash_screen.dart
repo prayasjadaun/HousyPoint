@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart'; // Import the package
 import 'package:provider/provider.dart'; // Import the provider package
 import '../../controllers/providers/splash_screen_provider.dart';
-import '../onBoardScreen/onboard_screen.dart';
+import 'onboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});

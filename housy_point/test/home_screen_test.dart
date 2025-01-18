@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:housy_point/views/screens/add_property_screen.dart';
-import 'package:housy_point/views/screens/distress_deal_property_screen_screen.dart';
-import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/profile_screen.dart';
-import 'package:housy_point/views/screens/search_screen.dart';
-import 'package:housy_point/views/widgets/utils/property_filter.dart';
-import 'package:housy_point/views/screens/home_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/add_property_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/profile_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/search_header_screen.dart';
+import 'package:housy_point/views/widgets/utils/uspFilterCard/usp_property_filter.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
 
 void main() {
   group('HomeScreen UI Tests', () {

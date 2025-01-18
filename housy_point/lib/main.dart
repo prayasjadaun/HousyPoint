@@ -7,7 +7,7 @@ import 'package:housy_point/controllers/providers/registration_provider.dart';
 import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:housy_point/controllers/providers/splash_screen_provider.dart';
 import 'package:housy_point/controllers/providers/theme_provider.dart';
-import 'package:housy_point/views/screens/home_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
 import 'controllers/providers/home_screen_provider.dart';
 import 'controllers/providers/menu_provider.dart';
 import 'package:provider/provider.dart';

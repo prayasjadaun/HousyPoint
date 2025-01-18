@@ -1,16 +1,17 @@
 import 'dart:async';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:housy_point/models/apartment_listing_model.dart';
+import 'package:housy_point/models/apartmentModels/apartment_listing_model.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/amenities_widget.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/configuration_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/download_resources.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_widget.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/location.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/master_layout_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/open_googlemap.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
-import '../../models/apart_overview_grid_model.dart';
+import '../../../models/apartmentModels/apart_overview_grid_model.dart';
 
 class ApartmentListingScreen extends StatefulWidget {
   const ApartmentListingScreen({super.key, required this.apartmentListing});
@@ -419,6 +420,34 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
                     SizedBox(
                       height: 20,
                     ),
+                    // Location ----------
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: const Text(
+                              "LOCATION",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            height: 2,
+                            width: 80,
+                            color: Colors.amber,
+                          ),
+                        ]),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    OpenMapFromBackend(),
+                    SizedBox(
+                      height: 30,
+                    ),
 
                     // Amenities Widget----------
                     Column(
@@ -441,6 +470,7 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
                             color: Colors.amber,
                           ),
                         ]),
+
                     AmenitiesScreen(),
                     SizedBox(
                       height: 50,
@@ -449,8 +479,11 @@ class _ApartmentListingScreenState extends State<ApartmentListingScreen> {
                     MasterLayoutWidget(),
                     // Configration Widget ----------
                     ConfigrationWidget(),
-                    // Location--------
-                    // ApartmentMapScreen(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    // Download Resources------------
+                    Container(height: 400, child: DownloadResources()),
                   ],
                 ),
               ),

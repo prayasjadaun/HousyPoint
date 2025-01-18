@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PropertyFilters extends StatefulWidget {
-  const PropertyFilters(
+class UspPropertyFilter extends StatefulWidget {
+  const UspPropertyFilter(
       {super.key,
       this.onLocationChanged,
       this.onPropertyTypeChanged,
@@ -16,10 +16,10 @@ class PropertyFilters extends StatefulWidget {
   final Function(bool)? onDistressDealsExpandedChanged;
 
   @override
-  State<PropertyFilters> createState() => _PropertyFiltersState();
+  State<UspPropertyFilter> createState() => _UspPropertyFilterState();
 }
 
-class _PropertyFiltersState extends State<PropertyFilters> {
+class _UspPropertyFilterState extends State<UspPropertyFilter> {
   final List<String> _developers = ['Developers', 'M3M', 'DLF', 'Central Park'];
   String _selectedDeveloper = 'Developers';
 

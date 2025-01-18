@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:housy_point/views/screens/distress_deal_screen.dart';
-import 'package:housy_point/views/screens/popular_places.dart';
-import 'package:housy_point/views/screens/menu_screen.dart';
-import 'package:housy_point/views/screens/notifications_screen.dart';
-import 'package:housy_point/views/screens/distress_deal_property_screen_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
+import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/notifications_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
 import 'package:provider/provider.dart';
-import 'package:housy_point/views/screens/add_property_screen.dart';
-import 'package:housy_point/views/screens/shortlisted_screen.dart';
-import 'package:housy_point/views/screens/profile_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/add_property_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/shortlisted_screen.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/profile_screen.dart';
 import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
-import 'package:housy_point/views/widgets/utils/property_filter.dart';
+import 'package:housy_point/views/widgets/utils/uspFilterCard/usp_property_filter.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -179,48 +179,60 @@ class HomeContent extends StatelessWidget {
                         Positioned(
                           top: 50,
                           left: 20,
+                          right: 80,
+                          child: GestureDetector(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 30),
+                              height: 60,
+                              decoration: BoxDecoration(
+                                color: backgroundColor,
+                                borderRadius: BorderRadius.circular(20),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.1),
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 4),
+                                  ),
+                                ],
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.search, size: 28),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    'Search for homes, aparts etc.',
+                                    style: TextStyle(
+                                      color: textColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 50,
                           right: 20,
                           child: Container(
                             height: 60,
                             decoration: BoxDecoration(
-                              color: backgroundColor,
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.1),
-                                  blurRadius: 10,
-                                  offset: const Offset(0, 4),
-                                ),
-                              ],
+                              color: Colors.white,
+                              shape: BoxShape.circle,
                             ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.search,
-                                      size: 27, color: Colors.grey),
+                                  icon: const Icon(Icons.filter_list_sharp,
+                                      color: Colors.black),
                                   onPressed: () {
-                                    debugPrint('Search button pressed');
+                                    Scaffold.of(context).openEndDrawer();
                                   },
-                                ),
-                                Text(
-                                  'Search for homes, aparts etc.',
-                                  style: TextStyle(
-                                    color: textColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: const Icon(Icons.filter_list_sharp,
-                                          color: Colors.grey),
-                                      onPressed: () {
-                                        Scaffold.of(context).openEndDrawer();
-                                      },
-                                    ),
-                                  ],
                                 ),
                               ],
                             ),
@@ -230,7 +242,7 @@ class HomeContent extends StatelessWidget {
                           top: 200,
                           left: 35,
                           right: 35,
-                          child: PropertyFilters(),
+                          child: UspPropertyFilter(),
                         ),
                       ],
                     ),

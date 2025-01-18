@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:housy_point/models/registration_field_model.dart';
-import 'package:housy_point/views/screens/home_screen.dart';
+import 'package:housy_point/models/registrationModel/registration_field_model.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
 import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';
 
