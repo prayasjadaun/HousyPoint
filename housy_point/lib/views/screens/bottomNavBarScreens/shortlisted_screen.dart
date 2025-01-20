@@ -76,7 +76,7 @@ class ShortlistedScreen extends StatelessWidget {
                         return ListTile(
                           title: Text(property.title,
                               style: TextStyle(color: textColor)),
-                          subtitle: Text('\$${property.price}',
+                          subtitle: Text('\₹${property.price} \Cr',
                               style: TextStyle(color: textColor)),
                           leading: Image.asset(property.imageUrl),
                           trailing: IconButton(

@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:housy_point/views/screens/bottomNavBarScreens/search_header_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
 import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
@@ -117,11 +119,25 @@ class _TabContentState extends State<TabContent>
   bool get wantKeepAlive => true;
 }
 
-class HomeContent extends StatelessWidget {
+class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
 
   @override
+  State<HomeContent> createState() => _HomeContentState();
+}
+
+class _HomeContentState extends State<HomeContent> {
+  @override
   Widget build(BuildContext context) {
+    final Map<String, List<String>> locationProperties = {
+      "Jammu & Kashmir": ["Property 1", "Property 2", "Property 3"],
+      "Himachal Pradesh": ["Property 4", "Property 5"],
+      "Punjab": ["Property 6", "Property 7"],
+      "Haryana": ["Property 8", "Property 9"],
+      "Uttarakhand": ["Property 10"],
+      "Uttar Pradesh": ["Property 11", "Property 12"],
+    };
+
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final backgroundColor = isDarkMode ? Colors.black : Colors.white;
@@ -144,7 +160,7 @@ class HomeContent extends StatelessWidget {
                       children: [
                         Container(
                           width: double.infinity,
-                          height: 400,
+                          height: 450,
                           decoration: const BoxDecoration(
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(30),
@@ -159,7 +175,7 @@ class HomeContent extends StatelessWidget {
                         ),
                         Positioned.fill(
                           child: Container(
-                            height: 300,
+                            height: 400,
                             decoration: BoxDecoration(
                               borderRadius: const BorderRadius.only(
                                 bottomLeft: Radius.circular(30),
@@ -167,7 +183,7 @@ class HomeContent extends StatelessWidget {
                               ),
                               gradient: LinearGradient(
                                 colors: [
-                                  Colors.transparent,
+                                  Colors.black.withOpacity(0.3),
                                   Colors.black.withOpacity(0.9),
                                 ],
                                 begin: Alignment.topCenter,
@@ -181,9 +197,17 @@ class HomeContent extends StatelessWidget {
                           left: 20,
                           right: 80,
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              showSearchHeaderDialog(
+                                context,
+                                locationProperties,
+                                (query) {
+                                  print('User searched for: $query');
+                                },
+                              );
+                            },
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 30),
+                              padding: EdgeInsets.symmetric(horizontal: 20),
                               height: 60,
                               decoration: BoxDecoration(
                                 color: backgroundColor,
@@ -238,15 +262,52 @@ class HomeContent extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Positioned(
+                          top: 265,
+                          right: 10,
+                          left: 10,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: Color(0xFF004240).withOpacity(0.7),
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30))),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Are you a Property Owner? ',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w400),
+                                ),
+                                Text(
+                                  'Sell/Rent for FREE ',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w800),
+                                ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: Colors.white,
+                                  size: 20,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
                         const Positioned(
-                          top: 200,
-                          left: 35,
-                          right: 35,
+                          top: 300,
+                          left: 10,
+                          right: 10,
                           child: UspPropertyFilter(),
                         ),
                       ],
                     ),
-                    const SizedBox(height: 220),
+                    const SizedBox(height: 290),
                     Center(child: DistressDealsWidget()),
                     DistressDealPropertyScreen(),
                     const SizedBox(height: 20),

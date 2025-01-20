@@ -81,12 +81,14 @@ class _OtpScreenState extends State<OtpScreen> {
               logoPath: 'assets/applogos/logo.png',
             ),
             const SizedBox(height: 20),
-            Text(
-              'OTP Verification',
-              style: GoogleFonts.merriweather(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontWeight: FontWeight.w600),
+            Center(
+              child: Text(
+                'OTP Verification',
+                style: GoogleFonts.merriweather(
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600),
+              ),
             ),
             const SizedBox(height: 20),
             Consumer<AuthScreenProvider>(
@@ -281,7 +283,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 // Upper line or drag indicator
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 8.0),
-                  width: 80.0,
+                  width: 10.0,
                   height: 4.0,
                   decoration: BoxDecoration(
                     color: Colors.black,

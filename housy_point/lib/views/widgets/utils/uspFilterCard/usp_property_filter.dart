@@ -54,8 +54,8 @@ class _UspPropertyFilterState extends State<UspPropertyFilter> {
             ),
           ],
           borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(30),
-              topRight: Radius.circular(30),
+              topLeft: Radius.circular(0),
+              topRight: Radius.circular(0),
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20)),
           color: Colors.white),

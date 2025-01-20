@@ -58,7 +58,7 @@ class DistressDealsWidget extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    color: isSelected ? Colors.teal : Colors.transparent,
+                    color: isSelected ? Color(0xFF004240) : Colors.transparent,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Text(

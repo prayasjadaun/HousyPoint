@@ -1,83 +1,100 @@
 import 'package:flutter/material.dart';
 
 class AuthScreenProvider extends ChangeNotifier {
-  String _countryCode = '+91'; // Default country code
-  String _phoneNumber = ''; // User's phone number
-  bool _isLoading = false; // Loading state for verification
-  bool _isPhoneValid = true; // Phone number validation status
-  int _expectedPhoneLength = 10; // Default expected length for India (+91)
+  String _countryCode = '+91';
+  String _phoneNumber = '';
+  bool _isLoading = false;
+  bool _isPhoneValid = true;
+  int _expectedPhoneLength = 10;
+  bool _isAuthenticated = false;
+  String _userRole = 'Guest';
 
-  // Getter for country code
+  // Getters
   String get countryCode => _countryCode;
-
-  // Getter for phone number
   String get phoneNumber => _phoneNumber;
-
-  // Getter for loading status
   bool get isLoading => _isLoading;
-
-  // Getter for phone validation status
   bool get isPhoneValid => _isPhoneValid;
+  bool get isAuthenticated => _isAuthenticated;
+  String get userRole => _userRole;
+  
+  final Map<String, int> countryPhoneLengths = {
+    '+91': 10, // India
+    '+1': 10,  // USA/Canada
+    '+44': 10, // UK
+    '+61': 9,  // Australia
+    '+86': 11, // China
+    '+81': 10, // Japan
+    '+49': 11, // Germany
+    '+33': 9,  // France
+    '+7': 10,  // Russia
+    '+55': 11, // Brazil
+    // Add more as needed
+  };
 
-  // Update country code and set expected phone number length
-  void setCountryCode(String code, int expectedLength) {
+  void setCountryCode(String code) {
     _countryCode = code;
-    _expectedPhoneLength = expectedLength;
+    _expectedPhoneLength = countryPhoneLengths[code] ?? 10;
+    // Don't reset phone number here to maintain better UX
+    _isPhoneValid = _validatePhoneNumber(_phoneNumber);
     notifyListeners();
   }
 
-  // Update phone number
-  void setPhoneNumber(String number) {
-    _phoneNumber = number;
-    _isPhoneValid = _validatePhoneNumber(number);
+  void setPhoneNumber(String number, BuildContext context) {
+    String cleanNumber = number.replaceAll(RegExp(r'[^0-9]'), '');
+    
+    if (cleanNumber.length > _expectedPhoneLength) {
+      cleanNumber = cleanNumber.substring(0, _expectedPhoneLength);
+    }
+    
+    _phoneNumber = cleanNumber;
+    _isPhoneValid = _validatePhoneNumber(cleanNumber);
     notifyListeners();
+
+    if (_isPhoneValid && cleanNumber.length == _expectedPhoneLength) {
+      FocusScope.of(context).unfocus();
+    }
   }
 
-  // Validate phone number based on the country code
   bool _validatePhoneNumber(String number) {
-    // Check if the number length matches the expected length for the country
+    if (number.isEmpty) return true; // Don't show error for empty field
     return number.length == _expectedPhoneLength;
   }
 
-  // Trigger validation error
-  void setValidationError() {
-    _isPhoneValid = false;
+  // Authentication methods
+  void login(String username, String role) {
+    _isAuthenticated = true;
+    _userRole = role;
     notifyListeners();
   }
 
-  // Simulate phone number verification
+  void logout() {
+    _isAuthenticated = false;
+    _userRole = 'Guest';
+    notifyListeners();
+  }
+
   Future<bool> verifyPhoneNumber() async {
     if (_phoneNumber.isEmpty || !_isPhoneValid) {
-      setValidationError();
       return false;
     }
 
     _isLoading = true;
     notifyListeners();
 
-    // Simulated verification delay
-    await Future.delayed(const Duration(seconds: 2));
-
-    _isLoading = false;
-    notifyListeners();
-
-    return true;
-  }
-   bool _isAuthenticated = false;
-  String _userRole = 'Guest';  // Define user role
-
-  bool get isAuthenticated => _isAuthenticated;
-  String get userRole => _userRole;  // Getter for userRole
-
-  void login(String username, String role) {
-    _isAuthenticated = true;
-    _userRole = role;  // Set user role on login
-    notifyListeners();
+    try {
+      // Add your phone verification logic here
+      // For example, using Firebase Auth or your backend API
+      await Future.delayed(const Duration(seconds: 2));
+      return true;
+    } catch (e) {
+      return false;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
   }
 
-  void logout() {
-    _isAuthenticated = false;
-    _userRole = 'Guest';  // Reset role on logout
-    notifyListeners();
+  String getFullPhoneNumber() {
+    return '$_countryCode$_phoneNumber';
   }
 }

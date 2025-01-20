@@ -1,133 +1,211 @@
-// import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:geocoding/geocoding.dart';
 
-// class TopSheetContent extends StatefulWidget {
-//   final VoidCallback onClose;
+class SearchHeaderDialog extends StatefulWidget {
+  final List<String> properties; // List of property names
+  final Function(String) onSearch;
 
-//   const TopSheetContent({super.key, required this.onClose});
+  final Map<String, List<String>> locationProperties;
+  const SearchHeaderDialog({
+    Key? key,
+    required this.properties,
+    required this.onSearch,
+    required this.locationProperties,
+  }) : super(key: key);
 
-//   @override
-//   _TopSheetContentState createState() => _TopSheetContentState();
-// }
+  @override
+  _SearchHeaderDialogState createState() => _SearchHeaderDialogState();
+}
 
-// class _TopSheetContentState extends State<TopSheetContent> {
-//   final TextEditingController _searchController = TextEditingController();
-//   bool isSearching = false;
-//   List<String> popularSearches = [
-//     "Luxury Apartments",
-//     "Villas",
-//     "Affordable Homes"
-//   ];
-//   List<String> searchResults = [];
+class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
+  List<String> filteredProperties = [];
+  String userLocation = "Fetching Location...";
 
-//   Future<void> fetchSearchResults(String query) async {
-//     // Simulate API call
-//     await Future.delayed(const Duration(seconds: 1));
-//     setState(() {
-//       searchResults =
-//           List.generate(5, (index) => "$query Property ${index + 1}");
-//     });
-//   }
+  @override
+  void initState() {
+    super.initState();
+    filteredProperties = widget.properties; // Initially show all properties
+    _getCurrentLocation(); // Fetch location on dialog open
+  }
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return SafeArea(
-//       bottom: false,
-//       top: true,
-//       child: Scaffold(
-//         body: Material(
-//           elevation: 8,
-//           child: Container(
-//             color: Colors.red,
-//             padding: const EdgeInsets.all(16.0),
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: [
-//                 Row(
-//                   children: [
-//                     Expanded(
-//                       child: TextField(
-//                         controller: _searchController,
-//                         decoration: InputDecoration(
-//                           labelText: 'Search properties...',
-//                           border: const OutlineInputBorder(),
-//                           prefixIcon: const Icon(Icons.search),
-//                           suffixIcon: _searchController.text.isNotEmpty
-//                               ? IconButton(
-//                                   icon: const Icon(Icons.clear),
-//                                   onPressed: () {
-//                                     setState(() {
-//                                       _searchController.clear();
-//                                       isSearching = false;
-//                                       searchResults = [];
-//                                     });
-//                                   },
-//                                 )
-//                               : null,
-//                         ),
-//                         onChanged: (query) {
-//                           if (query.isNotEmpty) {
-//                             setState(() {
-//                               isSearching = true;
-//                             });
-//                             fetchSearchResults(query);
-//                           } else {
-//                             setState(() {
-//                               isSearching = false;
-//                               searchResults = [];
-//                             });
-//                           }
-//                         },
-//                       ),
-//                     ),
-//                     IconButton(
-//                       icon: const Icon(Icons.close),
-//                       onPressed: widget.onClose,
-//                     ),
-//                   ],
-//                 ),
-//                 const SizedBox(height: 16),
-//                 if (!isSearching && popularSearches.isNotEmpty)
-//                   Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       const Text(
-//                         'Popular Searches:',
-//                         style: TextStyle(
-//                             fontSize: 16, fontWeight: FontWeight.bold),
-//                       ),
-//                       const SizedBox(height: 8),
-//                       Wrap(
-//                         spacing: 8,
-//                         children: popularSearches
-//                             .map((search) => ActionChip(
-//                                   label: Text(search),
-//                                   onPressed: () {
-//                                     _searchController.text = search;
-//                                     setState(() {
-//                                       isSearching = true;
-//                                     });
-//                                     fetchSearchResults(search);
-//                                   },
-//                                 ))
-//                             .toList(),
-//                       ),
-//                     ],
-//                   ),
-//                 if (isSearching)
-//                   ListView.builder(
-//                     shrinkWrap: true,
-//                     itemCount: searchResults.length,
-//                     itemBuilder: (context, index) {
-//                       return ListTile(
-//                         title: Text(searchResults[index]),
-//                       );
-//                     },
-//                   ),
-//               ],
-//             ),
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
+  Future<void> _getCurrentLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    // Check if location services are enabled
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Prompt the user to enable location services
+      setState(() {
+        userLocation = "Location services are disabled. Please enable them.";
+      });
+      return;
+    }
+
+    // Check location permission status
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied
+        setState(() {
+          userLocation = "Location permission denied.";
+        });
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are permanently denied
+      setState(() {
+        userLocation =
+            "Location permission permanently denied. Please enable it in settings.";
+      });
+      return;
+    }
+
+    // Fetch the user's current position
+    try {
+      Position position = await Geolocator.getCurrentPosition(
+          desiredAccuracy: LocationAccuracy.high);
+
+      List<Placemark> placemarks =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+
+      if (placemarks.isNotEmpty) {
+        Placemark place = placemarks.first;
+        setState(() {
+          userLocation =
+              "${place.locality}, ${place.administrativeArea}, ${place.country}";
+        });
+      } else {
+        setState(() {
+          userLocation = "Unable to fetch address.";
+        });
+      }
+    } catch (e) {
+      setState(() {
+        userLocation = "Error retrieving location: $e";
+      });
+    }
+  }
+
+  void _filterProperties(String query) {
+    final results = widget.properties
+        .where(
+            (property) => property.toLowerCase().contains(query.toLowerCase()))
+        .toList();
+
+    setState(() {
+      filteredProperties = results;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Material(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
+          ),
+          elevation: 4,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            padding: const EdgeInsets.all(16.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Search Popular Places',
+                  style: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Text(
+                  'Your Location: $userLocation',
+                  style: const TextStyle(fontSize: 16, color: Colors.black54),
+                ),
+                const SizedBox(height: 10),
+                TextField(
+                  onChanged: (query) {
+                    widget.onSearch(query);
+                    _filterProperties(query);
+                  },
+                  decoration: InputDecoration(
+                    hintText: 'Search home aparts etc...',
+                    prefixIcon: const Icon(Icons.search),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: filteredProperties.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: filteredProperties.length,
+                          itemBuilder: (context, index) {
+                            return ListTile(
+                              leading: const Icon(Icons.location_on),
+                              title: Text(filteredProperties[index]),
+                              onTap: () {
+                                // Handle property selection
+                                Navigator.of(context)
+                                    .pop(filteredProperties[index]);
+                              },
+                            );
+                          },
+                        )
+                      : const Center(
+                          child: Text('No properties found.'),
+                        ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+void showSearchHeaderDialog(BuildContext context,
+    Map<String, List<String>> locationProperties, Function(String) onSearch) {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: true,
+    barrierLabel: "Close",
+    barrierColor: Colors.black54,
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (_, __, ___) {
+      return SearchHeaderDialog(
+        locationProperties: locationProperties,
+        onSearch: onSearch,
+        properties: [],
+      );
+    },
+    transitionBuilder: (_, anim, __, child) {
+      return SlideTransition(
+        position: Tween(
+          begin: const Offset(0, -1),
+          end: Offset.zero,
+        ).animate(anim),
+        child: child,
+      );
+    },
+  );
+}

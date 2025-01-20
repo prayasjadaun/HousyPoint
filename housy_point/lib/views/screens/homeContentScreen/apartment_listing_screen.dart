@@ -5,7 +5,6 @@ import 'package:housy_point/views/widgets/utils/apartmentListingItems/amenities_
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/configuration_widget.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/download_resources.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_widget.dart';
-import 'package:housy_point/views/widgets/utils/apartmentListingItems/location.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/master_layout_widget.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/open_googlemap.dart';
 import 'package:photo_view/photo_view.dart';

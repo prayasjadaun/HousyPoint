@@ -1,13 +1,12 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:country_picker/country_picker.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
 import 'package:housy_point/views/auth/otp_screen.dart';
 import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';
-import 'package:country_picker/country_picker.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key, required this.onNext});
@@ -38,7 +37,7 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 const Text(
-                  'Login via mobile number',
+                  "New to Housy Point? Let's start",
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
@@ -46,133 +45,158 @@ class AuthScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 30),
                 Consumer<AuthScreenProvider>(
-                  builder: (context, provider, _) => Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      border: Border.all(
-                        color: provider.isPhoneValid
-                            ? Colors.grey[300]!
-                            : Colors.red, // Red border if validation fails
-                        width: 1,
-                      ),
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          spreadRadius: 2,
-                          blurRadius: 8,
-                          offset: const Offset(0, 4),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            showCountryPicker(
-                              context: context,
-                              showPhoneCode: true,
-                              onSelect: (Country country) {
-                                provider.setCountryCode(
-                                  '+${country.phoneCode}',
-                                  country.phoneCode
-                                      .length, // Update expected length
-                                );
-                              },
-                            );
-                          },
-                          child: Row(
-                            children: [
-                              Text(
-                                provider.countryCode,
-                                style: const TextStyle(fontSize: 16),
+                  builder: (context, provider, child) {
+                    return Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          // Phone Input Container
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: provider.isPhoneValid
+                                    ? Colors.grey[300]!
+                                    : Colors
+                                        .red, // Red border if validation fails
+                                width: 1,
                               ),
-                              const Icon(Icons.arrow_drop_down),
-                            ],
-                          ),
-                        ),
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextField(
-                            decoration: const InputDecoration(
-                              hintText: 'Enter Mobile Number',
-                              hintStyle: TextStyle(color: Colors.grey),
-                              border: InputBorder.none,
+                              borderRadius: BorderRadius.circular(8),
                             ),
-                            keyboardType: TextInputType.phone,
-                            onChanged: (value) {
-                              provider.setPhoneNumber(value);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 24),
-                Consumer<AuthScreenProvider>(
-                  builder: (context, auth, _) => GestureDetector(
-                    onTap: () {
-                      if (!auth.isLoading) {
-                        auth.verifyPhoneNumber().then((success) {
-                          if (success) {
-                            Navigator.pop(context);
-                            showOtpBottomSheet(context);
-                          }
-                        });
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0xFF004253),
-                            Color(0xFF004240),
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(12),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.2),
-                            spreadRadius: 2,
-                            blurRadius: 8,
-                            offset: const Offset(0, 4),
-                          ),
-                        ],
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 14),
-                      alignment: Alignment.center,
-                      child: auth.isLoading
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Row(
                               children: [
-                                const SpinKitThreeBounce(
-                                  color: Colors.white,
-                                  size: 24.0,
+                                // Country Code Selector
+                                InkWell(
+                                  onTap: () {
+                                    showCountryPicker(
+                                      context: context,
+                                      showPhoneCode: true,
+                                      onSelect: (Country country) {
+                                        provider.setCountryCode(
+                                            '+${country.phoneCode}');
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 16,
+                                    ),
+                                    child: Text(
+                                      provider.countryCode,
+                                      style: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                                const SizedBox(width: 12),
-                                Text(
-                                  'Verifying...',
-                                  style: GoogleFonts.poppins(
-                                    color: Colors.white,
-                                    fontSize: 16,
+                                // Vertical Divider
+                                Container(
+                                  height: 30,
+                                  width: 1,
+                                  color: Colors.grey,
+                                ),
+                                // Phone Number Input
+                                Expanded(
+                                  child: TextField(
+                                    keyboardType: TextInputType.number,
+                                    decoration: InputDecoration(
+                                      hintText: 'Enter phone number',
+                                      border: InputBorder.none,
+                                      contentPadding:
+                                          const EdgeInsets.symmetric(
+                                        horizontal: 16,
+                                        vertical: 14,
+                                      ),
+                                    ),
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.digitsOnly,
+                                      PhoneNumberFormatter(
+                                        provider.countryPhoneLengths[
+                                                provider.countryCode] ??
+                                            10,
+                                      ),
+                                    ],
+                                    onChanged: (value) =>
+                                        provider.setPhoneNumber(value, context),
                                   ),
                                 ),
                               ],
-                            )
-                          : Text(
-                              'Continue',
-                              style: GoogleFonts.poppins(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
                             ),
-                    ),
-                  ),
+                          ),
+                          const SizedBox(height: 24),
+                          // Continue Button
+                          Container(
+                            decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0xFF004253),
+                                    Color(0xFF004240),
+                                  ],
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                ),
+                                borderRadius: BorderRadius.circular(12)),
+                            width: double.infinity,
+                            height: 50,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xFF004240),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                              ),
+                              onPressed: provider.isLoading
+                                  ? null
+                                  : () async {
+                                      if (await provider.verifyPhoneNumber()) {
+                                        showOtpBottomSheet(context);
+                                      }
+                                      // if (!provider.isLoading) {
+                                      //   provider
+                                      //       .verifyPhoneNumber()
+                                      //       .then((success) {
+                                      //     if (success) {
+                                      //       Navigator.pop(context);
+                                      //       showOtpBottomSheet(context);
+                                      //     }
+                                      //   });
+                                      // }
+                                    },
+                              child: provider.isLoading
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        const SpinKitThreeBounce(
+                                          color: Colors.white,
+                                          size: 24.0,
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Text(
+                                          'Verifying...',
+                                          style: GoogleFonts.poppins(
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                          ),
+                                        ),
+                                      ],
+                                    )
+                                  : const Text(
+                                      'Continue',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
@@ -209,9 +233,8 @@ class AuthScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                // Upper line or drag indicator
                 Container(
-                  margin: EdgeInsets.symmetric(vertical: 8.0),
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
                   width: 80.0,
                   height: 4.0,
                   decoration: BoxDecoration(
@@ -222,7 +245,6 @@ class AuthScreen extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(16.0),
                   height: MediaQuery.of(context).size.height * 0.7,
-                 
                   child: OtpScreen(
                     onNext: () {},
                     onBack: () {},
@@ -234,5 +256,26 @@ class AuthScreen extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+// Phone number formatter (if not already defined)
+class PhoneNumberFormatter extends TextInputFormatter {
+  final int maxLength;
+
+  PhoneNumberFormatter(this.maxLength);
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.length > maxLength) {
+      return TextEditingValue(
+        text: newValue.text.substring(0, maxLength),
+        selection: TextSelection.collapsed(offset: maxLength),
+      );
+    }
+    return newValue;
   }
 }
