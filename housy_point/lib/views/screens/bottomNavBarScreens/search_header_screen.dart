@@ -33,40 +33,40 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Check if location services are enabled
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      // Prompt the user to enable location services
-      setState(() {
-        userLocation = "Location services are disabled. Please enable them.";
-      });
-      return;
-    }
-
-    // Check location permission status
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        // Permissions are denied
+    try {
+      // Check if location services are enabled
+      serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (!serviceEnabled) {
+        // Prompt the user to enable location services
         setState(() {
-          userLocation = "Location permission denied.";
+          userLocation = "Location services are disabled. Please enable them.";
         });
         return;
       }
-    }
 
-    if (permission == LocationPermission.deniedForever) {
-      // Permissions are permanently denied
-      setState(() {
-        userLocation =
-            "Location permission permanently denied. Please enable it in settings.";
-      });
-      return;
-    }
+      // Check location permission status
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          // Permissions are denied
+          setState(() {
+            userLocation = "Location permission denied.";
+          });
+          return;
+        }
+      }
 
-    // Fetch the user's current position
-    try {
+      if (permission == LocationPermission.deniedForever) {
+        // Permissions are permanently denied
+        setState(() {
+          userLocation =
+              "Location permission permanently denied. Please enable it in settings.";
+        });
+        return;
+      }
+
+      // Fetch the user's current position
       Position position = await Geolocator.getCurrentPosition(
           desiredAccuracy: LocationAccuracy.high);
 
@@ -85,11 +85,13 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
         });
       }
     } catch (e) {
+      // Catch any other unexpected errors
       setState(() {
         userLocation = "Error retrieving location: $e";
       });
     }
   }
+
 
   void _filterProperties(String query) {
     final results = widget.properties

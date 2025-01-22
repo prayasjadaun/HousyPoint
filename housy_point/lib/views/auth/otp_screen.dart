@@ -283,7 +283,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 // Upper line or drag indicator
                 Container(
                   margin: EdgeInsets.symmetric(vertical: 8.0),
-                  width: 10.0,
+                  width: 20.0,
                   height: 4.0,
                   decoration: BoxDecoration(
                     color: Colors.black,

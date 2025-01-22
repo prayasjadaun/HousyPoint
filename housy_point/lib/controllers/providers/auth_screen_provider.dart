@@ -28,7 +28,7 @@ class AuthScreenProvider extends ChangeNotifier {
     '+33': 9,  // France
     '+7': 10,  // Russia
     '+55': 11, // Brazil
-    // Add more as needed
+    
   };
 
   void setCountryCode(String code) {

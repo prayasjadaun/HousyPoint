@@ -153,16 +153,7 @@ class AuthScreen extends StatelessWidget {
                                       if (await provider.verifyPhoneNumber()) {
                                         showOtpBottomSheet(context);
                                       }
-                                      // if (!provider.isLoading) {
-                                      //   provider
-                                      //       .verifyPhoneNumber()
-                                      //       .then((success) {
-                                      //     if (success) {
-                                      //       Navigator.pop(context);
-                                      //       showOtpBottomSheet(context);
-                                      //     }
-                                      //   });
-                                      // }
+                                     
                                     },
                               child: provider.isLoading
                                   ? Row(
@@ -235,7 +226,7 @@ class AuthScreen extends StatelessWidget {
               children: [
                 Container(
                   margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  width: 80.0,
+                  width: 20.0,
                   height: 4.0,
                   decoration: BoxDecoration(
                     color: Colors.black,
