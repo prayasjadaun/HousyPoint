@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/views/widgets/utils/apartmentListingItems/master_layout_widget.dart';
 import 'package:insta_image_viewer/insta_image_viewer.dart';
 
 class ConfigrationWidget extends StatefulWidget {
