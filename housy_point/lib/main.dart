@@ -3,12 +3,13 @@ import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
 import 'package:housy_point/controllers/providers/bottom_step_manager_provider.dart';
 import 'package:housy_point/controllers/providers/distress_deal_provider.dart';
 import 'package:housy_point/controllers/providers/onbording_provider.dart';
+import 'package:housy_point/controllers/providers/property_provider.dart';
 import 'package:housy_point/controllers/providers/registration_provider.dart';
 import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:housy_point/controllers/providers/splash_screen_provider.dart';
 import 'package:housy_point/controllers/providers/theme_provider.dart';
 import 'package:housy_point/splash_screen.dart';
-import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/second_apart_screen.dart';
 import 'controllers/providers/home_screen_provider.dart';
 import 'controllers/providers/menu_provider.dart';
 import 'package:provider/provider.dart';
@@ -28,6 +29,9 @@ void main() {
         ChangeNotifierProvider(create: (_) => RegistrationProvider()),
         ChangeNotifierProvider(create: (context) => HomeScreenProvider()),
         ChangeNotifierProvider(create: (context) => DistressDealProvider()),
+        ChangeNotifierProvider(
+          create: (_) => PropertySliderProvider(),
+        ),
       ],
       child: const MyApp(),
     ),
@@ -64,8 +68,9 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       home:
-           HomeScreen(),
+          //  HomeScreen(),
           // SplashScreen(),
+          SecondProperty(),
     );
   }
 }
