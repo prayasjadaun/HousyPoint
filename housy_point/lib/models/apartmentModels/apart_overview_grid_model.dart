@@ -100,12 +100,14 @@ class PremiumOverviewGridModel extends StatelessWidget {
           ),
           const SizedBox(height: 12),
           // Title
-          Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 16,
-              color: Color(0xFF004240),
+          Expanded(
+            child: Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Color(0xFF004240),
+              ),
             ),
           ),
           const SizedBox(height: 8),

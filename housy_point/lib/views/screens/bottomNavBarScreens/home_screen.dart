@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 5, vsync: this);
+    _tabController = TabController(length: 4, vsync: this);
     _preloadExpensiveWidgets();
   }
 
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen>
 
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: const MenuScreen(),
+      // endDrawer: const MenuScreen(),
       body: TabBarView(
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
@@ -69,14 +69,14 @@ class _HomeScreenState extends State<HomeScreen>
           const TabContent(child: HomeContent()),
           const TabContent(child: ShortlistedScreen()),
           const TabContent(child: AddPropertyScreen()),
-          const TabContent(child: NotificationsScreen()),
           TabContent(child: ProfileScreen()),
         ],
       ),
       bottomNavigationBar: Consumer<ShortlistProvider>(
         builder: (context, shortlistProvider, child) {
           return ConvexAppBar(
-            height: 50,
+            
+            height: 60,
             style: TabStyle.reactCircle,
             backgroundColor: backgroundColor,
             activeColor: activeColor,
@@ -87,7 +87,6 @@ class _HomeScreenState extends State<HomeScreen>
               TabItem(icon: Icons.home, title: 'Home'),
               TabItem(icon: Icons.favorite, title: 'Shortlisted'),
               TabItem(icon: Icons.add, title: 'Rent/Sell'),
-              TabItem(icon: Icons.notifications, title: 'Notification'),
               TabItem(icon: Icons.person, title: 'Profile'),
             ],
           );
@@ -118,6 +117,7 @@ class _TabContentState extends State<TabContent>
   bool get wantKeepAlive => true;
 }
 
+// Home Screen Content
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
 
@@ -206,7 +206,7 @@ class _HomeContentState extends State<HomeContent> {
                               );
                             },
                             child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding: EdgeInsets.symmetric(horizontal: 10),
                               height: 60,
                               decoration: BoxDecoration(
                                 color: backgroundColor,
@@ -222,7 +222,7 @@ class _HomeContentState extends State<HomeContent> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.search, size: 28),
+                                  Icon(Icons.search, size: 28, color: Colors.black,),
                                   SizedBox(
                                     width: 10,
                                   ),
@@ -230,7 +230,7 @@ class _HomeContentState extends State<HomeContent> {
                                     'Search for homes, aparts etc.',
                                     style: TextStyle(
                                       color: textColor,
-                                      fontSize: 16,
+                                      fontSize: 15,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
