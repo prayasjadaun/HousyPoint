@@ -1,5 +1,6 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:housy_point/controllers/providers/property_provider.dart';
+import 'package:housy_point/controllers/providers/property_slider_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -33,8 +34,7 @@ class SecondProperty extends StatelessWidget {
                       future: Future.delayed(const Duration(seconds: 3)),
                       builder: (context, snapshot) {
                         // Show shimmer effect during the delay
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
                           return Shimmer.fromColors(
                             baseColor: Colors.grey.shade300,
                             highlightColor: Colors.grey.shade50,
@@ -43,46 +43,41 @@ class SecondProperty extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
-                                    margin:
-                                        EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    height: 200,
-                                    decoration: BoxDecoration(
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  height: 200,
+                                  decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(20)
-
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width * 1),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  width: MediaQuery.of(context).size.width,
+                                ),
                                 Container(
-                                    margin:EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    height: 20,
-                                    decoration: BoxDecoration(
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  height: 20,
+                                  decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(20)
-
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width * 1/2),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  width: MediaQuery.of(context).size.width * 0.5,
+                                ),
                                 Container(
-                                    margin:EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    height: 20,
-                                    decoration: BoxDecoration(
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  height: 20,
+                                  decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(20)
-
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width * 1),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  width: MediaQuery.of(context).size.width,
+                                ),
                                 Container(
-                                    margin:EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                                    height: 20,
-                                    decoration: BoxDecoration(
+                                  margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                  height: 20,
+                                  decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
-                                    borderRadius: BorderRadius.circular(20)
-
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width * 1/4),
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  width: MediaQuery.of(context).size.width * 0.25,
+                                ),
                               ],
                             ),
                           );
@@ -102,12 +97,10 @@ class SecondProperty extends StatelessWidget {
                                     fit: BoxFit.cover,
                                   ),
                                 ),
-                                SizedBox(height:10),
+                                SizedBox(height: 10),
                                 Text(
                                   'Mark Willson Property',
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold),
+                                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                                 ),
                                 Text('DHA, North Nazimabad, Lahore, Pakistan'),
                                 SizedBox(height: 4),
@@ -147,11 +140,13 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final propertySliderProvider =
-        Provider.of<PropertySliderProvider>(context, listen: false);
-    // Start auto-slide when the screen is loaded.
+    final propertySliderProvider = Provider.of<PropertySliderProvider>(context, listen: false);
+    
+    // Start auto-slide when the screen is loaded, only if the image list is not empty
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      propertySliderProvider.startAutoSlide(propertyImages);
+      if (propertyImages.isNotEmpty) {
+        propertySliderProvider.startAutoSlide(propertyImages);
+      }
     });
 
     return Scaffold(
@@ -168,8 +163,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     duration: const Duration(milliseconds: 500),
                     child: Image.asset(
                       propertyImages[propertySliderProvider.currentIndex],
-                      key: ValueKey<String>(
-                          propertyImages[propertySliderProvider.currentIndex]),
+                      key: ValueKey<String>(propertyImages[propertySliderProvider.currentIndex]),
                       height: 400,
                       width: double.infinity,
                       fit: BoxFit.cover,
@@ -195,7 +189,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                           onTap: () {
                             // Stop auto-slide and change the index when a thumbnail is tapped.
                             propertySliderProvider.updateImageIndex(index);
-                            propertySliderProvider.resumeAutoSlide();
+                            propertySliderProvider.resumeAutoSlide(propertyImages);
                           },
                           child: Container(
                             margin: const EdgeInsets.symmetric(horizontal: 8),
@@ -209,6 +203,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                               //   width: 2,
                               // ),
                               borderRadius: BorderRadius.circular(10),
+
                             ),
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8),
@@ -235,27 +230,20 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     children: [
                       Text(
                         'Home',
-                        style: TextStyle(
-                            color: Colors.grey.shade800,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w500),
+                        style: TextStyle(color: Colors.grey.shade800, fontSize: 18, fontWeight: FontWeight.w500),
                       ),
                       Row(
                         children: [
                           Text(
                             "\$1900/",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w900),
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900),
                           ),
                           Text(
                             "Month",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontSize: 15,
-                                fontWeight: FontWeight.w500),
+                            style: TextStyle(color: Colors.grey, fontSize: 15, fontWeight: FontWeight.w500),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                   const Text(
@@ -279,8 +267,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       children: const [
                         IconWithText(icon: Icons.bed, text: '3 Bed'),
                         IconWithText(icon: Icons.bathtub, text: '2 Bath'),
-                        IconWithText(
-                            icon: Icons.square_foot, text: '2,567 Sqft'),
+                        IconWithText(icon: Icons.square_foot, text: '2,567 Sqft'),
                       ],
                     ),
                   ),
@@ -301,16 +288,14 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                   ),
                   const ListTile(
                     leading: CircleAvatar(
-                      backgroundImage: AssetImage(
-                        'assets/images/boyProfile.png',
-                      ),
+                      backgroundImage: AssetImage('assets/images/boyProfile.png'),
                     ),
                     title: Text('Listing Agent'),
                     subtitle: Text('18392719103'),
                     trailing: Icon(Icons.phone),
                   ),
                   Container(
-                    padding:EdgeInsets.symmetric(horizontal: 10),
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
@@ -320,10 +305,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     child: const Center(
                       child: Text(
                         'B O O K N O W',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w800),
+                        style: TextStyle(color: Colors.white, fontSize: 15, fontWeight: FontWeight.w800),
                       ),
                     ),
                   ),
@@ -341,18 +323,13 @@ class IconWithText extends StatelessWidget {
   final IconData icon;
   final String text;
 
-  const IconWithText({Key? key, required this.icon, required this.text})
-      : super(key: key);
+  const IconWithText({Key? key, required this.icon, required this.text}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Icon(
-          icon,
-          size: 20,
-          color: Colors.black,
-        ),
+        Icon(icon, size: 20, color: Colors.black),
         const SizedBox(width: 4),
         Text(
           text,

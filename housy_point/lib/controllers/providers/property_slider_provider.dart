@@ -9,6 +9,11 @@ class PropertySliderProvider extends ChangeNotifier {
   PropertySliderProvider();
 
   void startAutoSlide(List<String> propertyImages) {
+    if (propertyImages.isEmpty) {
+      print("Error: No property images available to start the auto-slide.");
+      return; // Don't proceed if the list is empty.
+    }
+
     _timer?.cancel(); // Cancel any existing timer.
 
     // Start auto-sliding every 3 seconds
@@ -25,12 +30,18 @@ class PropertySliderProvider extends ChangeNotifier {
     isAutoSliding = false;
   }
 
-  void resumeAutoSlide() {
+  void resumeAutoSlide(List<String> propertyImages) {
+    // Ensure propertyImages is not empty before restarting the auto-slide
+    if (propertyImages.isEmpty) {
+      print("Error: No property images available to resume auto-slide.");
+      return;
+    }
+
     // Wait for 3 seconds before resuming auto-slide and updating the border color
     Timer(const Duration(seconds: 3), () {
       isAutoSliding = true;
       notifyListeners(); // Notify listeners to resume the UI update.
-      startAutoSlide([]); // Restart the auto-slide process.
+      startAutoSlide(propertyImages); // Restart the auto-slide process.
     });
   }
 

@@ -3,7 +3,7 @@ import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
 import 'package:housy_point/controllers/providers/bottom_step_manager_provider.dart';
 import 'package:housy_point/controllers/providers/distress_deal_provider.dart';
 import 'package:housy_point/controllers/providers/onbording_provider.dart';
-import 'package:housy_point/controllers/providers/property_provider.dart';
+import 'package:housy_point/controllers/providers/property_slider_provider.dart';
 import 'package:housy_point/controllers/providers/registration_provider.dart';
 import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
 import 'package:housy_point/controllers/providers/splash_screen_provider.dart';
