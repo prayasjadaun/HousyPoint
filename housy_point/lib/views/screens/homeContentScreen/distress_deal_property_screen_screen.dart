@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:housy_point/models/apartmentModels/apartment_listing_model.dart';
 import 'package:housy_point/models/distress_model.dart';
 import 'package:housy_point/views/screens/homeContentScreen/apartment_listing_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/second_apart_screen.dart';
 import 'package:housy_point/views/widgets/utils/itemCards/distress_card.dart';
 
 class DistressDealPropertyScreen extends StatefulWidget {
@@ -72,11 +73,7 @@ class _DistressDealPropertyScreenState extends State<DistressDealPropertyScreen>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ApartmentListingScreen(
-                      apartmentListing: ApartmentListing(
-                        distress: properties[_currentPage],
-                      ),
-                    ),
+                    builder: (context) => PropertyDetailScreen(),
                   ),
                 );
               },

@@ -4,7 +4,6 @@ import 'package:housy_point/views/screens/bottomNavBarScreens/search_header_scre
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
 import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
-import 'package:housy_point/views/screens/bottomNavBarScreens/notifications_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:housy_point/views/screens/bottomNavBarScreens/add_property_screen.dart';
