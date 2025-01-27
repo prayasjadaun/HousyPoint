@@ -134,7 +134,7 @@ class SecondProperty extends StatelessWidget {
 
 class PropertyDetailScreen extends StatefulWidget {
   late final AmenityItems amenity;
-  
+
   @override
   _PropertyDetailScreenState createState() => _PropertyDetailScreenState();
 }
@@ -147,7 +147,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
     'assets/images/propertyfour.jpg',
     'assets/images/propertyfive.jpg',
   ];
-  
+
   final List<AmenityItems> amenityitems = [
     AmenityItems(name: 'Basket Ball', icon: Icons.sports_basketball),
     AmenityItems(name: 'Themed Garden', icon: Icons.park),
@@ -157,7 +157,6 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
     AmenityItems(name: 'Kids Play Area', icon: Icons.child_friendly),
     AmenityItems(name: 'Tennis Court', icon: Icons.sports_tennis),
   ];
-  
 
   @override
   Widget build(BuildContext context) {
@@ -336,22 +335,40 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       text: 'Gurugram, Haryana',
                     ),
                     const SizedBox(height: 16),
+
                     Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(20),
-                        border: Border.all(color: Colors.grey),
+                        border: Border.all(color: Colors.grey.shade200)
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          IconWithText(icon: Icons.bed, text: '3 Bed'),
-                          IconWithText(icon: Icons.bathtub, text: '2 Bath'),
-                          IconWithText(
-                              icon: Icons.square_foot, text: '2,567 Sqft'),
-                        ],
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            IconWithText(
+                                icon: Icons.location_on, text: 'Location'),
+                                SizedBox(width: 5,),
+                            IconWithText(
+                                icon: Icons.square_sharp,
+                                text: 'Configration'),
+                            IconWithText(
+                                icon: Icons.square_foot,
+                                text: '2,567'),
+                                IconWithText(
+                                icon: Icons.location_on, text: 'Location'),
+                            IconWithText(
+                                icon: Icons.square_sharp,
+                                text: 'Configration'),
+                            IconWithText(
+                                icon: Icons.square_foot,
+                                text: '2,567'),
+                          ],
+                        ),
                       ),
                     ),
+
                     const SizedBox(height: 16),
                     // Description--------------
                     const Text(
@@ -398,19 +415,23 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     Container(
                       height: 300,
                       child: GridView.builder(
-                        physics: ScrollPhysics(),
+                        physics:
+                            BouncingScrollPhysics(), // Optional, adjust based on your use case
                         scrollDirection: Axis.vertical,
+                        shrinkWrap:
+                            true, // Ensures the GridView takes up only as much space as needed
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 4, // Number of columns
-                          crossAxisSpacing: 10, // Space between columns
-                          mainAxisSpacing: 10, // Space between rows
+                          crossAxisCount: 5, // Number of columns
+                          crossAxisSpacing: 5, // Space between columns
+                          mainAxisSpacing: 15, // Space between rows
                           childAspectRatio:
                               1, // Aspect ratio of each grid item (1 means square)
                         ),
                         itemCount: amenityitems.length,
                         itemBuilder: (context, index) {
                           return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.center, // Center the items
                             children: [
                               Container(
                                 height: 50,
@@ -420,10 +441,26 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                                   borderRadius: BorderRadius.circular(20),
                                   color: Colors.grey.shade300,
                                 ),
-                                child: Icon(amenityitems[index].icon, color: Colors.black,),
+                                child: Icon(
+                                  amenityitems[index].icon,
+                                  color: Colors.black,
+                                ),
                               ),
-                              SizedBox(height: 10,),
-                          Expanded(child: Text(amenityitems[index].name, overflow: TextOverflow.ellipsis,)),
+                              SizedBox(height: 5),
+                              Expanded(
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    softWrap: false,
+                                    maxLines: 2,
+                                    amenityitems[index].name,
+                                    textAlign:
+                                        TextAlign.center, // Center the text
+                                    overflow: TextOverflow
+                                        .ellipsis, // Add ellipsis if text overflows
+                                  ),
+                                ),
+                              ),
                             ],
                           );
                         },
@@ -460,11 +497,12 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
         ));
   }
 }
+
 class AmenityItems {
-    final String name ;
-    final IconData icon;
-    AmenityItems({required this.name, required this.icon});
-  }
+  final String name;
+  final IconData icon;
+  AmenityItems({required this.name, required this.icon});
+}
 
 class IconWithText extends StatelessWidget {
   final IconData icon;
@@ -478,11 +516,11 @@ class IconWithText extends StatelessWidget {
     return Row(
       children: [
         Icon(icon, size: 20, color: Colors.black),
-        const SizedBox(width: 4),
+        const SizedBox(width: 5),
         Text(
           text,
           style: const TextStyle(fontSize: 16),
-          overflow: TextOverflow.ellipsis,
+          // overflow: TextOverflow.ellipsis,
           maxLines: 2,
         ),
       ],
