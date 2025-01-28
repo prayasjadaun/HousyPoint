@@ -69,9 +69,9 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       home:
-          //  HomeScreen(),
+           HomeScreen(),
           // SplashScreen(),
-          SecondProperty(),
+          // SecondProperty(),
     );
   }
 }
