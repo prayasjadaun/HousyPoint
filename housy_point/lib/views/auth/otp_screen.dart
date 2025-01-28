@@ -84,7 +84,7 @@ class _OtpScreenState extends State<OtpScreen> {
             Center(
               child: Text(
                 'OTP Verification',
-                style: GoogleFonts.merriweather(
+                style: GoogleFonts.smoochSans(
                     fontSize: 25,
                     color: Colors.black,
                     fontWeight: FontWeight.w600),
@@ -95,8 +95,8 @@ class _OtpScreenState extends State<OtpScreen> {
               builder: (context, auth, _) => Center(
                 child: Text(
                   "We've sent a verification code to\n${auth.phoneNumber}",
-                  style: GoogleFonts.merriweather(
-                    fontSize: 16,
+                  style: GoogleFonts.smoochSans(
+                    fontSize: 20,
                     color: Colors.grey.shade600,
                   ),
                 ),

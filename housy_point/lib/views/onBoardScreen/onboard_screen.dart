@@ -189,15 +189,15 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     return Column(
       children: [
         buildImage(context, imagePath),
-        const SizedBox(height: 20),
+        // const SizedBox(height: 15),
         Text(
           title,
-          style: GoogleFonts.merriweather(
+          style: GoogleFonts.lexendGiga(
             fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
-        const SizedBox(height: 10),
+        // const SizedBox(height: 10),
         Text(
           bodyText,
           style: const TextStyle(fontSize: 16, color: Colors.grey),

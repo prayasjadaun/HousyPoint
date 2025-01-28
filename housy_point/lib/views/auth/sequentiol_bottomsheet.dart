@@ -42,15 +42,16 @@ class SequentialBottomSheet extends StatelessWidget {
                   },
                   onBack: () {
                     stepManager.previousStep();
-                    _pageController.previousPage(
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeIn,
-                    );
+                    // _pageController.previousPage(
+                    //   duration: const Duration(milliseconds: 300),
+                    //   curve: Curves.easeIn,
+                    // );
                   },
                 ),
                 RegistrationScreen(
+                  
                   onBack: () {
-                    stepManager.previousStep();
+                    // stepManager.previousStep();
                     _pageController.previousPage(
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeIn,
