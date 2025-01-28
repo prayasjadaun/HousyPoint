@@ -57,6 +57,8 @@ dependencies:
   permission_handler: ^11.3.1
   geocoding: ^3.0.0
   shimmer: ^3.0.0
+  animate_do: ^3.3.4
+  glassmorphism: ^3.0.0
 
 dev_dependencies:
   flutter_test:

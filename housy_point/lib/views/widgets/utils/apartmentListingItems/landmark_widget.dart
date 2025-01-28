@@ -76,7 +76,7 @@ class CircleBackgroundPainter extends CustomPainter {
       ..strokeWidth = 2;
 
     final center = Offset(size.width / 2, size.height / 2);
-    final radii = [120.0, 150.0, 180.0];
+    final radii = [110.0, 140.0, 170.0];
 
     for (var radius in radii) {
       canvas.drawCircle(center, radius, paint);
@@ -89,10 +89,10 @@ class CircleBackgroundPainter extends CustomPainter {
 
 class PositionedLandmarks extends StatelessWidget {
   final List<Landmark> landmarks = [
-    Landmark(name: "Hospital", km: '2 km', angle: 220),
+    Landmark(name: "Hospital", km: '2 km', angle: 300),
     Landmark(name: "School", km: '100 m', angle: -20),
     Landmark(name: "Mall", km: '200 m', angle: 20),
-    Landmark(name: "Park", km: '50 m', angle: 150),
+    Landmark(name: "Park", km: '50 m', angle: 40),
     Landmark(name: "Gym", km: '2 km', angle: 200),
     Landmark(name: "Tennis Court", km: '1 km', angle: 130),
   ];

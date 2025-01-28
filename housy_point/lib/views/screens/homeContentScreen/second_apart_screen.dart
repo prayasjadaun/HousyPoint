@@ -1,9 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:housy_point/controllers/providers/property_slider_provider.dart';
-import 'package:housy_point/views/widgets/utils/apartmentListingItems/amenities_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_widget.dart';
+import 'package:housy_point/views/widgets/utils/apartmentListingItems/open_googlemap.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
+
+import '../../widgets/utils/apartmentListingItems/configuration_widget.dart';
+import '../../widgets/utils/apartmentListingItems/download_resources.dart';
+import '../../widgets/utils/apartmentListingItems/location.dart';
+import '../../widgets/utils/apartmentListingItems/master_layout_widget.dart';
 
 class SecondProperty extends StatelessWidget {
   const SecondProperty({Key? key}) : super(key: key);
@@ -107,12 +113,12 @@ class SecondProperty extends StatelessWidget {
                                 ),
                                 SizedBox(height: 10),
                                 Text(
-                                  'Mark Willson Property',
+                                  'Housy Point Property',
                                   style: TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold),
                                 ),
-                                Text('DHA, North Nazimabad, Lahore, Pakistan'),
+                                Text('Iffcco Chawk Gurugram'),
                                 SizedBox(height: 4),
                                 Text('\$1900/Month'),
                               ],
@@ -264,7 +270,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                             CircleAvatar(
                               backgroundColor: Colors.white,
                               child: Icon(
-                                Icons.favorite,
+                                Icons.favorite_border_outlined,
                                 color: Colors.black,
                               ),
                             ),
@@ -424,7 +430,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Amenties --------
+                    // Amenties ----------------------
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -439,8 +445,9 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                         ),
                       ],
                     ),
+                    // Amenities Container
                     Container(
-                      height: 220,
+                      height: 240,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey.shade200),
                           borderRadius: BorderRadius.circular(20)),
@@ -498,20 +505,65 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Landmarks',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'see all',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ],
+                    // Landmarks Widget-------------------
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text(
+                    //       'Landmarks',
+                    //       style: TextStyle(
+                    //           fontSize: 18, fontWeight: FontWeight.w700),
+                    //     ),
+                    //     Text(
+                    //       'see all',
+                    //       style: TextStyle(color: Colors.blue),
+                    //     ),
+                    //   ],
+                    // ),
+                    Container(
+                      height: 600,
+                      width: double.infinity,
+                      child: LandmarksWidget()),
+                      // Location Widget
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: const Text(
+                              "LOCATION",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            height: 2,
+                            width: 80,
+                            color: Colors.amber,
+                          ),
+                        ]),
+                    SizedBox(
+                      height: 30,
                     ),
+                    OpenMapFromBackend(),
+                    
+                     SizedBox(
+                      height: 50,
+                    ),
+                    // Master Layout Widget----------------
+                    MasterLayoutWidget(),
+                    // Configration Widget ----------
+                    ConfigrationWidget(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    
+                    // Download Resources------------
+                    Container(height: 400, child: DownloadResources()),
+
                   ],
                 ),
               ),

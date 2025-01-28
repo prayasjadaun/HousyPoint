@@ -74,7 +74,6 @@ class _HomeScreenState extends State<HomeScreen>
       bottomNavigationBar: Consumer<ShortlistProvider>(
         builder: (context, shortlistProvider, child) {
           return ConvexAppBar(
-            
             height: 60,
             style: TabStyle.reactCircle,
             backgroundColor: backgroundColor,
@@ -221,7 +220,11 @@ class _HomeContentState extends State<HomeContent> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(Icons.search, size: 28, color: Colors.black,),
+                                  Icon(
+                                    Icons.search,
+                                    size: 28,
+                                    color: Colors.black,
+                                  ),
                                   SizedBox(
                                     width: 10,
                                   ),
