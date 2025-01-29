@@ -213,9 +213,55 @@ class _HomeContentState extends State<HomeContent> {
                           ),
                         ),
                         Positioned(
-                          top: 50,
+                          top: 40,
+                          left: 5,
+                          right: 5,
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.red,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Icon(Icons.location_on),
+                                        Text('Location')
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      IconButton(
+                                        icon: const Icon(Icons.person,
+                                            color: Colors.black),
+                                        onPressed: () {
+                                          Scaffold.of(context).openEndDrawer();
+                                        },
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          top: 110,
                           left: 20,
-                          right: 80,
+                          right: 20,
                           child: GestureDetector(
                             onTap: () {
                               showSearchHeaderDialog(
@@ -243,17 +289,9 @@ class _HomeContentState extends State<HomeContent> {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
-                                  Icon(
-                                    Icons.search,
-                                    size: 28,
-                                    color: Colors.black,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
                                   Expanded(
                                     child: AnimatedSwitcher(
-                                      switchInCurve: Curves.ease,
+                                      switchInCurve: Curves.easeInCubic,
                                       duration: Duration(seconds: 1),
                                       child: Row(
                                         children: [
@@ -278,33 +316,46 @@ class _HomeContentState extends State<HomeContent> {
                                       ),
                                     ),
                                   ),
+                                  Icon(
+                                    Icons.search,
+                                    size: 28,
+                                    color: Colors.black,
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Icon(
+                                    Icons.mic,
+                                    size: 28,
+                                    color: Colors.black,
+                                  ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        Positioned(
-                          top: 50,
-                          right: 20,
-                          child: Container(
-                            height: 60,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Row(
-                              children: [
-                                IconButton(
-                                  icon: const Icon(Icons.filter_list_sharp,
-                                      color: Colors.black),
-                                  onPressed: () {
-                                    Scaffold.of(context).openEndDrawer();
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        // Positioned(
+                        //   top: 100,
+                        //   right: 20,
+                        //   child: Container(
+                        //     height: 60,
+                        //     decoration: BoxDecoration(
+                        //       color: Colors.white,
+                        //       shape: BoxShape.circle,
+                        //     ),
+                        //     child: Row(
+                        //       children: [
+                        //         IconButton(
+                        //           icon: const Icon(Icons.filter_list_sharp,
+                        //               color: Colors.black),
+                        //           onPressed: () {
+                        //             Scaffold.of(context).openEndDrawer();
+                        //           },
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
                         Positioned(
                           top: 265,
                           right: 10,

@@ -45,8 +45,8 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
         ),
         elevation: 4,
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.6,
-          padding: const EdgeInsets.all(16.0),
+          height: MediaQuery.of(context).size.height * 0.5,
+          padding: const EdgeInsets.all(15.0),
           decoration: const BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.only(
@@ -56,9 +56,10 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               SizedBox(
-                height: 10,
+                height: 30,
               ),
               const Text(
                 'Search Properties',
