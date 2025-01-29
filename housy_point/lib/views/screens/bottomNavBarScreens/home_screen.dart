@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:housy_point/views/screens/bottomNavBarScreens/search_header_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/search_header_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
+import 'package:housy_point/views/screens/homeContentScreen/location_search.dart';
 import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
 import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
@@ -147,14 +148,23 @@ class _HomeContentState extends State<HomeContent> {
     "Powai, Mumbai",
     "Whitefield, Bangalore",
     "Salt Lake City, Kolkata",
-    "Connaught Place, Delhi",
-    "Indiranagar, Bangalore",
-    "Gachibowli, Hyderabad",
-    "Banjara Hills, Hyderabad",
-    "Koramangala, Bangalore",
-    "Sector 62, Noida",
-    "Hinjewadi, Pune",
-    "Anna Nagar, Chennai",
+    // "Connaught Place, Delhi",
+    // "Indiranagar, Bangalore",
+    // "Gachibowli, Hyderabad",
+    // "Banjara Hills, Hyderabad",
+    // "Koramangala, Bangalore",
+    // "Sector 62, Noida",
+    // "Hinjewadi, Pune",
+    // "Anna Nagar, Chennai",
+  ];
+  List<String> projects = [
+    "HCBS Sports Villa, Sohna",
+    "4 & 5, Sohna",
+    "Powai, Mumbai",
+  ];
+  List<String> builders = [
+    "Signature Global",
+    "Powai, Mumbai",
   ];
   @override
   Widget build(BuildContext context) {
@@ -213,62 +223,19 @@ class _HomeContentState extends State<HomeContent> {
                           ),
                         ),
                         Positioned(
-                          top: 40,
-                          left: 5,
-                          right: 5,
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20),
-                              color: Colors.red,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Icon(Icons.location_on),
-                                        Text('Location')
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Container(
-                                  height: 40,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    shape: BoxShape.circle,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      IconButton(
-                                        icon: const Icon(Icons.person,
-                                            color: Colors.black),
-                                        onPressed: () {
-                                          Scaffold.of(context).openEndDrawer();
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 110,
+                          top: 50,
                           left: 20,
                           right: 20,
                           child: GestureDetector(
                             onTap: () {
                               showSearchHeaderDialog(
                                 context,
-                                properties, // Pass your dynamic list here
+                                properties, // Pass your dynamic list of properties here
+                                projects, // Pass your dynamic list of projects here
+                                builders, // Pass your dynamic list of builders here
                                 (query) {
                                   print('User searched for: $query');
+                                  // You can add your custom search handling logic here
                                 },
                               );
                             },
@@ -291,9 +258,16 @@ class _HomeContentState extends State<HomeContent> {
                                 children: [
                                   Expanded(
                                     child: AnimatedSwitcher(
-                                      switchInCurve: Curves.easeInCubic,
-                                      duration: Duration(seconds: 1),
+                                      duration: const Duration(
+                                          seconds:
+                                              2), // Shortened duration for a quicker transition
+                                      switchInCurve: Curves
+                                          .easeInOut, // Smooth in and out transition
+                                      switchOutCurve: Curves
+                                          .easeOut, // Smooth transition when switching out
                                       child: Row(
+                                        key: ValueKey<int>(
+                                            _currentIndex), // Key for identifying and animating the changes
                                         children: [
                                           Text(
                                             "Search for ",
@@ -305,7 +279,6 @@ class _HomeContentState extends State<HomeContent> {
                                           ),
                                           Text(
                                             propertyTypes[_currentIndex],
-                                            key: ValueKey<int>(_currentIndex),
                                             style: TextStyle(
                                               color: Colors.black,
                                               fontSize: 17,
@@ -322,40 +295,32 @@ class _HomeContentState extends State<HomeContent> {
                                     color: Colors.black,
                                   ),
                                   SizedBox(
-                                    width: 10,
+                                    width: 20,
                                   ),
-                                  Icon(
-                                    Icons.mic,
-                                    size: 28,
-                                    color: Colors.black,
+                                  Container(
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade400,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.person,
+                                              color: Colors.black),
+                                          onPressed: () {
+                                            Scaffold.of(context)
+                                                .openEndDrawer();
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
                         ),
-                        // Positioned(
-                        //   top: 100,
-                        //   right: 20,
-                        //   child: Container(
-                        //     height: 60,
-                        //     decoration: BoxDecoration(
-                        //       color: Colors.white,
-                        //       shape: BoxShape.circle,
-                        //     ),
-                        //     child: Row(
-                        //       children: [
-                        //         IconButton(
-                        //           icon: const Icon(Icons.filter_list_sharp,
-                        //               color: Colors.black),
-                        //           onPressed: () {
-                        //             Scaffold.of(context).openEndDrawer();
-                        //           },
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ),
-                        // ),
                         Positioned(
                           top: 265,
                           right: 10,

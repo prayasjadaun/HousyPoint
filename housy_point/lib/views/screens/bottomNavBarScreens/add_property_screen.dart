@@ -22,7 +22,7 @@ class _AddPropertyScreenState extends State<AddPropertyScreen> {
                   borderRadius: BorderRadius.circular(15),
                 ),
                 child: Image.asset('assets/applogos/logo.png')),
-          )),
+          ),),
       body: SafeArea(
         child: SingleChildScrollView(
           // scrollDirection: Axis.vertical,

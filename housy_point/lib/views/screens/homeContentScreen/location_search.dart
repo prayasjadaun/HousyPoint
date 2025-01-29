@@ -1,126 +1,124 @@
-import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:flutter/material.dart';
+// import 'package:geolocator/geolocator.dart';
+// import 'package:geocoding/geocoding.dart';
 
-class LocationSearchScreen extends StatefulWidget {
-  @override
-  _LocationSearchScreenState createState() => _LocationSearchScreenState();
-}
+// class LocationWidget extends StatefulWidget {
+//   @override
+//   _LocationWidgetState createState() => _LocationWidgetState();
+// }
 
-class _LocationSearchScreenState extends State<LocationSearchScreen> {
-  String userLocation = "Unknown Location";
-  List<String> locations = [
-    "Jammu & Kashmir",
-    "Himachal Pradesh",
-    "Punjab",
-    "Haryana",
-    "Uttarakhand",
-    "Uttar Pradesh",
-  ];
-  List<String> filteredLocations = [];
+// class _LocationWidgetState extends State<LocationWidget> {
+//   String userLocation = "Fetching Location...";
 
-  @override
-  void initState() {
-    super.initState();
-    filteredLocations = locations;
-  }
+//   @override
+//   void initState() {
+//     super.initState();
+//     _getCurrentLocation(); // Fetch location on widget initialization
+//   }
 
-  Future<void> _getCurrentLocation() async {
-    PermissionStatus permission = await Permission.location.request();
+//   Future<void> _getCurrentLocation() async {
+//     bool serviceEnabled;
+//     LocationPermission permission;
 
-    if (permission == PermissionStatus.granted) {
-      try {
-        Position position = await Geolocator.getCurrentPosition(
-            desiredAccuracy: LocationAccuracy.high);
+//     try {
+//       // Check if location services are enabled
+//       serviceEnabled = await Geolocator.isLocationServiceEnabled();
+//       if (!serviceEnabled) {
+//         setState(() {
+//           userLocation = "Location services are disabled. Please enable them.";
+//         });
+//         return;
+//       }
 
-        setState(() {
-          userLocation =
-              "Lat: ${position.latitude}, Long: ${position.longitude}";
-        });
+//       // Check location permission status
+//       permission = await Geolocator.checkPermission();
+//       if (permission == LocationPermission.denied) {
+//         permission = await Geolocator.requestPermission();
+//         if (permission == LocationPermission.denied) {
+//           setState(() {
+//             userLocation = "Location permission denied.";
+//           });
+//           return;
+//         }
+//       }
 
-        // Optionally, convert coordinates to a human-readable address
-        // using reverse geocoding with a package like `geocoding`.
-      } catch (e) {
-        print("Error retrieving location: $e");
-        setState(() {
-          userLocation = "Unable to retrieve location.";
-        });
-      }
-    } else {
-      setState(() {
-        userLocation = "Location permission denied.";
-      });
-    }
-  }
+//       if (permission == LocationPermission.deniedForever) {
+//         setState(() {
+//           userLocation = "Location permission permanently denied. Please enable it in settings.";
+//         });
+//         return;
+//       }
 
-  void _filterLocations(String query) {
-    setState(() {
-      filteredLocations = locations
-          .where((location) =>
-              location.toLowerCase().contains(query.toLowerCase()))
-          .toList();
-    });
-  }
+//       // Fetch the user's current position
+//       Position position = await Geolocator.getCurrentPosition(
+//           desiredAccuracy: LocationAccuracy.high);
 
-  void _handleLocationSelection(String location) {
-    print("Selected Location: $location");
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => DistressDealPropertyScreen(),
-      ),
-    );
-  }
+//       List<Placemark> placemarks = await placemarkFromCoordinates(
+//           position.latitude, position.longitude);
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Search Location")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Your Location: $userLocation",
-              style: const TextStyle(fontSize: 16, color: Colors.black87),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: _getCurrentLocation,
-              child: const Text("Enable Location"),
-            ),
-            const SizedBox(height: 20),
-            TextField(
-              onChanged: _filterLocations,
-              decoration: InputDecoration(
-                hintText: 'Search for a location...',
-                prefixIcon: const Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Expanded(
-              child: filteredLocations.isNotEmpty
-                  ? ListView.builder(
-                      itemCount: filteredLocations.length,
-                      itemBuilder: (context, index) {
-                        final location = filteredLocations[index];
-                        return ListTile(
-                          leading: const Icon(Icons.location_on),
-                          title: Text(location),
-                          onTap: () => _handleLocationSelection(location),
-                        );
-                      },
-                    )
-                  : const Center(child: Text("No locations found.")),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
+//       if (placemarks.isNotEmpty) {
+//         Placemark place = placemarks.first;
+//         setState(() {
+//           userLocation =
+//               "${place.locality}, ${place.administrativeArea}, ${place.country}";
+//         });
+//       } else {
+//         setState(() {
+//           userLocation = "Unable to fetch address.";
+//         });
+//       }
+//     } catch (e) {
+//       setState(() {
+//         userLocation = "Error retrieving location: $e";
+//       });
+//     }
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Positioned(
+//       top: 40,
+//       left: 5,
+//       right: 5,
+//       child: Container(
+//         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+//         decoration: BoxDecoration(
+//           borderRadius: BorderRadius.circular(20),
+//           color: Colors.transparent,
+//         ),
+//         child: Row(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             Column(
+//               children: [
+//                 Row(
+//                   children: [
+//                     Icon(Icons.location_on),
+//                     Text(userLocation), // Display the fetched location
+//                   ],
+//                 ),
+//               ],
+//             ),
+//             Container(
+//               height: 40,
+//               decoration: BoxDecoration(
+//                 color: Colors.white,
+//                 shape: BoxShape.circle,
+//               ),
+//               child: Row(
+//                 children: [
+//                   IconButton(
+//                     icon: const Icon(Icons.person, color: Colors.black),
+//                     onPressed: () {
+//                       Scaffold.of(context).openEndDrawer();
+//                     },
+//                   ),
+//                 ],
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }
