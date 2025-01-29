@@ -1,39 +1,5 @@
 import 'package:flutter/material.dart';
 
-class TopScreen extends StatefulWidget {
-  @override
-  _TopScreenState createState() => _TopScreenState();
-}
-
-class _TopScreenState extends State<TopScreen> {
-  void openTopSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return PropertySearchTopSheet(
-          onClose: () {
-            Navigator.pop(context); // Close the sheet when onClose is called
-          },
-        );
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('Property Search')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => openTopSheet(context),
-          child: Text('Open Property Search'),
-        ),
-      ),
-    );
-  }
-}
-
 class PropertySearchTopSheet extends StatefulWidget {
   final VoidCallback onClose;
 
@@ -69,7 +35,9 @@ class _PropertySearchTopSheetState extends State<PropertySearchTopSheet> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onClose, // Close the sheet when tapping outside
+      onTap: () {
+        widget.onClose(); // Close the sheet when tapping outside
+      },
       child: Container(
         color: Colors.black.withOpacity(0.5), // Semi-transparent background
         child: Align(
@@ -128,7 +96,7 @@ class _PropertySearchTopSheetState extends State<PropertySearchTopSheet> {
                     itemBuilder: (context, index) {
                       final property = filteredProperties[index];
                       return ListTile(
-                        leading: Image.asset(
+                        leading: Image.network(
                           property.imageUrl,
                           width: 50,
                           height: 50,
@@ -149,13 +117,15 @@ class _PropertySearchTopSheetState extends State<PropertySearchTopSheet> {
   }
 }
 
+
 // Dummy Data
 class Property {
   final String name;
   final String location;
   final String imageUrl;
 
-  Property({required this.name, required this.location, required this.imageUrl});
+  Property(
+      {required this.name, required this.location, required this.imageUrl});
 }
 
 List<Property> dummyProperties = [

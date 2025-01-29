@@ -124,17 +124,40 @@ class HomeContent extends StatefulWidget {
 }
 
 class _HomeContentState extends State<HomeContent> {
+  final List<String> propertyTypes = ["'Apartment'", "'Home'", "'Villa'"];
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _startTextAnimation();
+  }
+
+  void _startTextAnimation() {
+    Future.delayed(Duration(seconds: 2), () {
+      setState(() {
+        _currentIndex = (_currentIndex + 1) % propertyTypes.length;
+      });
+      _startTextAnimation();
+    });
+  }
+
+  List<String> properties = [
+    "DLF Cyber City, Gurgaon",
+    "Powai, Mumbai",
+    "Whitefield, Bangalore",
+    "Salt Lake City, Kolkata",
+    "Connaught Place, Delhi",
+    "Indiranagar, Bangalore",
+    "Gachibowli, Hyderabad",
+    "Banjara Hills, Hyderabad",
+    "Koramangala, Bangalore",
+    "Sector 62, Noida",
+    "Hinjewadi, Pune",
+    "Anna Nagar, Chennai",
+  ];
   @override
   Widget build(BuildContext context) {
-    final Map<String, List<String>> locationProperties = {
-      "Jammu & Kashmir": ["Property 1", "Property 2", "Property 3"],
-      "Himachal Pradesh": ["Property 4", "Property 5"],
-      "Punjab": ["Property 6", "Property 7"],
-      "Haryana": ["Property 8", "Property 9"],
-      "Uttarakhand": ["Property 10"],
-      "Uttar Pradesh": ["Property 11", "Property 12"],
-    };
-
     final isDarkMode =
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final backgroundColor = isDarkMode ? Colors.black : Colors.white;
@@ -197,7 +220,7 @@ class _HomeContentState extends State<HomeContent> {
                             onTap: () {
                               showSearchHeaderDialog(
                                 context,
-                                locationProperties,
+                                properties, // Pass your dynamic list here
                                 (query) {
                                   print('User searched for: $query');
                                 },
@@ -207,7 +230,7 @@ class _HomeContentState extends State<HomeContent> {
                               padding: EdgeInsets.symmetric(horizontal: 10),
                               height: 60,
                               decoration: BoxDecoration(
-                                color: backgroundColor,
+                                color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
                                 boxShadow: [
                                   BoxShadow(
@@ -228,12 +251,31 @@ class _HomeContentState extends State<HomeContent> {
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  Text(
-                                    'Search for homes, aparts etc.',
-                                    style: TextStyle(
-                                      color: textColor,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400,
+                                  Expanded(
+                                    child: AnimatedSwitcher(
+                                      switchInCurve: Curves.ease,
+                                      duration: Duration(seconds: 1),
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            "Search for ",
+                                            style: TextStyle(
+                                              color: Colors.grey.shade700,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                          Text(
+                                            propertyTypes[_currentIndex],
+                                            key: ValueKey<int>(_currentIndex),
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],

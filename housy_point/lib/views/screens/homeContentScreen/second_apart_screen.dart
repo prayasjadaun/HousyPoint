@@ -5,10 +5,8 @@ import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_w
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/open_googlemap.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
-
 import '../../widgets/utils/apartmentListingItems/configuration_widget.dart';
 import '../../widgets/utils/apartmentListingItems/download_resources.dart';
-import '../../widgets/utils/apartmentListingItems/location.dart';
 import '../../widgets/utils/apartmentListingItems/master_layout_widget.dart';
 
 class SecondProperty extends StatelessWidget {
@@ -466,7 +464,6 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                           String icon = amenityitems[index]
                               .iconName; // Fallback to a default icon
 
-
                           return Column(
                             mainAxisAlignment: MainAxisAlignment
                                 .center, // Center items vertically
@@ -521,11 +518,11 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     //   ],
                     // ),
                     Container(
-                      height: 600,
-                      width: double.infinity,
-                      child: LandmarksWidget()),
-                      // Location Widget
-                      Column(
+                        height: 600,
+                        width: double.infinity,
+                        child: LandmarksWidget()),
+                    // Location Widget
+                    Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Center(
@@ -549,8 +546,8 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       height: 30,
                     ),
                     OpenMapFromBackend(),
-                    
-                     SizedBox(
+
+                    SizedBox(
                       height: 50,
                     ),
                     // Master Layout Widget----------------
@@ -560,10 +557,9 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     SizedBox(
                       height: 30,
                     ),
-                    
+
                     // Download Resources------------
                     Container(height: 400, child: DownloadResources()),
-
                   ],
                 ),
               ),
