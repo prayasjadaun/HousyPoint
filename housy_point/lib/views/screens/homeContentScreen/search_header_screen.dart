@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SearchHeaderDialog extends StatefulWidget {
   final Function(String) onSearch;
@@ -22,7 +23,8 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
   late List<String> filteredProperties;
   late List<String> filteredProjects;
   late List<String> filteredBuilders;
-  String searchQuery = ""; // Track the search query
+  String searchQuery = "";
+  bool _isLoading = true; // Track whether shimmer effect is active
 
   @override
   void initState() {
@@ -30,6 +32,13 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
     filteredProperties = widget.properties;
     filteredProjects = widget.projects;
     filteredBuilders = widget.builders;
+
+    // Simulate a 3-second delay before showing the actual UI
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
   }
 
   void _filterSearchResults(String query) {
@@ -50,189 +59,253 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
       filteredProperties = propertyResults;
       filteredProjects = projectResults;
       filteredBuilders = builderResults;
-      searchQuery = query; // Update the search query state
+      searchQuery = query;
     });
+  }
+
+  Widget _buildShimmerEffect() {
+    return Shimmer.fromColors(
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.grey[100]!,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Shimmer effect for the search bar
+          Container(
+            width: double.infinity,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          const SizedBox(height: 20),
+          // Shimmer effect for the "Popular Places" section
+          Container(
+            width: 150,
+            height: 20,
+            color: Colors.white,
+          ),
+          const SizedBox(height: 10),
+          // Shimmer effect for the list items
+          ...List.generate(
+              4,
+              (index) => Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 50,
+                          height: 50,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+        ],
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Material(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(20),
-          bottomRight: Radius.circular(20),
-        ),
-        elevation: 4,
-        child: Container(
-          height: MediaQuery.of(context).size.height * 0.6,
-          padding: const EdgeInsets.all(16.0),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(20),
-              bottomRight: Radius.circular(20),
-            ),
+    return SafeArea(
+      child: Align(
+        alignment: Alignment.topCenter,
+        child: Material(
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 10),
-              const Text(
-                'Search Properties',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
+          elevation: 4,
+          child: Container(
+            height: MediaQuery.of(context).size.height * 0.6,
+            padding: const EdgeInsets.all(16.0),
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
               ),
-              const SizedBox(height: 10),
-              TextField(
-                onChanged: (query) {
-                  widget.onSearch(query);
-                  _filterSearchResults(query);
-                },
-                decoration: InputDecoration(
-                  hintText: 'Search for properties, projects, or builders...',
-                  prefixIcon: const Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              // Only show 'Popular Places' if there is no search query
-              if (searchQuery.isEmpty) ...[
-                const Text(
-                  'Popular Places',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(height: 10),
-                // Show popular properties
-                ...widget.properties.map((property) => Container(
-                      margin: EdgeInsets.symmetric(vertical: 8),
-                      padding:
-                          EdgeInsets.symmetric(vertical: 5, horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: ListTile(
-                        leading: Icon(
-                          Icons.location_city,
-                          color: Colors.black,
-                          size: 30,
-                        ),
-                        title: Text(property),
-                        onTap: () {
-                          Navigator.of(context).pop(property);
-                        },
-                      ),
-                    )),
-              ],
-              if (searchQuery.isNotEmpty)
-                Expanded(
-                  child: ListView(
+            ),
+            child: _isLoading
+                ? _buildShimmerEffect()
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Show Properties if there are search results
-                      if (filteredProperties.isNotEmpty)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text('Properties',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
+                      const SizedBox(height: 20),
+                      TextField(
+                        onChanged: (query) {
+                          widget.onSearch(query);
+                          _filterSearchResults(query);
+                        },
+                        decoration: InputDecoration(
+                          hintText:
+                              'Search for properties, projects, or builders...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
-                      ...filteredProperties.map((property) => Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.location_city,
-                                color: Colors.black,
-                                size: 30,
+                      ),
+                      const SizedBox(height: 10),
+                      if (searchQuery.isEmpty) ...[
+                        const Text(
+                          'Popular Places',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
+                        const SizedBox(height: 10),
+                        ...widget.properties.map((property) => ListTile(
+                              leading: CircleAvatar(
+                                radius: 30,
+                                backgroundColor: Colors.grey.shade200,
+                                child: Icon(
+                                  Icons.location_city,
+                                  color: Colors.black,
+                                  size: 30,
+                                ),
                               ),
-                              title: Text(property),
+                              title: Container(
+                                height: 50,
+                                width: double.infinity,
+                                margin: EdgeInsets.symmetric(vertical: 8),
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                decoration: BoxDecoration(
+                                  border:
+                                      Border.all(color: Colors.grey.shade200),
+                                  color: Colors.grey.shade100,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    property,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600),
+                                  ),
+                                ),
+                              ),
                               onTap: () {
                                 Navigator.of(context).pop(property);
                               },
-                            ),
-                          )),
-
-                      // Show Projects if there are search results
-                      if (filteredProjects.isNotEmpty)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text('Projects',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                        ),
-                      ...filteredProjects.map((project) => Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.share_location_rounded,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                              title: Text(project),
-                              onTap: () {
-                                Navigator.of(context).pop(project);
-                              },
-                            ),
-                          )),
-
-                      // Show Builders if there are search results
-                      if (filteredBuilders.isNotEmpty)
-                        const Padding(
-                          padding: EdgeInsets.symmetric(vertical: 8.0),
-                          child: Text('Builders',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                        ),
-                      ...filteredBuilders.map((builder) => Container(
-                            margin: EdgeInsets.symmetric(vertical: 8),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.location_on,
-                                color: Colors.black,
-                                size: 30,
-                              ),
-                              title: Text(builder),
-                              onTap: () {
-                                Navigator.of(context).pop(builder);
-                              },
-                            ),
-                          )),
-
-                      // Show no results message if nothing matches
-                      if (filteredProperties.isEmpty &&
-                          filteredProjects.isEmpty &&
-                          filteredBuilders.isEmpty)
-                        const Center(
-                          child: Text('No results found.',
-                              style: TextStyle(color: Colors.grey)),
+                            )),
+                      ],
+                      if (searchQuery.isNotEmpty)
+                        Expanded(
+                          child: ListView(
+                            children: [
+                              if (filteredProperties.isNotEmpty)
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text('Properties',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ...filteredProperties.map((property) => Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListTile(
+                                      leading: Icon(
+                                        Icons.location_city,
+                                        color: Colors.black,
+                                        size: 30,
+                                      ),
+                                      title: Text(property),
+                                      onTap: () {
+                                        Navigator.of(context).pop(property);
+                                      },
+                                    ),
+                                  )),
+                              if (filteredProjects.isNotEmpty)
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text('Projects',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ...filteredProjects.map((project) => Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListTile(
+                                      leading: Icon(
+                                        Icons.share_location_rounded,
+                                        color: Colors.black,
+                                        size: 30,
+                                      ),
+                                      title: Text(project),
+                                      onTap: () {
+                                        Navigator.of(context).pop(project);
+                                      },
+                                    ),
+                                  )),
+                              if (filteredBuilders.isNotEmpty)
+                                const Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 8.0),
+                                  child: Text('Builders',
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                              ...filteredBuilders.map((builder) => Container(
+                                    margin: EdgeInsets.symmetric(vertical: 8),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 5, horizontal: 10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade200,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListTile(
+                                      leading: Icon(
+                                        Icons.location_on,
+                                        color: Colors.black,
+                                        size: 30,
+                                      ),
+                                      title: Text(builder),
+                                      onTap: () {
+                                        Navigator.of(context).pop(builder);
+                                      },
+                                    ),
+                                  )),
+                              if (filteredProperties.isEmpty &&
+                                  filteredProjects.isEmpty &&
+                                  filteredBuilders.isEmpty)
+                                const Center(
+                                  child: Text('No results found.',
+                                      style: TextStyle(color: Colors.grey)),
+                                ),
+                            ],
+                          ),
                         ),
                     ],
                   ),
-                ),
-            ],
           ),
         ),
       ),

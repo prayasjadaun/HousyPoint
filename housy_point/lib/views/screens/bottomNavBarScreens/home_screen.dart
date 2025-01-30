@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:housy_point/views/screens/homeContentScreen/search_header_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
-import 'package:housy_point/views/screens/homeContentScreen/location_search.dart';
 import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
 import 'package:housy_point/views/screens/homeContentScreen/menu_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_property_screen_screen.dart';
@@ -168,10 +167,10 @@ class _HomeContentState extends State<HomeContent> {
   ];
   @override
   Widget build(BuildContext context) {
-    final isDarkMode =
-        MediaQuery.of(context).platformBrightness == Brightness.dark;
-    final backgroundColor = isDarkMode ? Colors.black : Colors.white;
-    final textColor = isDarkMode ? Colors.white : Colors.black;
+    // final isDarkMode =
+    //     MediaQuery.of(context).platformBrightness == Brightness.dark;
+    // final backgroundColor = isDarkMode ? Colors.black : Colors.white;
+    // final textColor = isDarkMode ? Colors.white : Colors.black;
 
     return Scaffold(
       endDrawer: const MenuScreen(),
@@ -241,7 +240,6 @@ class _HomeContentState extends State<HomeContent> {
                             },
                             child: Container(
                               padding: EdgeInsets.symmetric(horizontal: 10),
-                              height: 60,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),

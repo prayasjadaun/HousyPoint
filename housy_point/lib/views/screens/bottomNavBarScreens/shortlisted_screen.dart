@@ -22,7 +22,6 @@ class ShortlistedScreen extends StatelessWidget {
         isDarkMode ? Colors.grey.shade700 : Colors.grey.shade300;
 
     return SafeArea(
-      
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         margin: const EdgeInsets.all(10),
