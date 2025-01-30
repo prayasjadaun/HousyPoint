@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen>
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const TabContent(child: HomeContent()),
-          const TabContent(child: ShortlistedScreen()),
+           TabContent(child: ShortlistedScreen()),
           const TabContent(child: AddPropertyScreen()),
           TabContent(child: ProfileScreen()),
         ],

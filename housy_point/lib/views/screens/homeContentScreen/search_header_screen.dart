@@ -63,13 +63,17 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
     });
   }
 
+
+// Shimmer Effects----------------------
   Widget _buildShimmerEffect() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
       highlightColor: Colors.grey[100]!,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          SizedBox(height: 40,),
           // Shimmer effect for the search bar
           Container(
             width: double.infinity,
@@ -119,57 +123,58 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
       ),
     );
   }
-
+// Main UI----------------------
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Align(
-        alignment: Alignment.topCenter,
-        child: Material(
-          borderRadius: const BorderRadius.only(
-            bottomLeft: Radius.circular(20),
-            bottomRight: Radius.circular(20),
-          ),
-          elevation: 4,
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.6,
-            padding: const EdgeInsets.all(16.0),
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20),
-              ),
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Material(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+        ),
+        elevation: 4,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.6,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
             ),
-            child: _isLoading
-                ? _buildShimmerEffect()
-                : Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 20),
-                      TextField(
-                        onChanged: (query) {
-                          widget.onSearch(query);
-                          _filterSearchResults(query);
-                        },
-                        decoration: InputDecoration(
-                          hintText:
-                              'Search for properties, projects, or builders...',
-                          prefixIcon: const Icon(Icons.search),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
+          ),
+          child: _isLoading
+              ? _buildShimmerEffect()
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 45),
+                    TextField(
+                      onChanged: (query) {
+                        widget.onSearch(query);
+                        _filterSearchResults(query);
+                      },
+                      decoration: InputDecoration(
+                        hintText:
+                            'Search for properties, projects, or builders...',
+                        prefixIcon: const Icon(Icons.search),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
                         ),
                       ),
+                    ),
+                    const SizedBox(height: 10),
+                    if (searchQuery.isEmpty) ...[
+                      const Text(
+                        'Popular Places',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w600),
+                      ),
                       const SizedBox(height: 10),
-                      if (searchQuery.isEmpty) ...[
-                        const Text(
-                          'Popular Places',
-                          style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w600),
-                        ),
-                        const SizedBox(height: 10),
-                        ...widget.properties.map((property) => ListTile(
+                      ...widget.properties.map((property) => Expanded(
+                        child: ListTile(
                               leading: CircleAvatar(
                                 radius: 30,
                                 backgroundColor: Colors.grey.shade200,
@@ -204,109 +209,109 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                               onTap: () {
                                 Navigator.of(context).pop(property);
                               },
-                            )),
-                      ],
-                      if (searchQuery.isNotEmpty)
-                        Expanded(
-                          child: ListView(
-                            children: [
-                              if (filteredProperties.isNotEmpty)
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text('Properties',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ...filteredProperties.map((property) => Container(
-                                    margin: EdgeInsets.symmetric(vertical: 8),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.location_city,
-                                        color: Colors.black,
-                                        size: 30,
-                                      ),
-                                      title: Text(property),
-                                      onTap: () {
-                                        Navigator.of(context).pop(property);
-                                      },
-                                    ),
-                                  )),
-                              if (filteredProjects.isNotEmpty)
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text('Projects',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ...filteredProjects.map((project) => Container(
-                                    margin: EdgeInsets.symmetric(vertical: 8),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.share_location_rounded,
-                                        color: Colors.black,
-                                        size: 30,
-                                      ),
-                                      title: Text(project),
-                                      onTap: () {
-                                        Navigator.of(context).pop(project);
-                                      },
-                                    ),
-                                  )),
-                              if (filteredBuilders.isNotEmpty)
-                                const Padding(
-                                  padding: EdgeInsets.symmetric(vertical: 8.0),
-                                  child: Text('Builders',
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold)),
-                                ),
-                              ...filteredBuilders.map((builder) => Container(
-                                    margin: EdgeInsets.symmetric(vertical: 8),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey.shade200,
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: ListTile(
-                                      leading: Icon(
-                                        Icons.location_on,
-                                        color: Colors.black,
-                                        size: 30,
-                                      ),
-                                      title: Text(builder),
-                                      onTap: () {
-                                        Navigator.of(context).pop(builder);
-                                      },
-                                    ),
-                                  )),
-                              if (filteredProperties.isEmpty &&
-                                  filteredProjects.isEmpty &&
-                                  filteredBuilders.isEmpty)
-                                const Center(
-                                  child: Text('No results found.',
-                                      style: TextStyle(color: Colors.grey)),
-                                ),
-                            ],
-                          ),
-                        ),
+                            ),
+                      )),
                     ],
-                  ),
-          ),
+                    if (searchQuery.isNotEmpty)
+                      Expanded(
+                        child: ListView(
+                          children: [
+                            if (filteredProperties.isNotEmpty)
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Properties',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ...filteredProperties.map((property) => Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.location_city,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    title: Text(property),
+                                    onTap: () {
+                                      Navigator.of(context).pop(property);
+                                    },
+                                  ),
+                                )),
+                            if (filteredProjects.isNotEmpty)
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Projects',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ...filteredProjects.map((project) => Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.share_location_rounded,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    title: Text(project),
+                                    onTap: () {
+                                      Navigator.of(context).pop(project);
+                                    },
+                                  ),
+                                )),
+                            if (filteredBuilders.isNotEmpty)
+                              const Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8.0),
+                                child: Text('Builders',
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold)),
+                              ),
+                            ...filteredBuilders.map((builder) => Container(
+                                  margin: EdgeInsets.symmetric(vertical: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.shade200,
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  child: ListTile(
+                                    leading: Icon(
+                                      Icons.location_on,
+                                      color: Colors.black,
+                                      size: 30,
+                                    ),
+                                    title: Text(builder),
+                                    onTap: () {
+                                      Navigator.of(context).pop(builder);
+                                    },
+                                  ),
+                                )),
+                            if (filteredProperties.isEmpty &&
+                                filteredProjects.isEmpty &&
+                                filteredBuilders.isEmpty)
+                              const Center(
+                                child: Text('No results found.',
+                                    style: TextStyle(color: Colors.grey)),
+                              ),
+                          ],
+                        ),
+                      ),
+                  ],
+                ),
         ),
       ),
     );
@@ -320,7 +325,7 @@ void showSearchHeaderDialog(BuildContext context, List<String> properties,
     barrierDismissible: true,
     barrierLabel: "Close",
     barrierColor: Colors.black54,
-    transitionDuration: const Duration(milliseconds: 600),
+    transitionDuration: const Duration(milliseconds: 400),
     pageBuilder: (_, __, ___) {
       return SearchHeaderDialog(
         onSearch: onSearch,
