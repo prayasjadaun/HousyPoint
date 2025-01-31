@@ -14,6 +14,8 @@ import 'controllers/providers/home_screen_provider.dart';
 import 'controllers/providers/menu_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'views/screens/homeLoanScreen/home_loan_screen.dart';
+
 void main() {
   runApp(
     MultiProvider(
@@ -68,7 +70,8 @@ class MyApp extends StatelessWidget {
       ),
       themeMode: ThemeMode.system,
       home:
-          HomeScreen(),
+      HomeLoanScreen()
+          // HomeScreen(),
       // SplashScreen(),
     );
   }

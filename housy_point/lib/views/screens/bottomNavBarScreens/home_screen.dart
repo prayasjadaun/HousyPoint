@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:google_nav_bar/google_nav_bar.dart'; // Import the package
 import 'package:housy_point/views/screens/homeContentScreen/search_header_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/distress_deal_screen.dart';
 import 'package:housy_point/views/screens/homeContentScreen/popular_places.dart';
@@ -39,6 +39,9 @@ class _HomeScreenState extends State<HomeScreen>
   }
 
   void _onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
     _tabController.animateTo(index);
   }
 
@@ -56,37 +59,55 @@ class _HomeScreenState extends State<HomeScreen>
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final backgroundColor = isDarkMode ? Colors.black : Colors.white;
     final activeColor = isDarkMode ? Colors.white : Colors.black;
-    final iconColor = isDarkMode ? Colors.grey : Colors.grey.shade600;
+    final iconColor = isDarkMode ? Colors.grey : Colors.black;
 
     return Scaffold(
       key: _scaffoldKey,
-      // endDrawer: const MenuScreen(),
       body: TabBarView(
         controller: _tabController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const TabContent(child: HomeContent()),
-           TabContent(child: ShortlistedScreen()),
+          TabContent(child: ShortlistedScreen()),
           const TabContent(child: AddPropertyScreen()),
           TabContent(child: ProfileScreen()),
         ],
       ),
       bottomNavigationBar: Consumer<ShortlistProvider>(
         builder: (context, shortlistProvider, child) {
-          return ConvexAppBar(
-            height: 60,
-            style: TabStyle.reactCircle,
-            backgroundColor: backgroundColor,
-            activeColor: activeColor,
-            color: iconColor,
-            initialActiveIndex: _currentIndex,
-            onTap: _onTabTapped,
-            items: const [
-              TabItem(icon: Icons.home, title: 'Home'),
-              TabItem(icon: Icons.favorite, title: 'Shortlisted'),
-              TabItem(icon: Icons.add, title: 'Rent/Sell'),
-              TabItem(icon: Icons.person, title: 'Profile'),
-            ],
+          return Container(
+            margin: EdgeInsets.only(bottom: 20),
+            color: backgroundColor,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+              child: GNav(
+                gap: 8,
+                color: iconColor,
+                activeColor: activeColor,
+                tabBackgroundColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                tabs: const [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.favorite,
+                    text: 'Shortlisted',
+                  ),
+                  GButton(
+                    icon: Icons.add,
+                    text: 'Rent/Sell',
+                  ),
+                  GButton(
+                    icon: Icons.person,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _currentIndex,
+                onTabChange: _onTabTapped,
+              ),
+            ),
           );
         },
       ),
@@ -114,7 +135,6 @@ class _TabContentState extends State<TabContent>
   @override
   bool get wantKeepAlive => true;
 }
-
 // Home Screen Content
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});

@@ -20,6 +20,14 @@ class SearchHeaderDialog extends StatefulWidget {
 }
 
 class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
+  final List<String> imagePaths = [
+    'assets/images/propertyone.jpeg',
+    'assets/images/propertytwo.jpg',
+    'assets/images/propertythree.jpg',
+    'assets/images/propertyfour.jpg',
+    'assets/images/propertyfive.jpg',
+  ];
+
   late List<String> filteredProperties;
   late List<String> filteredProjects;
   late List<String> filteredBuilders;
@@ -34,7 +42,7 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
     filteredBuilders = widget.builders;
 
     // Simulate a 3-second delay before showing the actual UI
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isLoading = false;
       });
@@ -63,8 +71,7 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
     });
   }
 
-
-// Shimmer Effects----------------------
+  // Shimmer Effects----------------------
   Widget _buildShimmerEffect() {
     return Shimmer.fromColors(
       baseColor: Colors.grey[300]!,
@@ -73,57 +80,75 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          SizedBox(height: 40,),
+          SizedBox(
+            height: 40,
+          ),
           // Shimmer effect for the search bar
           Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
             width: double.infinity,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: Colors.grey,
               borderRadius: BorderRadius.circular(12),
             ),
           ),
           const SizedBox(height: 20),
           // Shimmer effect for the "Popular Places" section
           Container(
+            margin: EdgeInsets.symmetric(horizontal: 10),
             width: 150,
             height: 20,
-            color: Colors.white,
+            color: Colors.grey,
           ),
           const SizedBox(height: 10),
           // Shimmer effect for the list items
           ...List.generate(
-              4,
-              (index) => Container(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Expanded(
-                          child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                        ),
-                      ],
+            4,
+            (index) => Expanded(
+              child: Container(
+                height: 100,
+                margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Row(
+                  children: [
+                    Container(
+                      margin:
+                          const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.white,
+                      ),
                     ),
-                  )),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 5),
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
-// Main UI----------------------
+
+  // Main UI----------------------
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -136,10 +161,11 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
         elevation: 4,
         child: Container(
           height: MediaQuery.of(context).size.height * 0.6,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-          decoration: const BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.only(
+          padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 10),
+          
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(20),
               bottomRight: Radius.circular(20),
             ),
@@ -151,66 +177,96 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(height: 45),
-                    TextField(
-                      onChanged: (query) {
-                        widget.onSearch(query);
-                        _filterSearchResults(query);
-                      },
-                      decoration: InputDecoration(
-                        hintText:
-                            'Search for properties, projects, or builders...',
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: TextField(
+                        onChanged: (query) {
+                          widget.onSearch(query);
+                          _filterSearchResults(query);
+                        },
+                        decoration: InputDecoration(
+                          hintText:
+                              'Search for properties, projects, or builders...',
+                          prefixIcon: const Icon(Icons.search),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 10),
                     if (searchQuery.isEmpty) ...[
-                      const Text(
-                        'Popular Places',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w600),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                        child: const Text(
+                          'Popular Places',
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w600),
+                        ),
                       ),
-                      const SizedBox(height: 10),
-                      ...widget.properties.map((property) => Expanded(
-                        child: ListTile(
-                              leading: CircleAvatar(
-                                radius: 30,
-                                backgroundColor: Colors.grey.shade200,
-                                child: Icon(
-                                  Icons.location_city,
-                                  color: Colors.black,
-                                  size: 30,
-                                ),
+                      ...widget.properties.asMap().entries.map((entry) {
+                        final index = entry.key;
+                        final property = entry.value;
+                        return Expanded(
+                          child: ListTile(
+                            title: Container(
+                              height: 80,
+                              margin: const EdgeInsets.symmetric(vertical: 2,),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(20),
                               ),
-                              title: Container(
-                                height: 50,
-                                width: double.infinity,
-                                margin: EdgeInsets.symmetric(vertical: 8),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 5, horizontal: 10),
-                                decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.grey.shade200),
-                                  color: Colors.grey.shade100,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    property,
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w600),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 5),
+                                    height: 70,
+                                    width: 70,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(20),
+                                      child: Image.asset(
+                                        imagePaths[index %
+                                            imagePaths
+                                                .length], // Use modulo to avoid index out of bounds
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 2, horizontal: 5),
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            property,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w400,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              onTap: () {
-                                Navigator.of(context).pop(property);
-                              },
                             ),
-                      )),
+                            onTap: () {
+                              Navigator.of(context).pop(property);
+                            },
+                          ),
+                        );
+                      }),
                     ],
                     if (searchQuery.isNotEmpty)
                       Expanded(
@@ -219,21 +275,24 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                             if (filteredProperties.isNotEmpty)
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text('Properties',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
+                                child: Text(
+                                  'Properties',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ...filteredProperties.map((property) => Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8),
-                                  padding: EdgeInsets.symmetric(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: ListTile(
-                                    leading: Icon(
+                                    leading: const Icon(
                                       Icons.location_city,
                                       color: Colors.black,
                                       size: 30,
@@ -247,21 +306,24 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                             if (filteredProjects.isNotEmpty)
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text('Projects',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
+                                child: Text(
+                                  'Projects',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ...filteredProjects.map((project) => Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8),
-                                  padding: EdgeInsets.symmetric(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: ListTile(
-                                    leading: Icon(
+                                    leading: const Icon(
                                       Icons.share_location_rounded,
                                       color: Colors.black,
                                       size: 30,
@@ -275,21 +337,24 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                             if (filteredBuilders.isNotEmpty)
                               const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8.0),
-                                child: Text('Builders',
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold)),
+                                child: Text(
+                                  'Builders',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
+                                ),
                               ),
                             ...filteredBuilders.map((builder) => Container(
-                                  margin: EdgeInsets.symmetric(vertical: 8),
-                                  padding: EdgeInsets.symmetric(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 8),
+                                  padding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.grey.shade200,
                                     borderRadius: BorderRadius.circular(10),
                                   ),
                                   child: ListTile(
-                                    leading: Icon(
+                                    leading: const Icon(
                                       Icons.location_on,
                                       color: Colors.black,
                                       size: 30,
@@ -304,8 +369,10 @@ class _SearchHeaderDialogState extends State<SearchHeaderDialog> {
                                 filteredProjects.isEmpty &&
                                 filteredBuilders.isEmpty)
                               const Center(
-                                child: Text('No results found.',
-                                    style: TextStyle(color: Colors.grey)),
+                                child: Text(
+                                  'No results found.',
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
                           ],
                         ),
