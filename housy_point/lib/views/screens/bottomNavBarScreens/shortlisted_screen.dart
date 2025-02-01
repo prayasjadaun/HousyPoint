@@ -34,11 +34,10 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             // Shimmer effect for the search bar
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-              width: MediaQuery.of(context).size.height * 1/4,
+              width: MediaQuery.of(context).size.height * 1 / 4,
               height: 50,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -50,31 +49,30 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> {
             const SizedBox(height: 10),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              spacing: 10,
               children: [
                 Container(
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 Container(
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 Container(
                   width: 100,
                   height: 40,
                   decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
               ],
             ),
@@ -95,7 +93,7 @@ class _ShortlistedScreenState extends State<ShortlistedScreen> {
             ),
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
-              width: MediaQuery.of(context).size.height * 1/3,
+              width: MediaQuery.of(context).size.height * 1 / 3,
               height: 40,
               decoration: BoxDecoration(
                 color: Colors.white,
