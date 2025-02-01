@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
+import 'dart:math' as math;
 
 class HomeLoanScreen extends StatefulWidget {
   const HomeLoanScreen({super.key});
@@ -37,46 +38,59 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
       TextSpan(
         children: [
           TextSpan(
-            text: "Your dream ",
+            text: "Your dream\n",
+            style: TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          TextSpan(
+            text: "Home with Simpler\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Home with Simpler ",
+            text: "Faster\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.green.shade900,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.red.shade700,
             ),
           ),
           TextSpan(
-            text: "Faster ",
+            text: "Friendlier ",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Friendlier Home Loan ",
+            text: "Home Loan\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.red.shade700,
             ),
           ),
           TextSpan(
-            text: "100% Paperless ",
+            text: "✅100% Paperless\n",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
           TextSpan(
-            text: "Lowest Interest Rate",
+            text: "✅Lowest Interest Rate",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
         ],
@@ -86,39 +100,43 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
       TextSpan(
         children: [
           TextSpan(
-            text: "Get Your ",
+            text: "Get Your\n",
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              color: Colors.grey.shade900,
             ),
           ),
           TextSpan(
-            text: "Personal Loan ",
+            text: "Personal Loan\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.green.shade900,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.blue.shade900,
             ),
           ),
           TextSpan(
-            text: "Loaded with Benefits ",
+            text: "Loaded with Benefits\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Attractive Interest Rates ",
+            text: "✅Attractive Interest Rates\n",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
           TextSpan(
-            text: "100% Paperless",
+            text: "✅100% Paperless",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
         ],
@@ -128,46 +146,57 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
       TextSpan(
         children: [
           TextSpan(
-            text: "Get Instant ",
+            text: "Get Instant\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
+              fontWeight: FontWeight.w800,
+              color: Colors.grey.shade700,
             ),
           ),
           TextSpan(
-            text: "L&T Finance Personal Loan ",
+            text: "L&T Finance\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.green.shade900,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "in 2 Minutes ",
+            text: "Personal Loan in\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Digital Process ",
+            text: "2 Minutes\n",
             style: TextStyle(
-              fontSize: 16,
-              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+              color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Instant Approval",
+            text: "✅Digital Process\n",
             style: TextStyle(
               fontSize: 16,
-              color: Colors.white,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
+            ),
+          ),
+          TextSpan(
+            text: "✅Instant Approval",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: Colors.black,
             ),
           ),
         ],
       ),
     ),
   ];
-
   late Timer _timer;
   bool _isExpanded = false; // Controls the animation state
   bool _isLoading = true;
@@ -313,11 +342,12 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
         ? _buildShimmerEffect()
         : Scaffold(
             appBar: AppBar(
+              centerTitle: true,
               backgroundColor: const Color(0xFF004240),
               title: Image.asset(
                 'assets/applogos/logo.png',
                 height: 80,
-                width: 160,
+                width: 180,
               ),
             ),
             body: SingleChildScrollView(
@@ -348,19 +378,22 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                           ),
                           // Animated Text (Left to Right)------------
                           AnimatedPositioned(
-                            duration: const Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 700),
                             curve: Curves.easeInOut,
                             left: _isExpanded
                                 ? 20
                                 : -MediaQuery.of(context).size.width,
                             top: 20,
                             child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 700),
                               opacity: _isExpanded ? 1 : 0,
-                              child: // In the build method, replace the Column widget with:
-                                  Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Wrap(
+                                spacing: 10,
+                                runSpacing: 20,
+                                alignment: WrapAlignment.start,
+                                // mainAxisAlignment:
+                                //     MainAxisAlignment.spaceAround,
+                                // crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   backgroundText[
                                       _currentIndex % backgroundText.length],
@@ -370,14 +403,14 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                           ),
                           // Animated Image (Right to Left)------------
                           AnimatedPositioned(
-                            duration: const Duration(milliseconds: 500),
+                            duration: const Duration(milliseconds: 700),
                             curve: Curves.easeInOut,
                             right: _isExpanded
                                 ? 20
                                 : -MediaQuery.of(context).size.width,
                             bottom: 20,
                             child: AnimatedOpacity(
-                              duration: const Duration(milliseconds: 500),
+                              duration: const Duration(milliseconds: 700),
                               opacity: _isExpanded ? 1 : 0,
                               child: Image.asset(
                                 animateLoanImages[
@@ -395,12 +428,122 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
 
                   // Credit Card ------------------
                   Container(
-                    height: 200,
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                    height: 250,
                     clipBehavior: Clip.antiAlias,
-                    margin: const EdgeInsets.all(10), // Add margin for spacing
+                    margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.grey,
+                      color: Colors.purple.shade900,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.5),
+                          spreadRadius: 2,
+                          blurRadius: 5,
+                          offset: Offset(0, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Center(
+                          child: CustomGauge(
+                            value:
+                                0.7, // 0.0 to 1.0, where 0.0 is far left and 1.0 is far right
+                            size: 100,
+                            colors: const [
+                              Colors.red,
+                              Colors.orange,
+                              Colors.yellow,
+                              Colors.lightGreen,
+                              Colors.green,
+                            ],
+                            strokeWidth: 25,
+                            needleColor: Colors.black87,
+                          ),
+                        ),
+                        SizedBox(height: 10),
+                        Text.rich(
+                          textAlign: TextAlign.center,
+                          TextSpan(children: [
+                            TextSpan(
+                              text: "Get Your CIBIL Credit Report ",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 20,
+                                  color: Colors.white),
+                            ),
+                            TextSpan(
+                              text: "worth 500\n",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 20,
+                                  color: Colors.yellow.shade900),
+                            ),
+                            TextSpan(
+                              text: "for FREE\n",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 20,
+                                color: Colors.green.shade600,
+                              ),
+                            ),
+                            TextSpan(
+                              text:
+                                  '5 Lac + people have got their Credit Scores for FREE!',
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 14,
+                                  color: Colors.white),
+                            ),
+                          ]),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          height: 50,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Center(
+                            child: Text.rich(
+                              TextSpan(children: [
+                                TextSpan(
+                                  text: "Check Your  ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text: "FREE  ",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                      color: Colors.green.shade900),
+                                ),
+                                TextSpan(
+                                  text: "Credit Score",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 15,
+                                      color: Colors.black),
+                                ),
+                                TextSpan(
+                                  text: " →",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 20,
+                                      color: Colors.purple.shade900),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
 
@@ -481,4 +624,131 @@ class BanksCustomContainer extends StatelessWidget {
       ),
     );
   }
+}
+
+class CustomGauge extends StatelessWidget {
+  final double value; // Value between 0 and 1
+  final double size;
+  final List<Color> colors;
+  final double strokeWidth;
+  final Color backgroundColor;
+  final Color needleColor;
+
+  const CustomGauge({
+    Key? key,
+    required this.value,
+    this.size = 200,
+    this.colors = const [
+      Colors.red,
+      Colors.orange,
+      Colors.yellow,
+      Colors.lightGreen,
+      Colors.green,
+    ],
+    this.strokeWidth = 20,
+    this.backgroundColor = Colors.blue,
+    this.needleColor = Colors.black87,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: size,
+      height: size / 2,
+      child: CustomPaint(
+        painter: _GaugePainter(
+          value: value,
+          colors: colors,
+          strokeWidth: strokeWidth,
+          backgroundColor: backgroundColor,
+          needleColor: needleColor,
+        ),
+      ),
+    );
+  }
+}
+
+class _GaugePainter extends CustomPainter {
+  final double value;
+  final List<Color> colors;
+  final double strokeWidth;
+  final Color backgroundColor;
+  final Color needleColor;
+
+  _GaugePainter({
+    required this.value,
+    required this.colors,
+    required this.strokeWidth,
+    required this.backgroundColor,
+    required this.needleColor,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final center = Offset(size.width / 2, size.height);
+    final radius = size.width / 2;
+
+    // Paint for the background arc
+    final bgPaint = Paint()
+      ..color = Colors.grey.withOpacity(0.2)
+      ..strokeWidth = strokeWidth
+      ..style = PaintingStyle.stroke;
+
+    // Draw background arc
+    canvas.drawArc(
+      Rect.fromCircle(center: center, radius: radius),
+      math.pi,
+      math.pi,
+      false,
+      bgPaint,
+    );
+
+    // Calculate the number of segments
+    final numSegments = colors.length;
+    final segmentAngle = math.pi / numSegments;
+
+    // Draw colored segments
+    for (int i = 0; i < numSegments; i++) {
+      final paint = Paint()
+        ..color = colors[i]
+        ..strokeWidth = strokeWidth
+        ..style = PaintingStyle.stroke;
+
+      final startAngle = math.pi + (i * segmentAngle);
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        startAngle,
+        segmentAngle,
+        false,
+        paint,
+      );
+    }
+
+    // Draw the needle
+    final needleLength = radius - (strokeWidth / 2);
+    final needleAngle = math.pi + (value * math.pi);
+    final needleEndX = center.dx + needleLength * math.cos(needleAngle);
+    final needleEndY = center.dy + needleLength * math.sin(needleAngle);
+
+    final needlePath = Path()
+      ..moveTo(center.dx - 4, center.dy) // Start slightly left of center
+      ..lineTo(center.dx + 4, center.dy) // Move right to create base
+      ..lineTo(needleEndX, needleEndY) // Draw to tip
+      ..close(); // Close the path
+
+    final needlePaint = Paint()
+      ..color = needleColor
+      ..style = PaintingStyle.fill;
+
+    canvas.drawPath(needlePath, needlePaint);
+
+    // Draw center point
+    final centerPaint = Paint()
+      ..color = needleColor
+      ..style = PaintingStyle.fill;
+    canvas.drawCircle(center, strokeWidth / 2, centerPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
 }

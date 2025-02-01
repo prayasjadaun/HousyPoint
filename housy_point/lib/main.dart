@@ -43,33 +43,32 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Housy Point',
-      theme: ThemeData.light(useMaterial3: true).copyWith(
-        primaryColor: Colors.green,
-        scaffoldBackgroundColor: Colors.white,
-        cardColor: Colors.grey.shade200,
-        iconTheme: IconThemeData(color: Colors.green.shade900),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.black),
-          bodyMedium: TextStyle(color: Colors.black87),
+        debugShowCheckedModeBanner: false,
+        title: 'Housy Point',
+        theme: ThemeData.light(useMaterial3: true).copyWith(
+          primaryColor: Colors.green,
+          scaffoldBackgroundColor: Colors.white,
+          cardColor: Colors.grey.shade200,
+          iconTheme: IconThemeData(color: Colors.green.shade900),
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.black),
+            bodyMedium: TextStyle(color: Colors.black87),
+          ),
         ),
-      ),
-      darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
-        primaryColor: Colors.teal,
-        scaffoldBackgroundColor: Colors.black,
-        cardColor: Colors.grey.shade800,
-        iconTheme: IconThemeData(color: Colors.tealAccent),
-        textTheme: const TextTheme(
-          bodyLarge: TextStyle(color: Colors.white),
-          bodyMedium: TextStyle(color: Colors.white70),
+        darkTheme: ThemeData.dark(useMaterial3: true).copyWith(
+          primaryColor: Colors.teal,
+          scaffoldBackgroundColor: Colors.black,
+          cardColor: Colors.grey.shade800,
+          iconTheme: IconThemeData(color: Colors.tealAccent),
+          textTheme: const TextTheme(
+            bodyLarge: TextStyle(color: Colors.white),
+            bodyMedium: TextStyle(color: Colors.white70),
+          ),
         ),
-      ),
-      themeMode: ThemeMode.system,
-      home:
-      HomeLoanScreen()
-          // HomeScreen(),
-      // SplashScreen(),
-    );
+        themeMode: ThemeMode.system,
+        home: HomeLoanScreen()
+        // HomeScreen(),
+        // SplashScreen(),
+        );
   }
 }
