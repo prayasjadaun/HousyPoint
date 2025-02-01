@@ -33,6 +33,28 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
     Colors.green.shade100,
   ];
 
+  // final List<Color> loanCardColors = [
+  //   Colors.deepOrangeAccent.shade700,
+  //   Colors.blue.shade900,
+  //   Colors.purple.shade900,
+  //   Colors.pink.shade900,
+  // ];
+  // Define loanCardColors as a list of colors
+  final List<Color> loanCardColors = [
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
+  ];
+
+  // Define loanCardText as a list of strings
+  final List<String> loanCardText = [
+    'Home Loan\nInstant approval at lowest interest rates\n8.35 %\nCheck Eligibility',
+    'Loan Against Property\nLowest interest rate\n9.2 %\nCheck Eligibility',
+    'Business Loan\nInterest rate starting from\n14 %\nCheck Eligibility',
+    'Personal Loan\nPaperless process at low rate\n10.49 %\nCheck Eligibility',
+  ];
+
   final List<Text> backgroundText = [
     Text.rich(
       TextSpan(
@@ -42,14 +64,14 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Colors.grey.shade700,
+              color: Colors.grey.shade900,
             ),
           ),
           TextSpan(
             text: "Home with Simpler\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
@@ -57,7 +79,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "Faster\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Colors.red.shade700,
             ),
           ),
@@ -65,15 +87,15 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "Friendlier ",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
           TextSpan(
-            text: "Home Loan\n",
+            text: "Home Loans\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Colors.red.shade700,
             ),
           ),
@@ -111,7 +133,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "Personal Loan\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Colors.blue.shade900,
             ),
           ),
@@ -119,7 +141,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "Loaded with Benefits\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
@@ -157,7 +179,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "L&T Finance\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
@@ -165,7 +187,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "Personal Loan in\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
@@ -173,7 +195,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             text: "2 Minutes\n",
             style: TextStyle(
               fontSize: 18,
-              fontWeight: FontWeight.w700,
+              fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
           ),
@@ -317,7 +339,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
               // Types of banks shimmer effect ------------
               Column(
                 children: [
-                  for (int i = 0; i < 5; i++)
+                  for (int i = 0; i < 4; i++)
                     Container(
                       height: 300,
                       clipBehavior: Clip.antiAlias,
@@ -387,16 +409,36 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                             child: AnimatedOpacity(
                               duration: const Duration(milliseconds: 700),
                               opacity: _isExpanded ? 1 : 0,
-                              child: Wrap(
-                                spacing: 10,
-                                runSpacing: 20,
-                                alignment: WrapAlignment.start,
-                                // mainAxisAlignment:
-                                //     MainAxisAlignment.spaceAround,
-                                // crossAxisAlignment: CrossAxisAlignment.start,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  backgroundText[
-                                      _currentIndex % backgroundText.length],
+                                  Wrap(
+                                    spacing: 10,
+                                    runSpacing: 20,
+                                    alignment: WrapAlignment.start,
+                                    children: [
+                                      backgroundText[_currentIndex %
+                                          backgroundText.length],
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 100,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: Center(
+                                        child: Text(
+                                      'Apply Now',
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w700),
+                                    )),
+                                  ),
                                 ],
                               ),
                             ),
@@ -429,7 +471,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                   // Credit Card ------------------
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
-                    height: 250,
+                    height: 250, // Increased height to avoid overflow
                     clipBehavior: Clip.antiAlias,
                     margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
@@ -445,8 +487,9 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                       ],
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        SizedBox(height: 10),
                         Center(
                           child: CustomGauge(
                             value:
@@ -464,125 +507,216 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                           ),
                         ),
                         SizedBox(height: 10),
-                        Text.rich(
-                          textAlign: TextAlign.center,
-                          TextSpan(children: [
+                        // Use Align or Center to center the text
+                        Center(
+                          child: Text.rich(
                             TextSpan(
-                              text: "Get Your CIBIL Credit Report ",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                  color: Colors.white),
+                              children: [
+                                TextSpan(
+                                  text: "Get Your CIBIL Credit Report ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "worth 500\n",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 18,
+                                    color: Colors.yellow.shade900,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: "for FREE\n",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: 20,
+                                    color: Colors.green.shade600,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text:
+                                      '5 Lac + people have got their Credit Scores for FREE!',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 14,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
                             ),
-                            TextSpan(
-                              text: "worth 500\n",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 20,
-                                  color: Colors.yellow.shade900),
-                            ),
-                            TextSpan(
-                              text: "for FREE\n",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w900,
-                                fontSize: 20,
-                                color: Colors.green.shade600,
-                              ),
-                            ),
-                            TextSpan(
-                              text:
-                                  '5 Lac + people have got their Credit Scores for FREE!',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w900,
-                                  fontSize: 14,
-                                  color: Colors.white),
-                            ),
-                          ]),
+                            textAlign:
+                                TextAlign.center, // Center-align the text
+                          ),
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          height: 50,
-                          decoration: BoxDecoration(
+                        SizedBox(height: 10),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
+                            margin: EdgeInsets.symmetric(
+                              horizontal: 10,
+                            ),
+                            height: 40,
+                            decoration: BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Center(
-                            child: Text.rich(
-                              TextSpan(children: [
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text.rich(
                                 TextSpan(
-                                  text: "Check Your  ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 15,
-                                      color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                      text: "Check Your  ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "FREE  ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 13,
+                                        color: Colors.green.shade900,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: "Credit Score",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 13,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: " →",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.w900,
+                                        fontSize: 13,
+                                        color: Colors.purple.shade900,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                TextSpan(
-                                  text: "FREE  ",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 15,
-                                      color: Colors.green.shade900),
-                                ),
-                                TextSpan(
-                                  text: "Credit Score",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 15,
-                                      color: Colors.black),
-                                ),
-                                TextSpan(
-                                  text: " →",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w900,
-                                      fontSize: 20,
-                                      color: Colors.purple.shade900),
-                                ),
-                              ]),
+                              ),
                             ),
                           ),
                         ),
                       ],
                     ),
                   ),
-
                   // Trending Loans and offers -------------------
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Trending Loan Offers',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: Colors.black),
+                          )
+                        ]),
+                  ),
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 1,
-                    height: 200, // Fixed height for the PageView
+                    height: 200,
                     child: PageView.builder(
-                      padEnds: false,
-                      pageSnapping: false,
-                      itemCount: imagePath.length,
-                      controller:
-                          PageController(initialPage: 0, viewportFraction: 0.9),
-                      onPageChanged: (value) {
-                        setState(() {
-                          currentIndex = value;
-                        });
-                      },
-                      physics: const BouncingScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Container(
-                          clipBehavior: Clip.antiAlias,
-                          margin: const EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.grey,
-                          ),
-                          child: Image.asset(
-                            imagePath[index],
-                            fit: BoxFit.cover,
-                          ),
-                        );
-                      },
-                    ),
+                        padEnds: false,
+                        pageSnapping: false,
+                        itemCount: loanCardText.length,
+                        controller: PageController(
+                            initialPage: 0, viewportFraction: 0.9),
+                        onPageChanged: (value) {
+                          setState(() {
+                            currentIndex = value;
+                          });
+                        },
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 20, vertical: 20),
+                            margin: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: loanCardColors[index],
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.black.withOpacity(0.2),
+                                  blurRadius: 10,
+                                  offset: Offset(0, 5),
+                                ),
+                              ],
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  loanCardText[index].split(
+                                      '\n')[0], // Loan type (e.g., Home Loan)
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  loanCardText[index].split('\n')[
+                                      1], // Description (e.g., Instant approval...)
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16,
+                                  ),
+                                ),
+                                Text(
+                                  loanCardText[index].split(
+                                      '\n')[2], // Interest rate (e.g., 8.35 %)
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Flexible(
+                                  child: Align(
+                                    alignment: Alignment.bottomRight,
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 15, vertical: 5),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        'Check Eligibility →',
+                                        style: TextStyle(
+                                          color: loanCardColors[index],
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        }),
                   ),
                   TabPageSelector(
                     controller: TabController(
                       initialIndex: currentIndex,
-                      length: imagePath.length,
+                      length: loanCardText.length,
                       vsync: this,
                     ),
                     selectedColor: Colors.black,
@@ -590,10 +724,24 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                     color: Colors.grey.shade300,
                   ),
                   // Types of banks---------------------------
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 5),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Types of Banks',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16,
+                                color: Colors.black),
+                          )
+                        ]),
+                  ),
                   Column(
                     children: [
-                      for (int i = 0; i < imagePath.length; i++)
-                        BanksCustomContainer(imagePath: imagePath[i]),
+                      for (int i = 0; i < 5; i++) BanksCustomContainer(),
                     ],
                   ),
                 ],
@@ -605,12 +753,14 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
 
 // Custom Container-------For banks cards--------
 class BanksCustomContainer extends StatelessWidget {
-  const BanksCustomContainer({super.key, required this.imagePath});
-  final String imagePath;
+  const BanksCustomContainer({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       height: 300,
       clipBehavior: Clip.antiAlias,
       margin: const EdgeInsets.all(10), // Add margin for spacing
@@ -618,9 +768,26 @@ class BanksCustomContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         color: Colors.grey,
       ),
-      child: Image.asset(
-        imagePath,
-        fit: BoxFit.cover,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            height: 100,
+            decoration: BoxDecoration(color: Colors.red),
+          ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('NBFC'),
+                Text('Leading NBFCs'),
+                Text('Home Loan Rate: 8.75% - 11.50 %'),
+                Text(
+                    'Non - Banking Financial Comapnies offering competitive home loan rates with flexible eligibility criteria and quick processing'),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }
