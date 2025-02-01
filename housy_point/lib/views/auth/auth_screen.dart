@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:country_picker/country_picker.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
+import 'package:housy_point/controllers/providers/authProvider/auth_screen_provider.dart';
 import 'package:housy_point/views/auth/otp_screen.dart';
 import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';

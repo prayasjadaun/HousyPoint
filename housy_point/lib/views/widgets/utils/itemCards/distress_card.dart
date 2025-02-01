@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:housy_point/models/distress_model.dart';
-import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
+import 'package:housy_point/controllers/providers/bottomNavProvider/shortlisted_provider.dart';
 import 'package:provider/provider.dart';
 
 class DistressCard extends StatefulWidget {

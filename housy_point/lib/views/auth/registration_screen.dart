@@ -5,7 +5,7 @@ import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
 import 'package:housy_point/views/widgets/const/app_logo.dart';
 import 'package:provider/provider.dart';
 
-import '../../controllers/providers/registration_provider.dart';
+import '../../controllers/providers/authProvider/registration_provider.dart';
 
 class RegistrationScreen extends StatefulWidget {
   final VoidCallback onBack;

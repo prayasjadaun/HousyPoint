@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/controllers/providers/theme_provider.dart';
+import 'package:housy_point/controllers/providers/themeProvider/theme_provider.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart'; // Import the package
 import 'package:provider/provider.dart'; // Import the provider package
-import 'controllers/providers/splash_screen_provider.dart';
+import 'controllers/providers/splashProvider/splash_screen_provider.dart';
 import 'views/onBoardScreen/onboard_screen.dart';
 
 class SplashScreen extends StatefulWidget {

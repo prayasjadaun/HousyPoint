@@ -9,7 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:housy_point/views/screens/bottomNavBarScreens/add_property_screen.dart';
 import 'package:housy_point/views/screens/bottomNavBarScreens/shortlisted_screen.dart';
 import 'package:housy_point/views/screens/bottomNavBarScreens/profile_screen.dart';
-import 'package:housy_point/controllers/providers/shortlisted_provider.dart';
+import 'package:housy_point/controllers/providers/bottomNavProvider/shortlisted_provider.dart';
 import 'package:housy_point/views/widgets/utils/uspFilterCard/usp_property_filter.dart';
 
 class HomeScreen extends StatefulWidget {

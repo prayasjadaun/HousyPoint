@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/controllers/providers/menu_provider.dart';
+import 'package:housy_point/controllers/providers/menuProvider/menu_provider.dart';
 import 'package:housy_point/models/menuBarModel/menu_items_model.dart';
 import 'package:provider/provider.dart';
 
-import '../../../controllers/providers/auth_screen_provider.dart';
+import '../../../controllers/providers/authProvider/auth_screen_provider.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({super.key});

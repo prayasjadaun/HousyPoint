@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:housy_point/controllers/providers/distress_deal_provider.dart';
+import 'package:housy_point/controllers/providers/propertiesProvider/distress_deal_provider.dart';
 import 'package:provider/provider.dart';
 
 /// Widget for Tab UI

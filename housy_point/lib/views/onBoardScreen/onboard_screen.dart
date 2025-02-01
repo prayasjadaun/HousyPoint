@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:housy_point/controllers/providers/auth_screen_provider.dart';
-import 'package:housy_point/controllers/providers/onbording_provider.dart';
+import 'package:housy_point/controllers/providers/authProvider/auth_screen_provider.dart';
+import 'package:housy_point/controllers/providers/splashProvider/onbording_provider.dart';
 import 'package:housy_point/views/auth/auth_screen.dart';
 import 'package:housy_point/views/auth/sequentiol_bottomsheet.dart';
 import 'package:introduction_screen/introduction_screen.dart';

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:housy_point/controllers/providers/property_slider_provider.dart';
+import 'package:housy_point/controllers/providers/propertiesProvider/property_slider_provider.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/landmark_widget.dart';
 import 'package:housy_point/views/widgets/utils/apartmentListingItems/open_googlemap.dart';
 import 'package:provider/provider.dart';
