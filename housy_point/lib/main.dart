@@ -8,8 +8,6 @@ import 'package:housy_point/controllers/providers/authProvider/registration_prov
 import 'package:housy_point/controllers/providers/bottomNavProvider/shortlisted_provider.dart';
 import 'package:housy_point/controllers/providers/splashProvider/splash_screen_provider.dart';
 import 'package:housy_point/controllers/providers/themeProvider/theme_provider.dart';
-import 'package:housy_point/splash_screen.dart';
-import 'package:housy_point/views/screens/bottomNavBarScreens/home_screen.dart';
 import 'controllers/providers/homeProvider/home_screen_provider.dart';
 import 'controllers/providers/menuProvider/menu_provider.dart';
 import 'package:provider/provider.dart';
