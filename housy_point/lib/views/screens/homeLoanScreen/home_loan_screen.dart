@@ -28,9 +28,9 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
     'assets/loanImages/HomeLoan3.png',
   ];
   final List<Color> carouselBackgroundColors = [
-    Colors.deepOrangeAccent.shade100,
-    Colors.blue.shade100,
-    Colors.green.shade100,
+    Colors.orange.shade50,
+    Colors.blue.shade50,
+    Colors.green.shade50,
   ];
 
   // final List<Color> loanCardColors = [
