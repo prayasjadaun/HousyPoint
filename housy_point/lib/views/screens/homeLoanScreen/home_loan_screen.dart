@@ -31,7 +31,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
   final List<Color> carouselBackgroundColors = [
     Colors.orange.shade50,
     Colors.blue.shade50,
-    Colors.green.shade50,
+    Colors.green.shade100,
   ];
 
   // Define loanCardColors as a list of colors
