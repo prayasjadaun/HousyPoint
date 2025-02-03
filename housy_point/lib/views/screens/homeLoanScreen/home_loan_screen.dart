@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:housy_point/views/screens/homeLoanScreen/loan_calculator.dart';
 import 'package:shimmer/shimmer.dart';
 import 'dart:math' as math;
 
@@ -29,17 +28,23 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
     'assets/loanImages/HomeLoan3.png',
   ];
   final List<Color> carouselBackgroundColors = [
-    Colors.orange.shade50,
-    Colors.blue.shade50,
-    Colors.green.shade50,
+    Colors.deepOrangeAccent.shade100,
+    Colors.blue.shade100,
+    Colors.green.shade100,
   ];
 
+  // final List<Color> loanCardColors = [
+  //   Colors.deepOrangeAccent.shade700,
+  //   Colors.blue.shade900,
+  //   Colors.purple.shade900,
+  //   Colors.pink.shade900,
+  // ];
   // Define loanCardColors as a list of colors
   final List<Color> loanCardColors = [
-    Colors.blue.shade50,
-    Colors.green.shade50,
-    Colors.orange.shade50,
-    Colors.purple.shade50,
+    Colors.blue,
+    Colors.green,
+    Colors.orange,
+    Colors.purple,
   ];
 
   // Define loanCardText as a list of strings
@@ -57,7 +62,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Your dream\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade900,
             ),
@@ -65,7 +70,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Home with Simpler\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -73,7 +78,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Faster\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Colors.red.shade700,
             ),
@@ -81,7 +86,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Friendlier ",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -89,7 +94,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Home Loans\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Colors.red.shade700,
             ),
@@ -97,7 +102,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅100% Paperless\n",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -105,7 +110,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅Lowest Interest Rate",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -119,7 +124,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Get Your\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade900,
             ),
@@ -127,7 +132,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Personal Loan\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Colors.blue.shade900,
             ),
@@ -135,7 +140,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Loaded with Benefits\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -143,7 +148,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅Attractive Interest Rates\n",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -151,7 +156,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅100% Paperless",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -165,7 +170,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Get Instant\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 18,
               fontWeight: FontWeight.w800,
               color: Colors.grey.shade700,
             ),
@@ -173,7 +178,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "L&T Finance\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -181,7 +186,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Personal Loan in\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -189,7 +194,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "2 Minutes\n",
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.w900,
               color: Color(0xFF004240),
             ),
@@ -197,7 +202,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅Digital Process\n",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -205,7 +210,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "✅Instant Approval",
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 16,
               fontWeight: FontWeight.w700,
               color: Colors.black,
             ),
@@ -334,7 +339,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
               // Types of banks shimmer effect ------------
               Column(
                 children: [
-                  for (int i = 0; i < 3; i++)
+                  for (int i = 0; i < 4; i++)
                     Container(
                       height: 300,
                       clipBehavior: Clip.antiAlias,
@@ -343,67 +348,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                         borderRadius: BorderRadius.circular(20),
                         color: Colors.white,
                       ),
-                    ),
-                  // Loan calculator Shimmer Effect-----------
-                  Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.1),
-                          spreadRadius: 5,
-                          blurRadius: 15,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        // Placeholder for Pie Chart
-                        Container(
-                          height: 200,
-                          width: double.infinity,
-                          color: Colors.grey[800],
-                        ),
-                        const SizedBox(height: 24),
-                        // Placeholder for Monthly EMI
-                        Container(
-                          height: 30,
-                          width: 150,
-                          color: Colors.grey[800],
-                        ),
-                        const SizedBox(height: 8),
-                        Container(
-                          height: 50,
-                          width: 200,
-                          color: Colors.grey[800],
-                        ),
-                        const SizedBox(height: 24),
-                        // Placeholder for Breakdown
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              height: 50,
-                              width: 80,
-                              color: Colors.grey[800],
-                            ),
-                            Container(
-                              height: 50,
-                              width: 80,
-                              color: Colors.grey[800],
-                            ),
-                            Container(
-                              height: 50,
-                              width: 80,
-                              color: Colors.grey[800],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
+                    )
                 ],
               ),
             ],
@@ -531,7 +476,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                     margin: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
-                      color: Colors.white,
+                      color: Colors.purple.shade900,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
@@ -561,7 +506,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                             needleColor: Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 20),
+                        SizedBox(height: 10),
                         // Use Align or Center to center the text
                         Center(
                           child: Text.rich(
@@ -571,15 +516,15 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   text: "Get Your CIBIL Credit Report ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 16,
-                                    color: Colors.black,
+                                    fontSize: 18,
+                                    color: Colors.white,
                                   ),
                                 ),
                                 TextSpan(
                                   text: "worth 500\n",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 16,
+                                    fontSize: 18,
                                     color: Colors.yellow.shade900,
                                   ),
                                 ),
@@ -587,7 +532,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   text: "for FREE\n",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 18,
+                                    fontSize: 20,
                                     color: Colors.green.shade600,
                                   ),
                                 ),
@@ -597,7 +542,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
-                                    color: Colors.black,
+                                    color: Colors.white,
                                   ),
                                 ),
                               ],
@@ -720,8 +665,8 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   loanCardText[index].split(
                                       '\n')[0], // Loan type (e.g., Home Loan)
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 16,
+                                    color: Colors.white,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -729,16 +674,16 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   loanCardText[index].split('\n')[
                                       1], // Description (e.g., Instant approval...)
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
+                                    color: Colors.white,
+                                    fontSize: 16,
                                   ),
                                 ),
                                 Text(
                                   loanCardText[index].split(
                                       '\n')[2], // Interest rate (e.g., 8.35 %)
                                   style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
+                                    color: Colors.white,
+                                    fontSize: 24,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -755,7 +700,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                       child: Text(
                                         'Check Eligibility →',
                                         style: TextStyle(
-                                          color: Colors.black,
+                                          color: loanCardColors[index],
                                           fontSize: 14,
                                           fontWeight: FontWeight.bold,
                                         ),
@@ -796,32 +741,9 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                   ),
                   Column(
                     children: [
-                      BanksCustomContainer(
-                        text:
-                            'NBFC\nLeading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
-                            'Non-Banking Financial Companies offering competitive home loan rates with flexible eligibility criteria and quick processing.',
-                        buttonText: 'Read More',
-                        icon: Icons.business,
-                      ),
-                      BanksCustomContainer(
-                        text:
-                            'PRIVATE BANKS\nPremium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n'
-                            'Leading private sector banks providing premium banking services with competitive home loan rates and personalized solutions.',
-                        buttonText: 'Read More',
-                        icon: Icons.account_balance,
-                      ),
-                      BanksCustomContainer(
-                        text:
-                            'GOVERNMENT BANK\nPublic Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
-                            'Government-backed banks offering reliable home loan services with competitive interest rates and maximum security.',
-                        buttonText: 'Read More',
-                        icon: Icons.verified_user,
-                      ),
+                      for (int i = 0; i < 5; i++) BanksCustomContainer(),
                     ],
                   ),
-                  // Loan Calculator-----------
-
-                  Container(height: 1000, child: LoanCalculator()),
                 ],
               ),
             ),
@@ -829,106 +751,42 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
   }
 }
 
+// Custom Container-------For banks cards--------
 class BanksCustomContainer extends StatelessWidget {
   const BanksCustomContainer({
-    required this.icon,
-    required this.buttonText,
-    required this.text,
     super.key,
   });
-
-  final String text;
-  final String buttonText;
-  final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      height: 400,
+      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+      height: 300,
       clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.all(12),
+      margin: const EdgeInsets.all(10), // Add margin for spacing
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: Colors.white,
-        // gradient: LinearGradient(
-        //   colors: [Colors.white, Colors.black],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.3),
-            blurRadius: 15,
-            offset: Offset(0, 8),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(20),
+        color: Colors.grey,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Icon(
-                icon,
-                size: 60,
-                color: Colors.black,
-              ),
-            ),
+            height: 100,
+            decoration: BoxDecoration(color: Colors.red),
           ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 12),
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  height: 1.5,
-                ),
-              ),
+          Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('NBFC'),
+                Text('Leading NBFCs'),
+                Text('Home Loan Rate: 8.75% - 11.50 %'),
+                Text(
+                    'Non - Banking Financial Comapnies offering competitive home loan rates with flexible eligibility criteria and quick processing'),
+              ],
             ),
-          ),
-          InkWell(
-            onTap: () {
-              // Handle button tap
-            },
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 22),
-              decoration: BoxDecoration(
-                color: Colors.amber.shade100,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 6,
-                    offset: Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: Text(
-                buttonText,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ),
+          )
         ],
       ),
     );

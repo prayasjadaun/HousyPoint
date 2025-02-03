@@ -78,14 +78,13 @@ class _HomeScreenState extends State<HomeScreen>
           return Container(
             margin: EdgeInsets.only(bottom: 20),
             color: backgroundColor,
-            child: Padding(
-              
+            child: Padding(              
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: GNav(
                 gap: 2,
                 color: iconColor,
                 activeColor: activeColor,
-                tabBackgroundColor: isDarkMode ? Colors.grey.shade800! : Colors.white!,
+                tabBackgroundColor: isDarkMode ? Colors.grey.shade800 : Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                 tabs:  [
                   GButton(
