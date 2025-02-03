@@ -79,27 +79,33 @@ class _HomeScreenState extends State<HomeScreen>
             margin: EdgeInsets.only(bottom: 20),
             color: backgroundColor,
             child: Padding(
+              
               padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: GNav(
-                gap: 8,
+                gap: 2,
                 color: iconColor,
                 activeColor: activeColor,
-                tabBackgroundColor: isDarkMode ? Colors.grey[800]! : Colors.grey[300]!,
+                tabBackgroundColor: isDarkMode ? Colors.grey.shade800! : Colors.white!,
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                tabs: const [
+                tabs:  [
                   GButton(
+                    margin: EdgeInsets.symmetric(horizontal: 2),
+                    border: Border.all(color: Colors.grey.shade200),
                     icon: Icons.home,
                     text: 'Home',
                   ),
                   GButton(
+                    border: Border.all(color: Colors.grey.shade200),
                     icon: Icons.favorite,
                     text: 'Shortlisted',
                   ),
                   GButton(
+                    border: Border.all(color: Colors.grey.shade200),
                     icon: Icons.add,
                     text: 'Rent/Sell',
                   ),
                   GButton(
+                    border: Border.all(color: Colors.grey.shade200),
                     icon: Icons.person,
                     text: 'Profile',
                   ),
@@ -167,14 +173,7 @@ class _HomeContentState extends State<HomeContent> {
     "Powai, Mumbai",
     "Whitefield, Bangalore",
     "Salt Lake City, Kolkata",
-    // "Connaught Place, Delhi",
-    // "Indiranagar, Bangalore",
-    // "Gachibowli, Hyderabad",
-    // "Banjara Hills, Hyderabad",
-    // "Koramangala, Bangalore",
-    // "Sector 62, Noida",
-    // "Hinjewadi, Pune",
-    // "Anna Nagar, Chennai",
+    
   ];
   List<String> projects = [
     "HCBS Sports Villa, Sohna",
