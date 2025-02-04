@@ -76,41 +76,83 @@ class _HomeScreenState extends State<HomeScreen>
       bottomNavigationBar: Consumer<ShortlistProvider>(
         builder: (context, shortlistProvider, child) {
           return Container(
-            margin: EdgeInsets.only(bottom: 20),
-            color: backgroundColor,
-            child: Padding(              
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              child: GNav(
-                gap: 2,
-                color: iconColor,
-                activeColor: activeColor,
-                tabBackgroundColor: isDarkMode ? Colors.grey.shade800 : Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                tabs:  [
-                  GButton(
-                    margin: EdgeInsets.symmetric(horizontal: 2),
-                    border: Border.all(color: Colors.grey.shade200),
-                    icon: Icons.home,
-                    text: 'Home',
+            
+            margin: EdgeInsets.only(bottom: 20, ),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              border: Border(top: BorderSide.none),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric( vertical: 10),
+              child: Container(
+                padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+                decoration: BoxDecoration(
+                  
+                  border: Border(
+                    top: BorderSide(
+                        color: Colors.grey.shade200, width: 1),
+                     // Bottom border
                   ),
-                  GButton(
-                    border: Border.all(color: Colors.grey.shade200),
-                    icon: Icons.favorite,
-                    text: 'Shortlisted',
-                  ),
-                  GButton(
-                    border: Border.all(color: Colors.grey.shade200),
-                    icon: Icons.add,
-                    text: 'Rent/Sell',
-                  ),
-                  GButton(
-                    border: Border.all(color: Colors.grey.shade200),
-                    icon: Icons.person,
-                    text: 'Profile',
-                  ),
-                ],
-                selectedIndex: _currentIndex,
-                onTabChange: _onTabTapped,
+                ),
+                child: GNav(
+                  gap: 5,
+                  color: Colors.grey.shade500,
+                  activeColor: activeColor,
+                  tabBackgroundColor:
+                      isDarkMode ? Colors.grey.shade800 : Colors.blue.withOpacity(0.1),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  tabs: [
+                    GButton(
+                      border: _currentIndex == 0
+                          ? Border.all(
+                              color:
+                                  Colors.grey.shade200) // Active border color
+                          : Border.all(
+                              color:
+                                  Colors.transparent), // Inactive border color
+                      icon: Icons.home, iconSize: 20,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      border: _currentIndex == 1
+                          ? Border.all(
+                              color:
+                                  Colors.grey.shade200) // Active border color
+                          : Border.all(
+                              color:
+                                  Colors.transparent), // Inactive border color
+                      icon: Icons.favorite,
+                      text: 'Shortlisted',
+                    ),
+                    GButton(
+                      border: _currentIndex == 2
+                          ? Border.all(
+                              color:
+                                  Colors.grey.shade200) // Active border color
+                          : Border.all(
+                              color:
+                                  Colors.transparent), // Inactive border color
+                      icon: Icons.add,
+                      iconSize: 20,
+                      text: 'Rent/Sell',
+                    ),
+                    GButton(
+                      border: _currentIndex == 3
+                          ? Border.all(
+                              color:
+                                  Colors.grey.shade200) // Active border color
+                          : Border.all(
+                              color:
+                                  Colors.transparent), // Inactive border color
+                      icon: Icons.person,
+                      iconSize: 20,
+                      text: 'Profile',
+                    ),
+                  ],
+                  selectedIndex: _currentIndex,
+                  onTabChange: _onTabTapped,
+                ),
               ),
             ),
           );
@@ -140,6 +182,7 @@ class _TabContentState extends State<TabContent>
   @override
   bool get wantKeepAlive => true;
 }
+
 // Home Screen Content
 class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
@@ -172,7 +215,6 @@ class _HomeContentState extends State<HomeContent> {
     "Powai, Mumbai",
     "Whitefield, Bangalore",
     "Salt Lake City, Kolkata",
-    
   ];
   List<String> projects = [
     "HCBS Sports Villa, Sohna",

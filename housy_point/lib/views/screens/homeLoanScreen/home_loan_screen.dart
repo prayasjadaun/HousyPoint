@@ -57,7 +57,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Your dream\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade900,
             ),
@@ -119,7 +119,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Get Your\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.bold,
               color: Colors.grey.shade900,
             ),
@@ -165,7 +165,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
           TextSpan(
             text: "Get Instant\n",
             style: TextStyle(
-              fontSize: 16,
+              fontSize: 14,
               fontWeight: FontWeight.w800,
               color: Colors.grey.shade700,
             ),
@@ -542,7 +542,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                       ],
                     ),
                     child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         SizedBox(height: 10),
                         Center(
@@ -571,7 +571,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   text: "Get Your CIBIL Credit Report ",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 16,
+                                    fontSize: 14,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -579,7 +579,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   text: "worth 500\n",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 16,
+                                    fontSize: 15,
                                     color: Colors.yellow.shade900,
                                   ),
                                 ),
@@ -587,7 +587,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                   text: "for FREE\n",
                                   style: TextStyle(
                                     fontWeight: FontWeight.w900,
-                                    fontSize: 18,
+                                    fontSize: 15,
                                     color: Colors.green.shade600,
                                   ),
                                 ),
@@ -596,7 +596,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                       '5 Lac + people have got their Credit Scores for FREE!',
                                   style: TextStyle(
                                     fontWeight: FontWeight.w500,
-                                    fontSize: 14,
+                                    fontSize: 13,
                                     color: Colors.black,
                                   ),
                                 ),
@@ -607,57 +607,57 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                           ),
                         ),
                         SizedBox(height: 10),
-                        Expanded(
-                          child: Container(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            margin: EdgeInsets.symmetric(
-                              horizontal: 10,
-                            ),
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Center(
-                              child: Text.rich(
-                                TextSpan(
-                                  children: [
-                                    TextSpan(
-                                      text: "Check Your  ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        color: Colors.black,
-                                      ),
+                        Container(
+                          
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          margin: EdgeInsets.symmetric(
+                            horizontal: 10,
+                          ),
+                          height: 30,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.grey.shade300),
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Check Your  ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Colors.black,
                                     ),
-                                    TextSpan(
-                                      text: "FREE  ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 13,
-                                        color: Colors.green.shade900,
-                                      ),
+                                  ),
+                                  TextSpan(
+                                    text: "FREE  ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 13,
+                                      color: Colors.green.shade900,
                                     ),
-                                    TextSpan(
-                                      text: "Credit Score",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 13,
-                                        color: Colors.black,
-                                      ),
+                                  ),
+                                  TextSpan(
+                                    text: "Credit Score",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 13,
+                                      color: Colors.black,
                                     ),
-                                    TextSpan(
-                                      text: " →",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.w900,
-                                        fontSize: 13,
-                                        color: Colors.purple.shade900,
-                                      ),
+                                  ),
+                                  TextSpan(
+                                    text: " →",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 13,
+                                      color: Colors.purple.shade900,
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
@@ -676,7 +676,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                             'Trending Loan Offers',
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.black),
                           )
                         ]),
@@ -756,8 +756,8 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                                         'Check Eligibility →',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                       ),
                                     ),
@@ -789,7 +789,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
                             'Types of Banks',
                             style: TextStyle(
                                 fontWeight: FontWeight.w900,
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.black),
                           )
                         ]),
@@ -922,7 +922,7 @@ class BanksCustomContainer extends StatelessWidget {
               child: Text(
                 buttonText,
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),

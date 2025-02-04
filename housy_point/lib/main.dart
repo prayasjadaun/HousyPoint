@@ -68,8 +68,8 @@ class MyApp extends StatelessWidget {
         ),
         themeMode: ThemeMode.system,
         home: 
-        HomeLoanScreen()
-        // HomeScreen(),
+        // HomeLoanScreen()
+        HomeScreen(),
         // SplashScreen(),
         );
   }
