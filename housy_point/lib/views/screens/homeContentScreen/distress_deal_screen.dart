@@ -13,11 +13,11 @@ class DistressDealsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const SizedBox(height: 40),
+        const SizedBox(height: 10),
         const Text(
           "DISTRESS DEALS",
           style: TextStyle(
-            fontSize: 24,
+            fontSize: 18,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
@@ -66,7 +66,7 @@ class DistressDealsWidget extends StatelessWidget {
                     style: TextStyle(
                       color: isSelected ? Colors.white : Colors.black,
                       fontWeight:
-                          isSelected ? FontWeight.w800 : FontWeight.w700,
+                          isSelected ? FontWeight.w600 : FontWeight.w400,
                     ),
                   ),
                 ),

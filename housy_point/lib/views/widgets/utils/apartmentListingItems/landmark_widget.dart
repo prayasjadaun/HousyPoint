@@ -14,17 +14,16 @@ class LandmarksWidget extends StatelessWidget {
           ),
         ),
         Column(
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Title
             const SizedBox(height: 30),
-            Center(
-              child: const Text(
-                "LANDMARKS",
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black,
-                ),
+            const Text(
+              "LANDMARKS",
+              style: TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
               ),
             ),
             const SizedBox(height: 4),

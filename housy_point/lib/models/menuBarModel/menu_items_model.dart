@@ -23,7 +23,7 @@ class MenuItem extends StatelessWidget {
 
     final backgroundColor = theme.brightness == Brightness.dark
         ? Colors.grey.shade900
-        : Colors.grey.shade100;
+        : Colors.white;
 
     final iconColor =
         theme.brightness == Brightness.dark ? Colors.white : Color(0xFF004253);
@@ -35,7 +35,7 @@ class MenuItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey),
+        border: Border.all(color: Colors.grey.shade300),
       ),
       child: ListTile(
         leading: Icon(

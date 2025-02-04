@@ -23,7 +23,7 @@ class SecondProperty extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => PropertyDetailScreen(),
+                  builder: (context) => SecondApartScreen(),
                 ),
               );
             },
@@ -136,14 +136,14 @@ class SecondProperty extends StatelessWidget {
   }
 }
 
-class PropertyDetailScreen extends StatefulWidget {
+class SecondApartScreen extends StatefulWidget {
   late final AmenityItems amenity;
 
   @override
-  _PropertyDetailScreenState createState() => _PropertyDetailScreenState();
+  _SecondApartScreenState createState() => _SecondApartScreenState();
 }
 
-class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
+class _SecondApartScreenState extends State<SecondApartScreen> {
   final List<String> propertyImages = [
     'assets/images/propertyone.jpeg',
     'assets/images/propertytwo.jpg',
@@ -252,13 +252,10 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                             Navigator.pop(context);
                           },
                           icon: CircleAvatar(
-                            radius: 25,
                             backgroundColor: Colors.white,
-                            child: Center(
-                              child: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.black,
-                              ),
+                            child: Icon(
+                              Icons.arrow_back_ios_new_sharp,
+                              color: Colors.black,
                             ),
                           ),
                         ),
@@ -349,7 +346,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                           'Home',
                           style: TextStyle(
                               color: Colors.grey.shade800,
-                              fontSize: 18,
+                              fontSize: 14,
                               fontWeight: FontWeight.w500),
                         ),
                         Row(
@@ -357,13 +354,13 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                             Text(
                               "\$1900/",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.w900),
+                                  fontSize: 14, fontWeight: FontWeight.w900),
                             ),
                             Text(
                               "Month",
                               style: TextStyle(
                                   color: Colors.grey,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -373,7 +370,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     const Text(
                       'Housy Point Property',
                       style:
-                          TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     IconWithText(
@@ -402,19 +399,19 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                     const Text(
                       'Description',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: 8),
                     const Text(
                       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                      style: TextStyle(fontSize: 16),
+                      style: TextStyle(fontSize: 14),
                     ),
                     const SizedBox(height: 16),
                     // Listing Agent-----------
                     const Text(
                       'Listing Broker',
                       style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     ),
                     const ListTile(
                       leading: CircleAvatar(
@@ -429,23 +426,30 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       height: 10,
                     ),
                     // Amenties ----------------------
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Amenities',
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.w700),
-                        ),
-                        Text(
-                          'see all',
-                          style: TextStyle(color: Colors.blue),
-                        ),
-                      ],
-                    ),
+                    Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Center(
+                            child: const Text(
+                              "AMENITIES",
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Container(
+                            height: 2,
+                            width: 80,
+                            color: Colors.amber,
+                          ),
+                        ]),
+                          const SizedBox(height: 10),
                     // Amenities Container
                     Container(
-                      height: 240,
+                      height: 260,
                       decoration: BoxDecoration(
                           border: Border.all(color: Colors.grey.shade200),
                           borderRadius: BorderRadius.circular(20)),
@@ -502,21 +506,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                       ),
                     ),
                     SizedBox(height: 10),
-                    // Landmarks Widget-------------------
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Text(
-                    //       'Landmarks',
-                    //       style: TextStyle(
-                    //           fontSize: 18, fontWeight: FontWeight.w700),
-                    //     ),
-                    //     Text(
-                    //       'see all',
-                    //       style: TextStyle(color: Colors.blue),
-                    //     ),
-                    //   ],
-                    // ),
+                    // LandMark Widget-------------
                     Container(
                         height: 600,
                         width: double.infinity,
@@ -529,7 +519,7 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                             child: const Text(
                               "LOCATION",
                               style: TextStyle(
-                                fontSize: 30,
+                                fontSize: 15,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.black,
                               ),
@@ -543,23 +533,24 @@ class _PropertyDetailScreenState extends State<PropertyDetailScreen> {
                           ),
                         ]),
                     SizedBox(
-                      height: 30,
+                      height: 10,
                     ),
                     OpenMapFromBackend(),
 
                     SizedBox(
-                      height: 50,
+                      height: 20,
                     ),
                     // Master Layout Widget----------------
                     MasterLayoutWidget(),
                     // Configration Widget ----------
                     ConfigrationWidget(),
                     SizedBox(
-                      height: 30,
+                      height: 20,
                     ),
 
                     // Download Resources------------
-                    Container(height: 400, child: DownloadResources()),
+                    Container(height: 300, child: DownloadResources()),
+                    Container(child: Text(''),)
                   ],
                 ),
               ),

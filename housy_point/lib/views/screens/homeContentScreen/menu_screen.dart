@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:housy_point/controllers/providers/menuProvider/menu_provider.dart';
 import 'package:housy_point/models/menuBarModel/menu_items_model.dart';
+import 'package:housy_point/views/screens/homeLoanScreen/home_loan_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../../../controllers/providers/authProvider/auth_screen_provider.dart';
@@ -18,7 +20,7 @@ class MenuScreen extends StatelessWidget {
         final backgroundColor =
             theme.brightness == Brightness.dark ? Colors.black : Colors.white;
         final textColor =
-            theme.brightness == Brightness.dark ? Colors.white : Colors.black;
+            theme.brightness == Brightness.dark ? Colors.white : Colors.grey.shade700;
         final buttonColor = theme.brightness == Brightness.dark
             ? Colors.blue.shade300
             : Colors.blue.shade900;
@@ -29,7 +31,7 @@ class MenuScreen extends StatelessWidget {
           child: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Column(
                   children: [
                     _buildLoginSection(
@@ -150,10 +152,7 @@ class MenuScreen extends StatelessWidget {
         MenuItem(
           icon: Icons.developer_board_outlined,
           title: 'Developers',
-          onTap: () {
-            Navigator.pop(context);
-            // Add navigation logic here
-          },
+          onTap: () {},
           textColor: textColor,
         ),
         const SizedBox(
@@ -207,18 +206,7 @@ class MenuScreen extends StatelessWidget {
           },
           textColor: textColor,
         ),
-        const SizedBox(
-          height: 8,
-        ),
-        MenuItem(
-          icon: Icons.rocket_launch,
-          title: 'New Launch',
-          onTap: () {
-            Navigator.pop(context);
-            // Add navigation logic here
-          },
-          textColor: textColor,
-        ),
+        
         const SizedBox(
           height: 8,
         ),
@@ -226,35 +214,17 @@ class MenuScreen extends StatelessWidget {
           icon: Icons.local_atm_rounded,
           title: 'Home Loan',
           onTap: () {
-            Navigator.pop(context);
-            // Add navigation logic here
+            Future.microtask(() {
+              Navigator.push(
+                context,
+                CupertinoPageRoute(builder: (context) => HomeLoanScreen()),
+              );
+            });
           },
           textColor: textColor,
         ),
-        const SizedBox(
-          height: 8,
-        ),
-        MenuItem(
-          icon: Icons.design_services_outlined,
-          title: 'Interior Designing',
-          onTap: () {
-            Navigator.pop(context);
-            // Add navigation logic here
-          },
-          textColor: textColor,
-        ),
-        const SizedBox(
-          height: 8,
-        ),
-        MenuItem(
-          icon: Icons.looks,
-          title: 'Looking For',
-          onTap: () {
-            Navigator.pop(context);
-            // Add navigation logic here
-          },
-          textColor: textColor,
-        ),
+        
+        
         const SizedBox(
           height: 10,
         ),

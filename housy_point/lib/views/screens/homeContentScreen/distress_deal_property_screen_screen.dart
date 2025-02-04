@@ -71,7 +71,7 @@ class _DistressDealPropertyScreenState extends State<DistressDealPropertyScreen>
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => PropertyDetailScreen(),
+                    builder: (context) => SecondApartScreen(),
                   ),
                 );
               },

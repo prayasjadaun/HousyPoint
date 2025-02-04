@@ -5,17 +5,18 @@ class DownloadResources extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+
       // Title
       const SizedBox(height: 30),
-      Center(
-        child: const Text(
-          "DOWNLOAD RESOURCES",
-          style: TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            color: Colors.black,
-          ),
+      const Text(
+        "DOWNLOAD RESOURCES",
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold,
+          color: Colors.black,
         ),
       ),
       const SizedBox(height: 4),
@@ -70,12 +71,12 @@ class CustomResourceCards extends StatelessWidget {
         children: [
           Icon(
             icon,
-            size: 40,
+            size: 25,
             color: Colors.black,
           ),
           Text(
             text,
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
@@ -83,7 +84,7 @@ class CustomResourceCards extends StatelessWidget {
             child: Text(
               'Download',
               style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 10),
             ),
           ),
         ],

@@ -59,7 +59,6 @@ class _HomeScreenState extends State<HomeScreen>
         MediaQuery.of(context).platformBrightness == Brightness.dark;
     final backgroundColor = isDarkMode ? Colors.black : Colors.white;
     final activeColor = isDarkMode ? Colors.white : Colors.black;
-    final iconColor = isDarkMode ? Colors.grey : Colors.black;
 
     return Scaffold(
       key: _scaffoldKey,
@@ -82,77 +81,74 @@ class _HomeScreenState extends State<HomeScreen>
               color: backgroundColor,
               border: Border(top: BorderSide.none),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric( vertical: 10),
-              child: Container(
-                padding: EdgeInsets.only(top: 10, left: 10, right: 10),
-                decoration: BoxDecoration(
-                  
-                  border: Border(
-                    top: BorderSide(
-                        color: Colors.grey.shade200, width: 1),
-                     // Bottom border
+            child: Container(
+              padding: EdgeInsets.only(top: 10, left: 10, right: 10),
+              decoration: BoxDecoration(
+                
+                border: Border(
+                  top: BorderSide(
+                      color: Colors.grey.shade200, width: 1),
+                   // Bottom border
+                ),
+              ),
+              child: GNav(
+                gap: 5,
+                color: Colors.grey.shade500,
+                activeColor: activeColor,
+                tabBackgroundColor:
+                    isDarkMode ? Colors.grey.shade800 : Colors.white.withOpacity(0.5),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                tabs: [
+                  GButton(
+                    border: _currentIndex == 0
+                        ? Border.all(
+                            color:
+                                Colors.grey.shade200) // Active border color
+                        : Border.all(
+                            color:
+                                Colors.transparent), // Inactive border color
+                    icon: Icons.home, iconSize: 20,
+                    text: 'Home',
                   ),
-                ),
-                child: GNav(
-                  gap: 5,
-                  color: Colors.grey.shade500,
-                  activeColor: activeColor,
-                  tabBackgroundColor:
-                      isDarkMode ? Colors.grey.shade800 : Colors.blue.withOpacity(0.1),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  tabs: [
-                    GButton(
-                      border: _currentIndex == 0
-                          ? Border.all(
-                              color:
-                                  Colors.grey.shade200) // Active border color
-                          : Border.all(
-                              color:
-                                  Colors.transparent), // Inactive border color
-                      icon: Icons.home, iconSize: 20,
-                      text: 'Home',
-                    ),
-                    GButton(
-                      border: _currentIndex == 1
-                          ? Border.all(
-                              color:
-                                  Colors.grey.shade200) // Active border color
-                          : Border.all(
-                              color:
-                                  Colors.transparent), // Inactive border color
-                      icon: Icons.favorite,
-                      text: 'Shortlisted',
-                    ),
-                    GButton(
-                      border: _currentIndex == 2
-                          ? Border.all(
-                              color:
-                                  Colors.grey.shade200) // Active border color
-                          : Border.all(
-                              color:
-                                  Colors.transparent), // Inactive border color
-                      icon: Icons.add,
-                      iconSize: 20,
-                      text: 'Rent/Sell',
-                    ),
-                    GButton(
-                      border: _currentIndex == 3
-                          ? Border.all(
-                              color:
-                                  Colors.grey.shade200) // Active border color
-                          : Border.all(
-                              color:
-                                  Colors.transparent), // Inactive border color
-                      icon: Icons.person,
-                      iconSize: 20,
-                      text: 'Profile',
-                    ),
-                  ],
-                  selectedIndex: _currentIndex,
-                  onTabChange: _onTabTapped,
-                ),
+                  GButton(
+                    border: _currentIndex == 1
+                        ? Border.all(
+                            color:
+                                Colors.grey.shade200) // Active border color
+                        : Border.all(
+                            color:
+                                Colors.transparent), // Inactive border color
+                    icon: Icons.favorite,
+                    text: 'Shortlisted',
+                  ),
+                  GButton(
+                    border: _currentIndex == 2
+                        ? Border.all(
+                            color:
+                                Colors.grey.shade200) // Active border color
+                        : Border.all(
+                            color:
+                                Colors.transparent), // Inactive border color
+                    icon: Icons.add,
+                    iconSize: 20,
+                    text: 'Rent/Sell',
+                  ),
+                  GButton(
+                    border: _currentIndex == 3
+                        ? Border.all(
+                            color:
+                                Colors.grey.shade200) // Active border color
+                        : Border.all(
+                            color:
+                                Colors.transparent), // Inactive border color
+                    icon: Icons.person,
+                    iconSize: 20,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _currentIndex,
+                onTabChange: _onTabTapped,
               ),
             ),
           );
@@ -202,13 +198,16 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   void _startTextAnimation() {
-    Future.delayed(Duration(seconds: 2), () {
+  Future.delayed(Duration(seconds: 2), () {
+    // Check if the widget is still mounted before calling setState
+    if (mounted) {
       setState(() {
         _currentIndex = (_currentIndex + 1) % propertyTypes.length;
       });
       _startTextAnimation();
-    });
-  }
+    }
+  });
+}
 
   List<String> properties = [
     "DLF Cyber City, Gurgaon",

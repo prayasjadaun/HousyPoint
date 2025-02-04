@@ -28,7 +28,7 @@ class _ConfigrationWidgetState extends State<ConfigrationWidget> {
             child: const Text(
               "CONFIGURATIONS",
               style: TextStyle(
-                fontSize: 30,
+                fontSize: 15,
                 fontWeight: FontWeight.bold,
                 color: Colors.black,
               ),
@@ -56,8 +56,8 @@ class _ConfigrationWidgetState extends State<ConfigrationWidget> {
                       });
                     },
                     child: Container(
-                      height: 50,
-                      width: 120,
+                      height: 40,
+                      width: 100,
                       margin: EdgeInsets.symmetric(horizontal: 10),
                       padding:
                           EdgeInsets.symmetric(horizontal: 10, vertical: 10),
@@ -69,7 +69,7 @@ class _ConfigrationWidgetState extends State<ConfigrationWidget> {
                           child: Text(
                         bhk,
                         style: TextStyle(
-                            fontSize: 15,
+                            fontSize: 12,
                             fontWeight: FontWeight.w700,
                             color: Colors.white),
                       )),
