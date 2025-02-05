@@ -12,7 +12,6 @@ import 'controllers/providers/homeProvider/home_screen_provider.dart';
 import 'controllers/providers/menuProvider/menu_provider.dart';
 import 'package:provider/provider.dart';
 import 'views/screens/bottomNavBarScreens/home_screen.dart';
-import 'views/screens/homeLoanScreen/home_loan_screen.dart';
 
 void main() {
   runApp(
