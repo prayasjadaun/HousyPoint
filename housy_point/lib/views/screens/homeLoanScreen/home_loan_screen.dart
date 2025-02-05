@@ -38,9 +38,9 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
   // Define loanCardColors as a list of colors
   final List<Color> loanCardColors = [
     Colors.blue.shade50,
-    Colors.green.shade50,
-    Colors.orange.shade50,
     Colors.purple.shade50,
+    Colors.orange.shade50,
+    Colors.green.shade50,
   ];
 
   // Define loanCardText as a list of strings
@@ -260,14 +260,13 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
 
   @override
   Widget build(BuildContext context) {
-    return  _buildHomeLoan();
+    return _buildHomeLoan();
   }
-  // _isLoading ? _buildShimmerEffect() : 
+  // _isLoading ? _buildShimmerEffect() :
 
   Widget _buildHomeLoan() {
     return Scaffold(
       appBar: AppBar(
-        
         centerTitle: true,
         backgroundColor: const Color(0xFF004240),
         title: Image.asset(
@@ -635,21 +634,23 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             Column(
               children: [
                 BanksCustomContainer(
-                  text: 'NBFC\nLeading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
+                  text1: "NBFC\n",
+                  text2: 'Leading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
                       'Non-Banking Financial Companies offering competitive home loan rates with flexible eligibility criteria and quick processing.',
                   buttonText: 'Read More',
                   icon: Icons.business,
                 ),
                 BanksCustomContainer(
-                  text:
-                      'PRIVATE BANKS\nPremium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n'
+                  text1: "PRIVATE BANKS\n",
+                  text2:
+                      'Premium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n'
                       'Leading private sector banks providing premium banking services with competitive home loan rates and personalized solutions.',
                   buttonText: 'Read More',
                   icon: Icons.account_balance,
                 ),
                 BanksCustomContainer(
-                  text:
-                      'GOVERNMENT BANK\nPublic Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
+                  text1: "GOVERNMENT BANK\n",
+                  text2: 'Public Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
                       'Government-backed banks offering reliable home loan services with competitive interest rates and maximum security.',
                   buttonText: 'Read More',
                   icon: Icons.verified_user,
@@ -658,11 +659,9 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             ),
             // Loan Calculator-----------
             Container(height: 1000, child: LoanCalculator()),
-            SizedBox(height:10),
+            SizedBox(height: 10),
             // Payment Breakdown Widget-------
-            Container(
-              height: 800 ,
-              child: EMIStructureScreen()),
+            Container(height: 800, child: EMIStructureScreen()),
           ],
         ),
       ),
@@ -830,100 +829,97 @@ class BanksCustomContainer extends StatelessWidget {
   const BanksCustomContainer({
     required this.icon,
     required this.buttonText,
-    required this.text,
+    required this.text1,
+    required this.text2,
     super.key,
   });
 
-  final String text;
+  final String text1;
+  final String text2;
   final String buttonText;
   final IconData icon;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-      height: 400,
-      clipBehavior: Clip.antiAlias,
-      margin: const EdgeInsets.all(12),
+      height: 300,
+      width: double.infinity,
+      margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
         color: Colors.white,
-        border: Border.all(color: Colors.grey.shade100)
-        // gradient: LinearGradient(
-        //   colors: [Colors.white, Colors.black],
-        //   begin: Alignment.topLeft,
-        //   end: Alignment.bottomRight,
-        // ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: Colors.black.withOpacity(0.3),
-        //     blurRadius: 15,
-        //     offset: Offset(0, 8),
-        //   ),
-        // ],
+        borderRadius: BorderRadius.only(
+            topRight: Radius.circular(0),
+            topLeft: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20)),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            blurRadius: 10,
+            spreadRadius: 2,
+            offset: Offset(0, 5),
+          ),
+        ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Stack(
         children: [
-          Container(
-            height: 120,
-            decoration: BoxDecoration(
-              color: Colors.amber.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Center(
-              child: Icon(
-                icon,
-                size: 60,
-                color: Colors.black,
-              ),
-            ),
-          ),
-          Expanded(
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 12),
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-              decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.5),
-                borderRadius: BorderRadius.circular(20),
-              ),
+          // Heading Text------
+          Positioned(
+              left: 10,
+              top: 20,
               child: Text(
-                text,
+                text1,
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  height: 1.5,
-                ),
-              ),
+                    color: Colors.black,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 22),
+              )),
+              // Right Circle Container------
+          Positioned(
+            top: -100,
+            right: -50,
+            child: Container(
+              height: 300,
+              width: 300,
+              decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.circular(20),
+                  shape: BoxShape.circle,
+                  color: Colors.green.withOpacity(0.2)),
             ),
           ),
-          InkWell(
-            onTap: () {
-              // Handle button tap
-            },
-            child: AnimatedContainer(
-              duration: Duration(milliseconds: 150),
-              padding: EdgeInsets.symmetric(vertical: 12, horizontal: 22),
+           // Left Circle Container--------
+          Positioned(
+            left: -100,
+            bottom: -100,
+            child: Container(
+              height: 300,
+              width: 400,
               decoration: BoxDecoration(
-                color: Colors.amber.shade100,
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.3),
-                    blurRadius: 6,
-                    offset: Offset(0, 4),
+                  shape: BoxShape.circle, color: Colors.amber.withOpacity(0.1)),
+            ),
+          ),
+          // Content Text Container--------
+          Positioned(
+            bottom: 10,
+            right: 10,
+            left: 10,
+            child: Container(
+              padding: EdgeInsets.all(5),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    text2,
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 12),
                   ),
                 ],
-              ),
-              child: Text(
-                buttonText,
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.black,
-                ),
               ),
             ),
           ),
