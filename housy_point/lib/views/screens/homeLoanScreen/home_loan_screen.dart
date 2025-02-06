@@ -610,30 +610,37 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
             Column(
               children: [
                 BanksCustomContainer(
+                  width: 150,
                   titleText: "NBFC\n",
-                  contentText: 'Leading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
+                  loanText: 'Leading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n',
+                  contentText: 
                       'Non-Banking Financial Companies offering competitive home loan rates with flexible eligibility criteria and quick processing.',
                   buttonText: 'Read More',
                   iconImage: 'assets/loanImages/nbfcbank.png',
                 ),
                 BanksCustomContainer(
+                  width: 140,
                   titleText: "PRIVATE BANKS\n",
+                  loanText: 'Premium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n' ,
                   contentText:
-                      'Premium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n'
+                     
                       'Leading private sector banks providing premium banking services with competitive home loan rates and personalized solutions.',
                   buttonText: 'Read More',
                   iconImage: 'assets/loanImages/privatebank.png',
                 ),
                 BanksCustomContainer(
+                  width: 190,
                   titleText: "GOVERNMENT BANK\n",
+                  loanText: 'Public Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n',
                   contentText:
-                      'Public Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
+                      
                       'Government-backed banks offering reliable home loan services with competitive interest rates and maximum security.',
                   buttonText: 'Read More',
                   iconImage: "assets/loanImages/govtbank.png",
                 ),
               ],
             ),
+            SizedBox(height: 10),
             // Loan Calculator-----------
             Container(height: 1000, child: LoanCalculator()),
             SizedBox(height: 10),
@@ -806,15 +813,19 @@ class BanksCustomContainer extends StatelessWidget {
   const BanksCustomContainer({
     required this.iconImage,
     required this.buttonText,
+    required this.loanText,
     required this.titleText,
     required this.contentText,
+    required this.width,
     super.key,
   });
 
   final String titleText;
+  final String loanText;
   final String contentText;
   final String buttonText;
   final String iconImage;
+    final double width;
 
   @override
   Widget build(BuildContext context) {
@@ -851,13 +862,24 @@ class BanksCustomContainer extends StatelessWidget {
                     fontWeight: FontWeight.w900,
                     fontSize: 20),
               )),
+              // Loan text Container
+              Positioned(
+              left: 10,
+              top: 50,
+              child: Text(
+                loanText,
+                style: TextStyle(
+                    color: Colors.grey.shade700,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 10),
+              )),
           // Right Circle Container------
           Positioned(
-            top: -40,
+            top: -30,
             right: -30,
             child: Container(
-              height: 190,
-              width: 190,
+              height: 170,
+              width: width,
               decoration: BoxDecoration(
                   // borderRadius: BorderRadius.circular(20),
                   shape: BoxShape.circle,
@@ -865,23 +887,7 @@ class BanksCustomContainer extends StatelessWidget {
                   child: Image.asset(iconImage, fit: BoxFit.cover,),
             ),
           ),
-          // Icon Container------
-          Positioned(
-            top: -80,
-            right: -60,
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 40),
-              height: 200,
-              width: 200,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                 
-                ],
-              ),
-            ),
-          ),
+          
 
           // Content Text Container--------
           Positioned(
@@ -891,7 +897,7 @@ class BanksCustomContainer extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.1),
+                  // color: Colors.grey.withOpacity(0.1),
                   borderRadius: BorderRadius.only(
                       topRight: Radius.circular(10),
                       bottomRight: Radius.circular(10))),
@@ -901,7 +907,7 @@ class BanksCustomContainer extends StatelessWidget {
                     contentText,
                     style: TextStyle(
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w400,
                         fontSize: 12),
                   ),
                 ],
