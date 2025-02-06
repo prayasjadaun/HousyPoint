@@ -507,19 +507,7 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
               ),
             ),
             // Trending Loans and offers -------------------
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Text(
-                  'Trending Loan Offers',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 14,
-                      color: Colors.black),
-                )
-              ]),
-            ),
+            CustomTitleRow(title: 'Trending Loan Offers',),
             SizedBox(
               width: MediaQuery.of(context).size.width * 1,
               height: 200,
@@ -618,42 +606,31 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
               color: Colors.grey.shade300,
             ),
             // Types of banks---------------------------
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-              child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                Text(
-                  'Types of Banks',
-                  style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 14,
-                      color: Colors.black),
-                )
-              ]),
-            ),
+            CustomTitleRow(title: 'Types of Bank',),
             Column(
               children: [
                 BanksCustomContainer(
-                  text1: "NBFC\n",
-                  text2: 'Leading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
+                  titleText: "NBFC\n",
+                  contentText: 'Leading NBFCs\nHome Loan Rate: 8.75% - 11.50%\n'
                       'Non-Banking Financial Companies offering competitive home loan rates with flexible eligibility criteria and quick processing.',
                   buttonText: 'Read More',
-                  icon: Icons.business,
+                  iconImage: 'assets/loanImages/nbfcbank.png',
                 ),
                 BanksCustomContainer(
-                  text1: "PRIVATE BANKS\n",
-                  text2:
+                  titleText: "PRIVATE BANKS\n",
+                  contentText:
                       'Premium Private Banks\nHome Loan Rate: 8.50% - 10.75%\n'
                       'Leading private sector banks providing premium banking services with competitive home loan rates and personalized solutions.',
                   buttonText: 'Read More',
-                  icon: Icons.account_balance,
+                  iconImage: 'assets/loanImages/privatebank.png',
                 ),
                 BanksCustomContainer(
-                  text1: "GOVERNMENT BANK\n",
-                  text2: 'Public Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
+                  titleText: "GOVERNMENT BANK\n",
+                  contentText:
+                      'Public Sector Banks\nHome Loan Rate: 8.40% - 9.75%\n'
                       'Government-backed banks offering reliable home loan services with competitive interest rates and maximum security.',
                   buttonText: 'Read More',
-                  icon: Icons.verified_user,
+                  iconImage: "assets/loanImages/govtbank.png",
                 ),
               ],
             ),
@@ -827,17 +804,17 @@ class _HomeLoanScreenState extends State<HomeLoanScreen>
 
 class BanksCustomContainer extends StatelessWidget {
   const BanksCustomContainer({
-    required this.icon,
+    required this.iconImage,
     required this.buttonText,
-    required this.text1,
-    required this.text2,
+    required this.titleText,
+    required this.contentText,
     super.key,
   });
 
-  final String text1;
-  final String text2;
+  final String titleText;
+  final String contentText;
   final String buttonText;
-  final IconData icon;
+  final String iconImage;
 
   @override
   Widget build(BuildContext context) {
@@ -868,52 +845,60 @@ class BanksCustomContainer extends StatelessWidget {
               left: 10,
               top: 20,
               child: Text(
-                text1,
+                titleText,
                 style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.w900,
-                    fontSize: 22),
+                    fontSize: 20),
               )),
-              // Right Circle Container------
+          // Right Circle Container------
           Positioned(
-            top: -100,
-            right: -50,
+            top: -40,
+            right: -30,
             child: Container(
-              height: 300,
-              width: 300,
+              height: 190,
+              width: 190,
               decoration: BoxDecoration(
                   // borderRadius: BorderRadius.circular(20),
                   shape: BoxShape.circle,
-                  color: Colors.green.withOpacity(0.2)),
+                  color: Colors.grey.withOpacity(0.1)),
+                  child: Image.asset(iconImage, fit: BoxFit.cover,),
             ),
           ),
-           // Left Circle Container--------
+          // Icon Container------
           Positioned(
-            left: -100,
-            bottom: -100,
+            top: -80,
+            right: -60,
             child: Container(
-              height: 300,
-              width: 400,
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle, color: Colors.amber.withOpacity(0.1)),
+              padding: EdgeInsets.symmetric(horizontal: 60, vertical: 40),
+              height: 200,
+              width: 200,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                 
+                ],
+              ),
             ),
           ),
+
           // Content Text Container--------
           Positioned(
-            bottom: 10,
+            bottom: 50,
             right: 10,
-            left: 10,
+            left: -1,
             child: Container(
-              padding: EdgeInsets.all(5),
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: Colors.black.withOpacity(0.1),
-                borderRadius: BorderRadius.circular(10),
-              ),
+                  color: Colors.black.withOpacity(0.1),
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(10),
+                      bottomRight: Radius.circular(10))),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    text2,
+                    contentText,
                     style: TextStyle(
                         color: Colors.black,
                         fontWeight: FontWeight.bold,
@@ -921,6 +906,22 @@ class BanksCustomContainer extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ),
+          Positioned(
+            bottom: 5,
+            right: 10,
+            child: Container(
+              height: 40,
+              width: 100,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30), color: Colors.black),
+              child: Center(
+                  child: Text(
+                buttonText,
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
+              )),
             ),
           ),
         ],
@@ -1054,4 +1055,40 @@ class _GaugePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => true;
+}
+
+//  main content title widget
+class CustomTitleRow extends StatelessWidget {
+  final String title;
+  final EdgeInsetsGeometry padding;
+  final TextStyle textStyle;
+  final MainAxisAlignment alignment;
+
+  const CustomTitleRow({
+    Key? key,
+    required this.title,
+    this.padding = const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+    this.textStyle = const TextStyle(
+      fontWeight: FontWeight.w900,
+      fontSize: 14,
+      color: Colors.black,
+    ),
+    this.alignment = MainAxisAlignment.start,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Row(
+        mainAxisAlignment: alignment,
+        children: [
+          Text(
+            title,
+            style: textStyle,
+          ),
+        ],
+      ),
+    );
+  }
 }
