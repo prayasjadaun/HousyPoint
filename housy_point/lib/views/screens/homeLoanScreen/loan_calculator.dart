@@ -77,8 +77,9 @@ class _LoanCalculatorState extends State<LoanCalculator> {
                 Text(
                   'Home Loan Calculator',
                   style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                        color: Colors.blue[900],
-                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 22
                       ),
                 ),
                 const SizedBox(height: 8),

@@ -837,7 +837,7 @@ class BanksCustomContainer extends StatelessWidget {
         color: Colors.white,
         borderRadius: BorderRadius.only(
             topRight: Radius.circular(0),
-            topLeft: Radius.circular(20),
+            // topLeft: Radius.circular(20),
             bottomLeft: Radius.circular(20),
             bottomRight: Radius.circular(20)),
         boxShadow: [
@@ -887,6 +887,20 @@ class BanksCustomContainer extends StatelessWidget {
                   child: Image.asset(iconImage, fit: BoxFit.cover,),
             ),
           ),
+          // Top Left Container
+           Positioned(
+            top: -60,
+            left: -70,
+            child: Container(
+              height: 170,
+              width: width,
+              decoration: BoxDecoration(
+                  // borderRadius: BorderRadius.circular(20),
+                  shape: BoxShape.circle,
+                  color: Colors.grey.withOpacity(0.2)),
+                  // child: Image.asset(iconImage, fit: BoxFit.cover,),
+            ),
+          ),
           
 
           // Content Text Container--------
@@ -906,7 +920,7 @@ class BanksCustomContainer extends StatelessWidget {
                   Text(
                     contentText,
                     style: TextStyle(
-                        color: Colors.black,
+                        color: Colors.grey.shade700,
                         fontWeight: FontWeight.w400,
                         fontSize: 12),
                   ),
